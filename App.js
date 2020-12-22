@@ -1,12 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Image, View } from 'react-native';
+import { StyleSheet, View, ImageBackground } from 'react-native';
+import GameArea from './GameArea';
+
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Image source={require('./assets/background.png')} style= {styles.backgroundImage}/>
-      <StatusBar style="auto" />
+      <ImageBackground source={require('./assets/background.png')} style={styles.backgroundImage}>
+        <GameArea />
+        <StatusBar style='auto' />
+      </ImageBackground>
     </View>
   );
 }
@@ -14,8 +18,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
   },
   backgroundImage:  {
     flex: 1,
