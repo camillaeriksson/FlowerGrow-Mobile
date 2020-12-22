@@ -1,25 +1,22 @@
-import React, { Component } from 'react'
-import { View, Dimensions, Image, StyleSheet } from 'react-native'
-
-const max_height = Dimensions.get('screen').height
-const max_width = Dimensions.get('screen').width
-
+import React, { Component } from 'react';
+import { View, Image } from 'react-native';
 export default class Grass extends Component {
   render() {
+  const width = this.props.size[0]
+  const height = this.props.size[1] 
+  const x = this.props.body.position.x
+  const y = this.props.body.position.y
+
     return (
-      <View>
-        <Image style={styles.grass} source={require('../assets/grass.png')} />
-      </View>
+      <Image 
+      style={{
+        position: 'absolute',
+        width: width,
+        height: height,
+        top: y,
+        left: x
+      }}
+      source={require('../assets/grass.png')} />
     ) 
   } 
 }
-
-const styles = StyleSheet.create({
-  grass: {
-    position: 'absolute',
-    width: max_width,
-    height: 150,
-    top: max_height - 150,
-    left: 0
-  },
-});

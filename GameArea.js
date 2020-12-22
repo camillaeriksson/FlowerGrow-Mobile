@@ -17,14 +17,24 @@ export default class GameArea extends Component {
 
   setupWorld = () => {
     let engine = Matter.Engine.create({ enableSleeping: false });
-    let world = engine.world
-    let grass = Matter.Bodies.
+    let world = engine.world;
+    let grass = Matter.Bodies.rectangle(0, max_height - 150, max_width, 150, { isStatic: true });
+
+    Matter.World.add(world, [grass]);
+
+    return {
+      grass: { body: grass, size: [max_width, 150], renderer: Grass}
+    }
   }
 
   render() {
     return (
       <View style={styles.container}>
-       <Grass />
+        <GameEngine
+          ref={(ref) => { this.gameEngine = ref; }}
+          style={styles.gameContainer}
+          entities={this.entities}
+        />
       </View>
     )
   }
@@ -34,6 +44,13 @@ const styles = StyleSheet.create({
   container: {
     height: max_height,
     width: max_width,
+  },
+  gameContainer: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0
   },
 });
 
