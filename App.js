@@ -19,6 +19,6 @@ const styles = StyleSheet.create({
   },
   backgroundImage:  {
     flex: 1,
-    resizeMode: 'cover',
+    resizeMode: 'contain',
   }
 });
