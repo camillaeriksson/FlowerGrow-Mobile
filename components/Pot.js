@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Image } from 'react-native';
 
-export default class Grass extends Component {
+export default class Pot extends Component {
   render() {
   const width = this.props.size[0]
   const height = this.props.size[1] 
@@ -17,7 +17,7 @@ export default class Grass extends Component {
         top: y,
         left: x
       }}
-      source={require('../assets/grass.png')} />
+      source={require('../assets/pot.png')} />
     ) 
   } 
 }
