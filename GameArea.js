@@ -11,7 +11,6 @@ import Grass from './components/Grass';
 import Pot from './components/Pot';
 import BadCloud from './components/BadCloud';
 import Flower from './components/Flower';
-import FlowerPhysics from './components/FlowerPhysics';
 
 const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
@@ -29,7 +28,7 @@ export default class GameArea extends Component {
 
     let grass = Matter.Bodies.rectangle(0, max_height - 150, max_width, 150, { isStatic: true });
     let pot = Matter.Bodies.rectangle(max_width / 2 - 50, max_height - 140, 100, 80, { isStatic: true });
-    let flower = Matter.Bodies.rectangle(max_width / 2 - 37.5 , max_height / 2, 75, 75);
+    let flower = Matter.Bodies.rectangle(max_width / 2 - 37.5 , max_height / 2, 75, 75, { isStatic: true });
     let badCloud = Matter.Bodies.rectangle(max_width / 5, -30, 117, 60, {isStatic: true });
 
     Matter.World.add(world, [grass, pot, badCloud, flower]);
@@ -51,7 +50,6 @@ export default class GameArea extends Component {
           style={styles.gameContainer}
           systems={[Physics]}
           entities={this.entities}
-          systems={[FlowerPhysics]}
         />
       </View>
     )
