@@ -38,7 +38,7 @@ export default class GameArea extends Component {
       grass: { body: grass, size: [max_width, 150], renderer: Grass},
       pot: { body: pot, size: [100, 80], renderer: Pot},
       badCloud: { body: badCloud, size: [117, 60], renderer: BadCloud},
-      flower: { body: flower, size: [76, 78], renderer: Flower}
+      flower: { body: flower, size: [76, 79], renderer: Flower}
     }
   }
 
