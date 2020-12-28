@@ -1,4 +1,4 @@
-import Matter from 'matter-js'
+import Matter from 'matter-js';
 import { Dimensions } from 'react-native';
 
 const max_width = Dimensions.get('screen').width;
