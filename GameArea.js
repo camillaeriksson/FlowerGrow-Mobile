@@ -8,6 +8,7 @@ import { Dimensions } from 'react-native';
 
 import Grass from './components/Grass';
 import Pot from './components/Pot';
+import BadCloud from './components/BadCloud';
 
 const max_height = Dimensions.get('screen').height
 const max_width = Dimensions.get('screen').width
@@ -25,12 +26,14 @@ export default class GameArea extends Component {
 
     let grass = Matter.Bodies.rectangle(0, max_height - 150, max_width, 150, { isStatic: true });
     let pot = Matter.Bodies.rectangle(max_width / 2 - 50, max_height - 140, 100, 80, { isStatic: true });
+    let badCloud = Matter.Bodies.rectangle(max_width / 5, max_height / 4, 50, 50, {isStatic: true });
 
-    Matter.World.add(world, [grass, pot]);
+    Matter.World.add(world, [grass, pot, badCloud]);
 
     return {
       grass: { body: grass, size: [max_width, 150], renderer: Grass},
-      pot: { body: pot, size: [100, 80], renderer: Pot}
+      pot: { body: pot, size: [100, 80], renderer: Pot},
+      badCloud: { body: badCloud, size: [117, 60], renderer: BadCloud}
     }
   }
 
