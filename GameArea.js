@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Physics from './Physics'
+import Systems from './systems'
 
 import { GameEngine } from 'react-native-game-engine';
 import Matter from 'matter-js';
@@ -48,7 +48,7 @@ export default class GameArea extends Component {
         <GameEngine
           ref={(ref) => { this.gameEngine = ref; }}
           style={styles.gameContainer}
-          systems={[Physics]}
+          systems={Systems}
           entities={this.entities}
         />
       </View>
