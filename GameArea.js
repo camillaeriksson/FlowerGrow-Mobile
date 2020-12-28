@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Physics from './Physics'
 
 import { GameEngine } from 'react-native-game-engine';
 import Matter from 'matter-js';
@@ -10,12 +11,12 @@ import Grass from './components/Grass';
 import Pot from './components/Pot';
 import BadCloud from './components/BadCloud';
 
-const max_height = Dimensions.get('screen').height
-const max_width = Dimensions.get('screen').width
+const max_height = Dimensions.get('screen').height;
+const max_width = Dimensions.get('screen').width;
 
 export default class GameArea extends Component {
   constructor(props) {
-    super(props) 
+    super(props);
     this.GameEngine = null;
     this.entities = this.setupWorld();
   } 
@@ -26,11 +27,12 @@ export default class GameArea extends Component {
 
     let grass = Matter.Bodies.rectangle(0, max_height - 150, max_width, 150, { isStatic: true });
     let pot = Matter.Bodies.rectangle(max_width / 2 - 50, max_height - 140, 100, 80, { isStatic: true });
-    let badCloud = Matter.Bodies.rectangle(max_width / 5, max_height / 4, 50, 50, {isStatic: true });
+    let badCloud = Matter.Bodies.rectangle(max_width / 5, -30, 117, 60, {isStatic: true });
 
     Matter.World.add(world, [grass, pot, badCloud]);
 
     return {
+      physics: { engine: engine, world: world },
       grass: { body: grass, size: [max_width, 150], renderer: Grass},
       pot: { body: pot, size: [100, 80], renderer: Pot},
       badCloud: { body: badCloud, size: [117, 60], renderer: BadCloud}
@@ -43,6 +45,7 @@ export default class GameArea extends Component {
         <GameEngine
           ref={(ref) => { this.gameEngine = ref; }}
           style={styles.gameContainer}
+          systems={[Physics]}
           entities={this.entities}
         />
       </View>
