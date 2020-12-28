@@ -10,6 +10,7 @@ import Grass from './components/Grass';
 import Pot from './components/Pot';
 import BadCloud from './components/BadCloud';
 import Flower from './components/Flower';
+import FlowerPhysics from './components/FlowerPhysics';
 
 const max_height = Dimensions.get('screen').height
 const max_width = Dimensions.get('screen').width
@@ -33,6 +34,7 @@ export default class GameArea extends Component {
     Matter.World.add(world, [grass, pot, badCloud, flower]);
 
     return {
+      flowerPhysics: { engine: engine, world: world },
       grass: { body: grass, size: [max_width, 150], renderer: Grass},
       pot: { body: pot, size: [100, 80], renderer: Pot},
       badCloud: { body: badCloud, size: [117, 60], renderer: BadCloud},
@@ -47,6 +49,7 @@ export default class GameArea extends Component {
           ref={(ref) => { this.gameEngine = ref; }}
           style={styles.gameContainer}
           entities={this.entities}
+          systems={[FlowerPhysics]}
         />
       </View>
     )
