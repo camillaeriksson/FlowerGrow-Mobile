@@ -1,3 +1,4 @@
 import Physics from './physics'
 import BadCloudPhysics from './BadCloudPhysics';
-export default [Physics, BadCloudPhysics];
+import FlowerPhysics from './FlowerPhysics';
+export default [Physics, BadCloudPhysics, FlowerPhysics];
