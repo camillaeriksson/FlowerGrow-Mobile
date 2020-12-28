@@ -8,7 +8,12 @@ const BadCloudPhysics = (entities, { time }) => {
   let engine = entities.physics.engine;
   let badCloud = entities.badCloud.body;
 
-  Matter.Body.translate(badCloud, { x: 0, y: 1 })
+  if (badCloud.position.y > max_height) {
+    Matter.Body.setPosition(badCloud, { x: badCloud.position.x, y: 0 });
+  } else {
+    Matter.Body.translate(badCloud, { x: 0, y: 1 });
+  }
+
 
   Matter.Engine.update(engine, time.delta); 
 
