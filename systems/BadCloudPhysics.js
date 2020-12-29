@@ -7,19 +7,22 @@ const max_width = Dimensions.get('screen').width;
 
 let badClouds = 0;
 
-const randomizePos = (min, max) => {
+const randomizeNumber = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 const spawnBadClouds = (world, entities) => {
 
-  let badCloud = Matter.Bodies.rectangle(randomizePos(0, max_width), randomizePos(0, -500), 117, 60, {isStatic: true });
+  let badCloud = Matter.Bodies.rectangle(randomizeNumber(0, max_width - 50), randomizeNumber(0, -max_height), 117, 60, {isStatic: true });
 
   Matter.World.add(world, [badCloud]);
+
+  let cloudNumber = randomizeNumber(1, 3)
 
   entities["badCloud" + (badClouds + 1)] = {
     body: badCloud,
     size: [117, 60],
+    cloudNumber: cloudNumber,
     renderer: BadCloud
   }
 
@@ -35,6 +38,7 @@ const BadCloudPhysics = (entities, { touches, time }) => {
   let hadTouches = false;
   touches.filter(t => t.type === "press").forEach(t => {
     if (!hadTouches){
+      spawnBadClouds(world, entities);
       spawnBadClouds(world, entities);
       spawnBadClouds(world, entities);
       spawnBadClouds(world, entities);
