@@ -3,7 +3,7 @@ import { Dimensions } from 'react-native';
 
 const max_height = Dimensions.get('screen').height;
 
-const PotPhysics = (entities) => {
+const GroundPhysics = (entities) => {
   let pot = entities.pot.body;
   let grass = entities.grass.body;
 
@@ -18,4 +18,4 @@ const PotPhysics = (entities) => {
   return entities;
 }
 
-export default PotPhysics;
+export default GroundPhysics;
