@@ -7,13 +7,13 @@ const max_width = Dimensions.get('screen').width;
 
 let badClouds = 0;
 
-randomizePos = (min, max) => {
+const randomizePos = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 const spawnBadClouds = (world, entities) => {
 
-  let badCloud = Matter.Bodies.rectangle(this.randomizePos(0, max_width), this.randomizePos(0, -500), 117, 60, {isStatic: true });
+  let badCloud = Matter.Bodies.rectangle(randomizePos(0, max_width), randomizePos(0, -500), 117, 60, {isStatic: true });
 
   Matter.World.add(world, [badCloud]);
 
