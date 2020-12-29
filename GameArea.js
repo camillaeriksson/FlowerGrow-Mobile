@@ -18,9 +18,10 @@ const max_width = Dimensions.get('screen').width;
 export default class GameArea extends Component {
   constructor(props) {
     super(props);
+    this.badClouds = [];
     this.GameEngine = null;
     this.entities = this.setupWorld();
-  } 
+  }
 
   setupWorld = () => {
     let engine = Matter.Engine.create({ enableSleeping: false });
@@ -29,15 +30,18 @@ export default class GameArea extends Component {
     let grass = Matter.Bodies.rectangle(0, max_height - 150, max_width, 150, { isStatic: true });
     let pot = Matter.Bodies.rectangle(max_width / 2 - 50, max_height - 140, 100, 80, { isStatic: true });
     let flower = Matter.Bodies.rectangle(max_width / 2 - 37.5 , max_height / 2, 75, 75, { isStatic: true });
-    let badCloud = Matter.Bodies.rectangle(max_width / 5, -30, 117, 60, {isStatic: true });
+    // let badCloud1 = Matter.Bodies.rectangle(this.randomizeXpos(0, max_width), -30, 117, 60, {isStatic: true });
+    // let badCloud2 = Matter.Bodies.rectangle(this.randomizeXpos(0, max_width), -30, 117, 60, {isStatic: true });
+    
 
-    Matter.World.add(world, [grass, pot, badCloud, flower]);
+    Matter.World.add(world, [grass, pot, flower]);
 
     return {
       physics: { engine: engine, world: world },
       grass: { body: grass, size: [max_width, 150], renderer: Grass},
       pot: { body: pot, size: [100, 80], renderer: Pot},
-      badCloud: { body: badCloud, size: [117, 60], renderer: BadCloud},
+      // badCloud1: { body: badCloud1, size: [117, 60], renderer: BadCloud},
+      // badCloud2: { body: badCloud2, size: [117, 60], renderer: BadCloud},
       flower: { body: flower, size: [76, 79], renderer: Flower}
     }
   }
