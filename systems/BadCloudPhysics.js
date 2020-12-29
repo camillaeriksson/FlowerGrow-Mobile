@@ -45,9 +45,16 @@ const BadCloudPhysics = (entities, { touches, time }) => {
   Matter.Engine.update(engine, time.delta); 
 
   Object.keys(entities).forEach(key => {
+    
     if (key.indexOf("badCloud") === 0) {
       Matter.Body.translate(entities[key].body, {x: 0, y: 1})
+
+      if (entities[key].body.position.y > max_height) {
+        delete(entities[key])
+        spawnBadClouds(world, entities)
+      }
     }
+    // if (entities[key])
   })
 
   return entities;
