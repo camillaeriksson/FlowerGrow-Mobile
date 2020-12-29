@@ -15,7 +15,7 @@ const spawnBadClouds = (world, entities) => {
 
   let badCloud = Matter.Bodies.rectangle(this.randomizePos(0, max_width), this.randomizePos(0, -500), 117, 60, {isStatic: true });
 
-  Matter.World.add(world, [badCloud])
+  Matter.World.add(world, [badCloud]);
 
   entities["badCloud" + (badClouds + 1)] = {
     body: badCloud,
