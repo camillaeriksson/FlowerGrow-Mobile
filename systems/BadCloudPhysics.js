@@ -13,7 +13,7 @@ const randomizeNumber = (min, max) => {
 
 const spawnBadClouds = (world, entities) => {
 
-  let badCloud = Matter.Bodies.rectangle(randomizeNumber(0, max_width), randomizeNumber(0, -500), 117, 60, {isStatic: true });
+  let badCloud = Matter.Bodies.rectangle(randomizeNumber(0, max_width - 50), randomizeNumber(0, -max_height), 117, 60, {isStatic: true });
 
   Matter.World.add(world, [badCloud]);
 
@@ -38,6 +38,7 @@ const BadCloudPhysics = (entities, { touches, time }) => {
   let hadTouches = false;
   touches.filter(t => t.type === "press").forEach(t => {
     if (!hadTouches){
+      spawnBadClouds(world, entities);
       spawnBadClouds(world, entities);
       spawnBadClouds(world, entities);
       spawnBadClouds(world, entities);
