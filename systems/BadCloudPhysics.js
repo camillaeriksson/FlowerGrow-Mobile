@@ -11,7 +11,7 @@ randomizePos = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-const addBadCloudsAtLocation = (world, entities) => {
+const spawnBadClouds = (world, entities) => {
 
   let badCloud = Matter.Bodies.rectangle(this.randomizePos(0, max_width), this.randomizePos(0, -500), 117, 60, {isStatic: true });
 
@@ -33,15 +33,14 @@ const BadCloudPhysics = (entities, { touches, time }) => {
   // let badCloud = entities.badCloud.body;
 
   let hadTouches = false;
-    touches.filter(t => t.type === "press").forEach(t => {
-        if (!hadTouches){
-                addBadCloudsAtLocation(world, entities)
-                addBadCloudsAtLocation(world, entities)
-                addBadCloudsAtLocation(world, entities) 
-            hadTouches = true;
-        }
-
-    });
+  touches.filter(t => t.type === "press").forEach(t => {
+    if (!hadTouches){
+      spawnBadClouds(world, entities)
+      spawnBadClouds(world, entities)
+      spawnBadClouds(world, entities) 
+      hadTouches = true;
+    }
+  });
 
   Matter.Engine.update(engine, time.delta); 
 
@@ -50,16 +49,6 @@ const BadCloudPhysics = (entities, { touches, time }) => {
       Matter.Body.translate(entities[key].body, {x: 0, y: 1})
     }
   })
-
-  // for (let i = 1; i <= 2; i++) {
-  //   if (entities['badCloud' + i].body.position.y > max_height) {
-  //     Matter.Body.setPosition(entities['badCloud' + i].body, { x: entities['badCloud' + i].body.position.x, y: 0 });
-  //   } else {
-  //     Matter.Body.translate(entities['badCloud' + i].body, { x: 0, y: 1 });
-  //   }
-  // }
-
-
 
   return entities;
 }
