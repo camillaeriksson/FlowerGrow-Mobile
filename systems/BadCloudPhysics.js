@@ -35,9 +35,9 @@ const BadCloudPhysics = (entities, { touches, time }) => {
   let hadTouches = false;
   touches.filter(t => t.type === "press").forEach(t => {
     if (!hadTouches){
-      spawnBadClouds(world, entities)
-      spawnBadClouds(world, entities)
-      spawnBadClouds(world, entities) 
+      spawnBadClouds(world, entities);
+      spawnBadClouds(world, entities);
+      spawnBadClouds(world, entities);
       hadTouches = true;
     }
   });
@@ -47,14 +47,13 @@ const BadCloudPhysics = (entities, { touches, time }) => {
   Object.keys(entities).forEach(key => {
     
     if (key.indexOf("badCloud") === 0) {
-      Matter.Body.translate(entities[key].body, {x: 0, y: 1})
+      Matter.Body.translate(entities[key].body, {x: 0, y: 1});
 
       if (entities[key].body.position.y > max_height) {
-        delete(entities[key])
-        spawnBadClouds(world, entities)
+        delete(entities[key]);
+        spawnBadClouds(world, entities);
       }
     }
-    // if (entities[key])
   })
 
   return entities;
