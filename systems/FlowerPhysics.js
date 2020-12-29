@@ -21,7 +21,6 @@ const FlowerPhysics = (entities, { touches }) => {
     } if (flower.position.x < min_width) {
       flower.position.x = min_width;
     }
-    return flower.position.x;
   });
 
 

@@ -15,7 +15,6 @@ const PotPhysics = (entities) => {
     pot.position.y = max_height + 200;
   }
 
-
   return entities;
 }
 
