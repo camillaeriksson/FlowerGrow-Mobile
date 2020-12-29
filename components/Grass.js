@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Image } from 'react-native';
+import Images from '../assets/Images';
 
 export default class Grass extends Component {
   render() {
@@ -17,7 +18,7 @@ export default class Grass extends Component {
         top: y,
         left: x
       }}
-      source={require('../assets/grass.png')} />
+      source={Images['grass']} />
     ) 
   } 
 }
