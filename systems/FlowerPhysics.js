@@ -4,8 +4,7 @@ import { Dimensions } from 'react-native';
 const max_width = Dimensions.get('screen').width;
 const min_width = 0;
 
-const FlowerPhysics = (entities, { touches, time }) => {
-  let engine = entities.physics.engine;
+const FlowerPhysics = (entities, { touches }) => {
   let flower = entities.flower.body;
 
   
@@ -25,8 +24,6 @@ const FlowerPhysics = (entities, { touches, time }) => {
     return flower.position.x;
   });
 
-
-  Matter.Engine.update(engine, time.delta); 
 
   return entities;
 }

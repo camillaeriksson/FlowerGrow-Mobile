@@ -30,8 +30,7 @@ const spawnBadClouds = (world, entities) => {
 
 }
 
-const BadCloudPhysics = (entities, { touches, time }) => {
-  let engine = entities.physics.engine;
+const BadCloudPhysics = (entities, { touches }) => {
   let world = entities.physics.world;
   // let badCloud = entities.badCloud.body;
 
@@ -46,8 +45,6 @@ const BadCloudPhysics = (entities, { touches, time }) => {
     }
   });
 
-  Matter.Engine.update(engine, time.delta); 
-
   Object.keys(entities).forEach(key => {
     
     if (key.indexOf("badCloud") === 0) {
@@ -58,7 +55,7 @@ const BadCloudPhysics = (entities, { touches, time }) => {
         spawnBadClouds(world, entities);
       }
     }
-  })
+  });
 
   return entities;
 }
