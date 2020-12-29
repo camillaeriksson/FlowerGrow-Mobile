@@ -2,7 +2,7 @@ import Matter from 'matter-js';
 import { Dimensions } from 'react-native';
 
 const max_width = Dimensions.get('screen').width;
-const min_width = Dimensions.get('screen').width - Dimensions.get('screen').width;
+const min_width = 0;
 
 const FlowerPhysics = (entities, { touches, time }) => {
   let engine = entities.physics.engine;
