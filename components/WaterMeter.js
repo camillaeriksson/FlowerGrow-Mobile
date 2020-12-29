@@ -17,8 +17,10 @@ export default class WaterMeter extends Component {
         top: y,
         left: x,
         backgroundColor: this.props.color,
-        opacity: 0.5,
-        borderRadius: 15
+        opacity: 0.6,
+        borderRadius: 15,
+        borderWidth: 4,
+        borderColor: 'darkblue'
       }}
       />
     ) 
