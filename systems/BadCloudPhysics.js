@@ -17,9 +17,12 @@ const spawnBadClouds = (world, entities) => {
 
   Matter.World.add(world, [badCloud]);
 
+  let cloudNumber = randomizePos(1, 3)
+
   entities["badCloud" + (badClouds + 1)] = {
     body: badCloud,
     size: [117, 60],
+    cloudNumber: cloudNumber,
     renderer: BadCloud
   }
 

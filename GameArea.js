@@ -9,7 +9,6 @@ import { Dimensions } from 'react-native';
 
 import Grass from './components/Grass';
 import Pot from './components/Pot';
-import BadCloud from './components/BadCloud';
 import Flower from './components/Flower';
 
 const max_height = Dimensions.get('screen').height;
@@ -18,7 +17,6 @@ const max_width = Dimensions.get('screen').width;
 export default class GameArea extends Component {
   constructor(props) {
     super(props);
-    this.badClouds = [];
     this.GameEngine = null;
     this.entities = this.setupWorld();
   }
