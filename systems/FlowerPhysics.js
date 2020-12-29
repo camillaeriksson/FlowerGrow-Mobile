@@ -12,10 +12,10 @@ const FlowerPhysics = (entities, { touches }) => {
   touches.filter(t => t.type === 'move').forEach(t => {
     const flowerRadius = 75;
 
-    if (t.event.locationX < max_width / 2) {
-      Matter.Body.translate(flower, { x: -3, y: 0 });
-    } else if (t.event.locationX > max_width / 2) {
-      Matter.Body.translate(flower, { x: +3, y: 0 });
+    if (t.event.locationX < flower.position.x) {
+      Matter.Body.translate(flower, { x: -5, y: 0 });
+    } if (t.event.locationX > flower.position.x) {
+      Matter.Body.translate(flower, { x: +5, y: 0 });
     } if (flower.position.x > max_width - flowerRadius) {
       flower.position.x = max_width - flowerRadius;
     } if (flower.position.x < min_width) {
