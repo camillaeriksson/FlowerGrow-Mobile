@@ -10,14 +10,14 @@ const FlowerPhysics = (entities, { touches }) => {
   
   // Function for the touch movement of the flower
   touches.filter(t => t.type === 'move').forEach(t => {
-    const flowerRadius = 75;
-
+    const flowerDiameter = 76;
+  
     if (t.event.locationX < flower.position.x) {
       Matter.Body.translate(flower, { x: -10, y: 0 });
     } if (t.event.locationX > flower.position.x) {
-      Matter.Body.translate(flower, { x: +10, y: 0 });
-    } if (flower.position.x > max_width - flowerRadius) {
-      flower.position.x = max_width - flowerRadius;
+      Matter.Body.translate(flower, { x: 10, y: 0 });
+    } if (flower.position.x > max_width - flowerDiameter) {
+      flower.position.x = max_width - flowerDiameter;
     } if (flower.position.x < min_width) {
       flower.position.x = min_width;
     }

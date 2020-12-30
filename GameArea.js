@@ -27,7 +27,7 @@ export default class GameArea extends Component {
 
     let grass = Matter.Bodies.rectangle(0, max_height - 150, max_width, 150, { isStatic: true });
     let pot = Matter.Bodies.rectangle(max_width / 2 - 50, max_height - 140, 100, 80, { isStatic: true });
-    let flower = Matter.Bodies.rectangle(max_width / 2 - 37.5 , max_height / 2, 75, 75, { isStatic: true });
+    let flower = Matter.Bodies.rectangle(max_width / 2 - 38 , max_height / 2, 76, 79, { isStatic: true });
     // let badCloud1 = Matter.Bodies.rectangle(this.randomizeXpos(0, max_width), -30, 117, 60, {isStatic: true });
     // let badCloud2 = Matter.Bodies.rectangle(this.randomizeXpos(0, max_width), -30, 117, 60, {isStatic: true });
     
