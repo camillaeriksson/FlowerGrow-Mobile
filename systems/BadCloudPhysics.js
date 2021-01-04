@@ -13,7 +13,7 @@ const randomizeNumber = (min, max) => {
 
 const spawnBadClouds = (world, entities) => {
 
-  let badCloud = Matter.Bodies.rectangle(randomizeNumber(0, max_width - 50), randomizeNumber(0, -max_height), 117, 60, {isStatic: true });
+  let badCloud = Matter.Bodies.rectangle(randomizeNumber(0, max_width - 50), randomizeNumber(0, -max_height), 117, 60, {isSensor: true });
 
   Matter.World.add(world, [badCloud]);
 
@@ -22,11 +22,18 @@ const spawnBadClouds = (world, entities) => {
   entities["badCloud" + (badClouds + 1)] = {
     body: badCloud,
     size: [117, 60],
+    color: 'red',
     cloudNumber: cloudNumber,
     renderer: BadCloud
   }
 
   badClouds += 1;
+
+  badCloud.collisionFilter = {
+    'group': -5,
+    'category': 10,
+    'mask': 20
+  }
 
 }
 
@@ -43,16 +50,18 @@ const BadCloudPhysics = (entities, { touches }) => {
       spawnBadClouds(world, entities);
       hadTouches = true;
     }
-  });
+  }); 
+
 
   Object.keys(entities).forEach(key => {
     
     if (key.indexOf("badCloud") === 0) {
-      Matter.Body.translate(entities[key].body, {x: 0, y: 1});
+     // Matter.Body.translate(entities[key].body, {x: 0, y: 1});
 
-      if (entities[key].body.position.y > max_height) {
-        delete(entities[key]);
-        spawnBadClouds(world, entities);
+      if (entities[key].body.position.y > max_height + 200) {
+        //delete(entities[key]);
+        //spawnBadClouds(world, entities);
+        Matter.Body.setPosition(entities[key].body, {x: randomizeNumber(0, max_width - 50), y: randomizeNumber(0, -max_height)});
       }
     }
   });
