@@ -37,20 +37,18 @@ const spawnBadClouds = (world, entities) => {
 
 }
 
-const BadCloudPhysics = (entities, { touches }) => {
+const BadCloudPhysics = (entities) => {
   let world = entities.physics.world;
+  let engine = entities.physics.engine;
+  let total_time = parseInt(Math.floor(engine.timing.timestamp));
   // let badCloud = entities.badCloud.body;
 
-  let hadTouches = false;
-  touches.filter(t => t.type === "press").forEach(t => {
-    if (!hadTouches){
+    if (total_time > 2100 && total_time < 2135){
       spawnBadClouds(world, entities);
       spawnBadClouds(world, entities);
       spawnBadClouds(world, entities);
       spawnBadClouds(world, entities);
-      hadTouches = true;
     }
-  }); 
 
 
   Object.keys(entities).forEach(key => {
@@ -65,7 +63,7 @@ const BadCloudPhysics = (entities, { touches }) => {
       }
     }
   });
-
+// console.log(total_time)
   return entities;
 }
 
