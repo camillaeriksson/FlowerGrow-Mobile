@@ -92,7 +92,7 @@ export default class GameArea extends Component {
       // badCloud1: { body: badCloud1, size: [117, 60], renderer: BadCloud},
       // badCloud2: { body: badCloud2, size: [117, 60], renderer: BadCloud},
       flower: { body: flower, color: 'blue', size: [76, 79], renderer: Flower},
-      waterMeter: { body: waterMeter, color: 'blue', size: [30, 170], renderer: WaterMeter},
+      waterMeter: { body: waterMeter, color: 'blue', size: [30, 170], score: this.state.score, renderer: WaterMeter},
       test: { body: test, color: 'red', size: [50, 50], renderer: Test},
       //test2: { body: test2, color: 'blue', size: [50, 50], renderer: Test}
     }
