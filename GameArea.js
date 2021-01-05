@@ -63,12 +63,23 @@ export default class GameArea extends Component {
           systems={Systems}
           entities={this.entities}
         />
+      <Text style={styles.score}>{this.state.time}m</Text>
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  score: {
+    position: 'absolute',
+    color: 'white',
+    fontSize: 22,
+    top: max_height - 50,
+    left: 15,
+    textShadowColor: '#444444',
+    textShadowOffset: { width: 2, height: 2},
+    textShadowRadius: 2,
+  },
   container: {
     height: max_height,
     width: max_width,
