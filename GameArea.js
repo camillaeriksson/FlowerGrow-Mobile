@@ -32,7 +32,7 @@ export default class GameArea extends Component {
   setupWorld = () => {
     let engine = Matter.Engine.create({ enableSleeping: false });
     let world = engine.world;
-    engine.world.gravity.y = 0.02;
+    engine.world.gravity.y = 0.05;
 
     let grass = Matter.Bodies.rectangle(0, max_height - 150, max_width, 150, { isStatic: true });
     let pot = Matter.Bodies.rectangle(max_width / 2 - 50, max_height - 140, 100, 80, { isStatic: true });
