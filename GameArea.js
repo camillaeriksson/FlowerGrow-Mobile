@@ -21,16 +21,12 @@ export default class GameArea extends Component {
     super(props);
 
     this.state = {
-      time: 0
+      time: 0,
+      score: 100
     };
 
     this.GameEngine = null;
     this.entities = this.setupWorld();
-
-    this.state = {
-      score: 100
-    };
-
   }
 
   
