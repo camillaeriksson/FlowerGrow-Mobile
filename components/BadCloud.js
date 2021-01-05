@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image } from 'react-native';
+import { Image, View } from 'react-native';
 import Images from '../assets/Images';
 
 export default class BadCloud extends Component {
@@ -15,16 +15,16 @@ export default class BadCloud extends Component {
 
 
     return (
-      <Image 
+      <View 
       style={{
         position: 'absolute',
         width: width,
         height: height,
         top: y,
-        left: x
+        left: x,
+        backgroundColor: this.props.color
       }}
-      resizeMode="stretch"
-      source={cloudImage} />
+      />
     ) 
   } 
 }

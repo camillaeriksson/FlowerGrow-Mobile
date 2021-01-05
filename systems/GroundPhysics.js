@@ -9,10 +9,10 @@ const GroundPhysics = (entities) => {
 
   Matter.Body.translate(pot, { x: 0, y: 1 });
   Matter.Body.translate(grass, { x: 0, y: 1 });
-  if (grass.position.y > max_height + 200) {
-    grass.position.y = max_height + 200;
-  } if (pot.position.y > max_height + 200) {
-    pot.position.y = max_height + 200;
+  if (grass.position.y > max_height + 1000) {
+    grass.position.y = max_height + 1000;
+  } if (pot.position.y > max_height + 1000) {
+    pot.position.y = max_height + 1000;
   }
 
   return entities;
