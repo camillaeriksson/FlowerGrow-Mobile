@@ -43,7 +43,7 @@ const BadCloudPhysics = (entities) => {
   let total_time = parseInt(Math.floor(engine.timing.timestamp));
   // let badCloud = entities.badCloud.body;
 
-    if (total_time === 4){
+    if (total_time > 2100 && total_time < 2135){
       console.log('hejhej')
       // spawnBadClouds(world, entities);
       // spawnBadClouds(world, entities);
@@ -64,7 +64,7 @@ const BadCloudPhysics = (entities) => {
       }
     }
   });
-console.log(total_time)
+// console.log(total_time)
   return entities;
 }
 
