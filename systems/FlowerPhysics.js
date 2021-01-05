@@ -21,8 +21,6 @@ const FlowerPhysics = (entities, { touches }) => {
       Matter.Body.setPosition(flower, { x: min_width, y: max_height / 2});
     }
   });
-  // console.log('max width: ', max_width)
-  // console.log('flower position: ', flower.position.x)
 
 
   return entities;

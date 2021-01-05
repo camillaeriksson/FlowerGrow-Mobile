@@ -24,7 +24,7 @@ export default class GameArea extends Component {
 
     this.state = {
       score: 100
-    }
+    };
 
   }
 
@@ -70,10 +70,8 @@ export default class GameArea extends Component {
       for (var i = 0; i < event.pairs.length; i++) {
         let pairs = event.pairs[i];
         if (pairs.bodyA.collisionFilter.group === 5 && pairs.bodyB.collisionFilter.group === -5) {
-        console.log('HIT')
         this.gameEngine.dispatch({ type: "score_down"});
         } if (pairs.bodyA.collisionFilter.group === 5 && pairs.bodyB.collisionFilter.group === -4) {
-          console.log('regnmoln')
         this.gameEngine.dispatch({ type: "score_up"});
         }
       }
