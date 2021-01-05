@@ -19,6 +19,11 @@ const max_width = Dimensions.get('screen').width;
 export default class GameArea extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      time: 0
+    };
+
     this.GameEngine = null;
     this.entities = this.setupWorld();
 
@@ -77,6 +82,13 @@ export default class GameArea extends Component {
       }
     })
 
+    Matter.Events.on(engine, 'beforeUpdate', (event) => {
+      let total_seconds = parseInt(Math.floor(engine.timing.timestamp / 1000));
+      this.setState({
+        time: total_seconds
+      })
+    });
+
     return {
       physics: { engine: engine, world: world },
       grass: { body: grass, size: [max_width, 150], renderer: Grass},
@@ -113,12 +125,23 @@ export default class GameArea extends Component {
           onEvent={this.onEvent}
         />
         <Text style={styles.score}>{this.state.score}</Text>
+        <Text style={styles.score}>{this.state.time}m</Text>
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  score: {
+    position: 'absolute',
+    color: 'white',
+    fontSize: 22,
+    top: max_height - 130,
+    left: 15,
+    textShadowColor: '#444444',
+    textShadowOffset: { width: 2, height: 2},
+    textShadowRadius: 2,
+  },
   container: {
     height: max_height,
     width: max_width,
