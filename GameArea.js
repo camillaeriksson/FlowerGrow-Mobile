@@ -125,14 +125,14 @@ export default class GameArea extends Component {
           onEvent={this.onEvent}
         />
         <Text style={styles.score}>{this.state.score}</Text>
-        <Text style={styles.score}>{this.state.time}m</Text>
+        <Text style={styles.scoreMeter}>{this.state.time}m</Text>
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  score: {
+  scoreMeter: {
     position: 'absolute',
     color: 'white',
     fontSize: 22,
