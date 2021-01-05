@@ -11,6 +11,7 @@ import Grass from './components/Grass';
 import Pot from './components/Pot';
 import Flower from './components/Flower';
 import WaterMeter from './components/WaterMeter';
+import Test from './components/Test';
 
 const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
@@ -39,15 +40,17 @@ export default class GameArea extends Component {
     let waterMeter = Matter.Bodies.rectangle(20, max_height - 300, 30, 170, { isStatic: true });
     //let badCloud1 = Matter.Bodies.rectangle(this.randomizeXpos(0, max_width), -30, 117, 60, {isStatic: true });
     // let badCloud2 = Matter.Bodies.rectangle(this.randomizeXpos(0, max_width), -30, 117, 60, {isStatic: true });
-    //let test = Matter.Bodies.rectangle(100, max_height - 800, 50, 50, { isSensor: true });
+    let test = Matter.Bodies.rectangle(100, max_height - 800, 50, 50, { isSensor: true });
     //let test2 = Matter.Bodies.rectangle(200, max_height - 700, 50, 50, { isSensor: true });
     
 
-    Matter.World.add(world, [grass, pot, flower]);
+    Matter.World.add(world, [grass, pot, flower, test]);
 
-   /*  test.collisionFilter = {
-    'group': 6
-    } */
+    test.collisionFilter = {
+    'group': -4,
+    'category': 30,
+    'mask': 0
+    }
     
     flower.collisionFilter = {
     'group': 5,
@@ -69,12 +72,16 @@ export default class GameArea extends Component {
 
 
     Matter.Events.on(engine, "collisionStart", (event) => {
-      let pairs = event.pairs;
-      //if (pairs[0].bodyA.collisionFilter.group === 5 && pairs[0].bodyB.collisionFilter.group === -5) {
-      console.log('HIT')
-      console.log('Pair 1', pairs[1] )
-      //this.gameEngine.dispatch({ type: "score"});
-      //}
+      for (var i = 0; i < event.pairs.length; i++) {
+        let pairs = event.pairs[i];
+        if (pairs.bodyA.collisionFilter.group === 5 && pairs.bodyB.collisionFilter.group === -5) {
+        console.log('HIT')
+        this.gameEngine.dispatch({ type: "score_down"});
+        } if (pairs.bodyA.collisionFilter.group === 5 && pairs.bodyB.collisionFilter.group === -4) {
+          console.log('regnmoln')
+        this.gameEngine.dispatch({ type: "score_up"});
+        }
+      }
     })
 
 
@@ -86,16 +93,19 @@ export default class GameArea extends Component {
       // badCloud2: { body: badCloud2, size: [117, 60], renderer: BadCloud},
       flower: { body: flower, color: 'blue', size: [76, 79], renderer: Flower},
       waterMeter: { body: waterMeter, color: 'blue', size: [30, 170], renderer: WaterMeter},
-      //test: { body: test, color: 'red', size: [50, 50], renderer: Test},
+      test: { body: test, color: 'red', size: [50, 50], renderer: Test},
       //test2: { body: test2, color: 'blue', size: [50, 50], renderer: Test}
     }
   }
 
   onEvent = (e) => {
-    if (e.type === "score"){
-      //Alert.alert("Game Over");
+    if (e.type === "score_down"){
       this.setState({
           score: this.state.score - 10
+      });
+    } if (e.type === "score_up") {
+      this.setState({
+        score: this.state.score + 10
       });
     }
   }
