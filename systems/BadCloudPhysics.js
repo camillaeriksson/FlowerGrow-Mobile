@@ -44,11 +44,10 @@ const BadCloudPhysics = (entities) => {
   // let badCloud = entities.badCloud.body;
 
     if (total_time > 2100 && total_time < 2135){
-      console.log('hejhej')
-      // spawnBadClouds(world, entities);
-      // spawnBadClouds(world, entities);
-      // spawnBadClouds(world, entities);
-      // spawnBadClouds(world, entities);
+      spawnBadClouds(world, entities);
+      spawnBadClouds(world, entities);
+      spawnBadClouds(world, entities);
+      spawnBadClouds(world, entities);
     }
 
 
