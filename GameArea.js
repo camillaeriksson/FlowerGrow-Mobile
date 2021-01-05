@@ -18,6 +18,11 @@ const max_width = Dimensions.get('screen').width;
 export default class GameArea extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      time: 0
+    };
+    
     this.GameEngine = null;
     this.entities = this.setupWorld();
   }
