@@ -49,7 +49,7 @@ export default class GameArea extends Component {
     test.collisionFilter = {
     'group': -4,
     'category': 30,
-    'mask': 0
+    'mask': 30
     }
     
     flower.collisionFilter = {
@@ -57,10 +57,6 @@ export default class GameArea extends Component {
     'category': 20,
     'mask': 10
     }
-
-    /* test2.collisionFilter = {
-    'group': 6,
-    } */
     
     pot.collisionFilter = {
       'group': 7
@@ -69,7 +65,6 @@ export default class GameArea extends Component {
     grass.collisionFilter = {
       'group': 7
     }
-
 
     Matter.Events.on(engine, "collisionStart", (event) => {
       for (var i = 0; i < event.pairs.length; i++) {
@@ -83,7 +78,6 @@ export default class GameArea extends Component {
         }
       }
     })
-
 
     return {
       physics: { engine: engine, world: world },
