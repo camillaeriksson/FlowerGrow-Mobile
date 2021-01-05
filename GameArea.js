@@ -36,6 +36,13 @@ export default class GameArea extends Component {
 
     Matter.World.add(world, [grass, pot, flower]);
 
+    Matter.Events.on(engine, 'beforeUpdate', (event) => {
+      let total_seconds = parseInt(Math.floor(engine.timing.timestamp / 1000))
+      this.setState({
+        time: total_seconds
+      })
+    });
+
     return {
       physics: { engine: engine, world: world },
       grass: { body: grass, size: [max_width, 150], renderer: Grass},
