@@ -2,16 +2,15 @@ import React, { Component } from 'react';
 import Systems from './systems'
 
 import { GameEngine } from 'react-native-game-engine';
-import Matter, { Pairs } from 'matter-js';
+import Matter from 'matter-js';
 
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { Dimensions } from 'react-native';
 
 import Grass from './components/Grass';
 import Pot from './components/Pot';
 import Flower from './components/Flower';
 import WaterMeter from './components/WaterMeter';
-import Test from './components/Test';
 
 const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
@@ -21,8 +20,14 @@ export default class GameArea extends Component {
     super(props);
     this.GameEngine = null;
     this.entities = this.setupWorld();
+
+    this.state = {
+      score: 100
+    }
+
   }
 
+  
   setupWorld = () => {
     let engine = Matter.Engine.create({ enableSleeping: false });
     let world = engine.world;
@@ -34,11 +39,11 @@ export default class GameArea extends Component {
     let waterMeter = Matter.Bodies.rectangle(20, max_height - 300, 30, 170, { isStatic: true });
     //let badCloud1 = Matter.Bodies.rectangle(this.randomizeXpos(0, max_width), -30, 117, 60, {isStatic: true });
     // let badCloud2 = Matter.Bodies.rectangle(this.randomizeXpos(0, max_width), -30, 117, 60, {isStatic: true });
-    let test = Matter.Bodies.rectangle(100, max_height - 800, 50, 50, { isSensor: true });
-    let test2 = Matter.Bodies.rectangle(200, max_height - 700, 50, 50, { isSensor: true });
+    //let test = Matter.Bodies.rectangle(100, max_height - 800, 50, 50, { isSensor: true });
+    //let test2 = Matter.Bodies.rectangle(200, max_height - 700, 50, 50, { isSensor: true });
     
 
-    Matter.World.add(world, [grass, pot, flower, test, test2]);
+    Matter.World.add(world, [grass, pot, flower]);
 
    /*  test.collisionFilter = {
     'group': 6
@@ -65,8 +70,11 @@ export default class GameArea extends Component {
 
     Matter.Events.on(engine, "collisionStart", (event) => {
       let pairs = event.pairs;
-      //if (pairs[0].bodyA.collisionFilter.category !== pairs[0].bodyB.collisionFilter.category) {
-      console.log('träff')
+      //if (pairs[0].bodyA.collisionFilter.group === 5 && pairs[0].bodyB.collisionFilter.group === -5) {
+      console.log('HIT')
+      console.log('Pair 1', pairs[1] )
+      //this.gameEngine.dispatch({ type: "score"});
+      //}
     })
 
 
@@ -76,10 +84,19 @@ export default class GameArea extends Component {
       pot: { body: pot, size: [100, 80], renderer: Pot},
       // badCloud1: { body: badCloud1, size: [117, 60], renderer: BadCloud},
       // badCloud2: { body: badCloud2, size: [117, 60], renderer: BadCloud},
-      flower: { body: flower, size: [76, 79], renderer: Flower},
+      flower: { body: flower, color: 'blue', size: [76, 79], renderer: Flower},
       waterMeter: { body: waterMeter, color: 'blue', size: [30, 170], renderer: WaterMeter},
-      test: { body: test, color: 'red', size: [50, 50], renderer: Test},
-      test2: { body: test2, color: 'blue', size: [50, 50], renderer: Test}
+      //test: { body: test, color: 'red', size: [50, 50], renderer: Test},
+      //test2: { body: test2, color: 'blue', size: [50, 50], renderer: Test}
+    }
+  }
+
+  onEvent = (e) => {
+    if (e.type === "score"){
+      //Alert.alert("Game Over");
+      this.setState({
+          score: this.state.score - 10
+      });
     }
   }
 
@@ -91,7 +108,9 @@ export default class GameArea extends Component {
           style={styles.gameContainer}
           systems={Systems}
           entities={this.entities}
+          onEvent={this.onEvent}
         />
+        <Text style={styles.score}>{this.state.score}</Text>
       </View>
     )
   }
@@ -108,6 +127,16 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0
+  },
+  score: {
+    position: 'absolute',
+    color: 'white',
+    fontSize: 72,
+    top: 50,
+    left: max_width / 2 - 20,
+    textShadowColor: '#444444',
+    textShadowOffset: { width: 2, height: 2},
+    textShadowRadius: 2
   },
 });
 
