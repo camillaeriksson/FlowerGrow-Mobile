@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Image, View } from 'react-native';
-import Images from '../assets/Images';
+import { View } from 'react-native';
 
-export default class Flower extends Component {
+export default class Test extends Component {
   render() {
   const width = this.props.size[0];
-  const height = this.props.size[1];
+  const height = this.props.size[1]; 
   const x = this.props.body.position.x;
   const y = this.props.body.position.y;
 
@@ -17,8 +16,13 @@ export default class Flower extends Component {
         height: height,
         top: y,
         left: x,
-        backgroundColor: this.props.color
-      }} />
+        backgroundColor: this.props.color,
+        opacity: 0.6,
+        borderRadius: 15,
+        borderWidth: 4,
+        borderColor: 'darkblue'
+      }}
+      />
     ) 
   } 
 }
