@@ -30,20 +30,19 @@ const spawnBadClouds = (world, entities) => {
 
 }
 
-const BadCloudPhysics = (entities, { touches }) => {
+const BadCloudPhysics = (entities) => {
   let world = entities.physics.world;
+  let engine = entities.physics.engine;
+  let total_time = parseInt(Math.floor(engine.timing.timestamp));
   // let badCloud = entities.badCloud.body;
 
-  let hadTouches = false;
-  touches.filter(t => t.type === "press").forEach(t => {
-    if (!hadTouches){
-      spawnBadClouds(world, entities);
-      spawnBadClouds(world, entities);
-      spawnBadClouds(world, entities);
-      spawnBadClouds(world, entities);
-      hadTouches = true;
+    if (total_time === 4){
+      console.log('hejhej')
+      // spawnBadClouds(world, entities);
+      // spawnBadClouds(world, entities);
+      // spawnBadClouds(world, entities);
+      // spawnBadClouds(world, entities);
     }
-  });
 
   Object.keys(entities).forEach(key => {
     
@@ -56,7 +55,7 @@ const BadCloudPhysics = (entities, { touches }) => {
       }
     }
   });
-
+console.log(total_time)
   return entities;
 }
 
