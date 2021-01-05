@@ -4,7 +4,7 @@ import Systems from './systems'
 import { GameEngine } from 'react-native-game-engine';
 import Matter from 'matter-js';
 
-import { View, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { Dimensions } from 'react-native';
 
 import Grass from './components/Grass';
@@ -22,7 +22,7 @@ export default class GameArea extends Component {
     this.state = {
       time: 0
     };
-    
+
     this.GameEngine = null;
     this.entities = this.setupWorld();
   }
