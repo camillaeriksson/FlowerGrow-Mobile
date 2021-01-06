@@ -12,6 +12,7 @@ import Pot from './components/Pot';
 import Flower from './components/Flower';
 // import WaterMeter from './components/WaterMeter';
 import Test from './components/Test';
+import WaterMeterBackground from './components/WaterMeterBackground'
 
 const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
@@ -43,6 +44,7 @@ export default class GameArea extends Component {
     // let badCloud2 = Matter.Bodies.rectangle(this.randomizeXpos(0, max_width), -30, 117, 60, {isStatic: true });
     let test = Matter.Bodies.rectangle(100, max_height - 800, 50, 50, { isSensor: true });
     //let test2 = Matter.Bodies.rectangle(200, max_height - 700, 50, 50, { isSensor: true });
+    let waterMeterBackground = Matter.Bodies.rectangle(20, max_height - 300, 30, 160, { isStatic: true });
     
 
     Matter.World.add(world, [grass, pot, flower, test]);
@@ -97,7 +99,8 @@ export default class GameArea extends Component {
       flower: { body: flower, color: 'blue', size: [76, 79], renderer: Flower},
       // waterMeter: { body: waterMeter, color: 'blue', size: [30, 170], renderer: WaterMeter},
       test: { body: test, color: 'red', size: [50, 50], renderer: Test},
-      //test2: { body: test2, color: 'blue', size: [50, 50], renderer: Test}
+      //test2: { body: test2, color: 'blue', size: [50, 50], renderer: Test},
+      waterMeterBackground: { body: waterMeterBackground, color: 'grey', size: [30, 160], renderer: WaterMeterBackground}
     }
   }
 
