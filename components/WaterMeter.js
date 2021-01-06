@@ -7,7 +7,6 @@ export default class WaterMeter extends Component {
   const height = this.props.size[1]; 
   const x = this.props.body.position.x;
   const y = this.props.body.position.y;
-  const score = this.props.score;
 
     return (
       <View>
@@ -24,7 +23,7 @@ export default class WaterMeter extends Component {
           borderColor: 'darkblue'
           }}
         />
-      <View style={{
+      {/* <View style={{
           position: 'absolute',
           width: width,
           height: score,
@@ -34,7 +33,7 @@ export default class WaterMeter extends Component {
           backgroundColor: 'red',
           opacity: 0.6,
           }}
-        />
+        /> */}
       </View>
     ) 
   } 

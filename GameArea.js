@@ -10,7 +10,7 @@ import { Dimensions } from 'react-native';
 import Grass from './components/Grass';
 import Pot from './components/Pot';
 import Flower from './components/Flower';
-import WaterMeter from './components/WaterMeter';
+// import WaterMeter from './components/WaterMeter';
 import Test from './components/Test';
 
 const max_height = Dimensions.get('screen').height;
@@ -22,7 +22,7 @@ export default class GameArea extends Component {
 
     this.state = {
       time: 0,
-      score: 100
+      waterLevel: 160
     };
 
     this.GameEngine = null;
@@ -38,7 +38,7 @@ export default class GameArea extends Component {
     let grass = Matter.Bodies.rectangle(0, max_height - 150, max_width, 150, { isStatic: true });
     let pot = Matter.Bodies.rectangle(max_width / 2 - 50, max_height - 140, 100, 80, { isStatic: true });
     let flower = Matter.Bodies.rectangle(max_width / 2 - 38 , max_height / 2, 76, 79, { isStatic: true });
-    let waterMeter = Matter.Bodies.rectangle(20, max_height - 300, 30, 170, { isStatic: true });
+    // let waterMeter = Matter.Bodies.rectangle(20, max_height - 300, 30, 170, { isStatic: true });
     //let badCloud1 = Matter.Bodies.rectangle(this.randomizeXpos(0, max_width), -30, 117, 60, {isStatic: true });
     // let badCloud2 = Matter.Bodies.rectangle(this.randomizeXpos(0, max_width), -30, 117, 60, {isStatic: true });
     let test = Matter.Bodies.rectangle(100, max_height - 800, 50, 50, { isSensor: true });
@@ -83,6 +83,9 @@ export default class GameArea extends Component {
       this.setState({
         time: total_seconds
       })
+      if (this.state.waterLevel === 0) {
+        this.gameEngine.dispatch({ type: "game_over"});
+      }
     });
 
     return {
@@ -92,7 +95,7 @@ export default class GameArea extends Component {
       // badCloud1: { body: badCloud1, size: [117, 60], renderer: BadCloud},
       // badCloud2: { body: badCloud2, size: [117, 60], renderer: BadCloud},
       flower: { body: flower, color: 'blue', size: [76, 79], renderer: Flower},
-      waterMeter: { body: waterMeter, color: 'blue', size: [30, 170], score: this.state.score, renderer: WaterMeter},
+      // waterMeter: { body: waterMeter, color: 'blue', size: [30, 170], renderer: WaterMeter},
       test: { body: test, color: 'red', size: [50, 50], renderer: Test},
       //test2: { body: test2, color: 'blue', size: [50, 50], renderer: Test}
     }
@@ -101,12 +104,14 @@ export default class GameArea extends Component {
   onEvent = (e) => {
     if (e.type === "score_down"){
       this.setState({
-          score: this.state.score - 10
+          waterLevel: this.state.waterLevel - 20
       });
     } if (e.type === "score_up") {
       this.setState({
-        score: this.state.score + 10
+        score: this.state.waterLevel + 20
       });
+    } if (e.type === "game_over") {
+      console.log("GAME OVER")
     }
   }
 
@@ -120,7 +125,7 @@ export default class GameArea extends Component {
           entities={this.entities}
           onEvent={this.onEvent}
         />
-        <Text style={styles.score}>{this.state.score}</Text>
+        <Text style={styles.score}>{this.state.waterLevel}</Text>
         <Text style={styles.scoreMeter}>{this.state.time}m</Text>
       </View>
     )
