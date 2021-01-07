@@ -4,8 +4,8 @@ import Images from '../assets/Images';
 
 export default class Flower extends Component {
   render() {
-  const width = this.props.size[0];
-  const height = this.props.size[1];
+  const diameter = this.props.size[0];
+  //const height = this.props.size[1];
   const x = this.props.body.position.x;
   const y = this.props.body.position.y;
 
@@ -13,8 +13,8 @@ export default class Flower extends Component {
       <View 
       style={{
         position: 'absolute',
-        width: width,
-        height: height,
+        width: diameter,
+        height: diameter,
         top: y,
         left: x,
         backgroundColor: this.props.color
