@@ -86,7 +86,7 @@ export default class GameArea extends Component {
       let total_seconds = parseInt(Math.floor(engine.timing.timestamp / 1000));
       this.setState({
         time: total_seconds
-      })
+      });
       if (this.state.waterLevel === 0) {
         this.gameEngine.dispatch({ type: "game_over"});
       }
@@ -126,7 +126,7 @@ export default class GameArea extends Component {
     }
   }
 
-  reset = () => {
+  resetGame = () => {
     resetWaterLevel();
     this.gameEngine.swap(this.setupWorld());
     this.setState({
@@ -138,10 +138,10 @@ export default class GameArea extends Component {
   }
 
   startGame = () => {
-    this.reset();
+    this.resetGame();
     this.setState({
       running: true
-    })
+    });
   }
 
   render() {
@@ -156,7 +156,7 @@ export default class GameArea extends Component {
         />
         <Text style={styles.score}>{this.state.waterLevel}</Text>
         <Text style={styles.scoreMeter}>{this.state.time}m</Text>
-        {this.state.showGameOverScreen && !this.state.running && <TouchableOpacity onPress={this.reset} style={styles.fullScreenButton}>
+        {this.state.showGameOverScreen && !this.state.running && <TouchableOpacity onPress={this.resetGame} style={styles.fullScreenButton}>
           <View style={styles.fullScreen}>
             <Text style={styles.gameOverText}>GAME OVER</Text>
           </View>
