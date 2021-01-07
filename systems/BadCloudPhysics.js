@@ -13,7 +13,7 @@ const randomizeNumber = (min, max) => {
 
 const spawnBadClouds = (world, entities) => {
 
-  let badCloud = Matter.Bodies.rectangle(randomizeNumber(0, max_width - 60), randomizeNumber(0, -max_height), 117, 60, {isSensor: true });
+  let badCloud = Matter.Bodies.rectangle(randomizeNumber(0, max_width), randomizeNumber(-30, -max_height), 117, 60, {isSensor: true });
 
   Matter.World.add(world, [badCloud]);
 
@@ -53,8 +53,9 @@ const BadCloudPhysics = (entities) => {
     if (key.indexOf("badCloud") === 0) {
       if (entities[key].body.position.y > max_height + 200) {
         Matter.Body.setPosition(entities[key].body, {
-          x: randomizeNumber(0, max_width - 60), 
-          y: randomizeNumber(0, -max_height)});
+          x: randomizeNumber(0, max_width), 
+          y: randomizeNumber(-30, -max_height)
+        });
       }
     }
   });
