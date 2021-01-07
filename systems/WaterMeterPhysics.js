@@ -3,7 +3,7 @@ import { Dimensions } from 'react-native';
 import WaterMeter from '../components/WaterMeter';
 
 const max_height = Dimensions.get('screen').height;
-const max_width = Dimensions.get('screen').width;
+
 let waterLevel = 160;
 let newWaterMeterY = max_height - 300;
 
@@ -48,11 +48,7 @@ const WaterMeterPhysics = (entities, onEvent) => {
         delete(entities["waterMeter"]);
         updateWaterMeter(world, entities);
       }
-    } /* else if (onEvent.events[0].type === 'game_over') {
-      resetWaterLevel()
-      delete(entities['waterMeter'])
-      updateWaterMeter(world, entities)
-    } */
+    }
   }
   return entities;
 }
