@@ -3,4 +3,5 @@ import BadCloudPhysics from './BadCloudPhysics';
 import FlowerPhysics from './FlowerPhysics';
 import GroundPhysics from './GroundPhysics';
 import WaterMeterPhysics from './WaterMeterPhysics'
-export default [Physics, BadCloudPhysics, FlowerPhysics, GroundPhysics, WaterMeterPhysics];
+import GoodCloudPhysics from './GoodCloudPhysics'
+export default [Physics, BadCloudPhysics, FlowerPhysics, GroundPhysics, WaterMeterPhysics, GoodCloudPhysics];

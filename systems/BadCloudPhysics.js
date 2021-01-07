@@ -41,30 +41,26 @@ const BadCloudPhysics = (entities) => {
   let world = entities.physics.world;
   let engine = entities.physics.engine;
   let total_time = parseInt(Math.floor(engine.timing.timestamp));
-  // let badCloud = entities.badCloud.body;
 
-    if (total_time > 2100 && total_time < 2135){
-      spawnBadClouds(world, entities);
-      spawnBadClouds(world, entities);
-      spawnBadClouds(world, entities);
-      spawnBadClouds(world, entities);
-    }
-
+  if (total_time > 2100 && total_time < 2135){
+    spawnBadClouds(world, entities);
+    spawnBadClouds(world, entities);
+    spawnBadClouds(world, entities);
+    spawnBadClouds(world, entities);
+  }
 
   Object.keys(entities).forEach(key => {
-    
     if (key.indexOf("badCloud") === 0) {
-     // Matter.Body.translate(entities[key].body, {x: 0, y: 1});
-
       if (entities[key].body.position.y > max_height + 200) {
-        //delete(entities[key]);
-        //spawnBadClouds(world, entities);
-        Matter.Body.setPosition(entities[key].body, {x: randomizeNumber(0, max_width - 60), y: randomizeNumber(0, -max_height)});
+        Matter.Body.setPosition(entities[key].body, {
+          x: randomizeNumber(0, max_width - 60), 
+          y: randomizeNumber(0, -max_height)});
       }
     }
   });
-// console.log(total_time)
+
   return entities;
+  
 }
 
 export default BadCloudPhysics;
