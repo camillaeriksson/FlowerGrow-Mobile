@@ -129,6 +129,12 @@ export default class GameArea extends Component {
     });
   }
 
+  startGame = () => {
+    this.setState({
+      running: true
+    })
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -144,6 +150,11 @@ export default class GameArea extends Component {
         {!this.state.running && <TouchableOpacity onPress={this.reset} style={styles.fullScreenButton}>
           <View style={styles.fullScreen}>
             <Text style={styles.gameOverText}>GAME OVER</Text>
+          </View>
+        </TouchableOpacity>}
+        {this.state.running && <TouchableOpacity onPress={this.startGame} style={styles.fullScreenButton}>
+          <View style={styles.fullScreen}>
+            <Text style={styles.gameOverText}>START SCREEN</Text>
           </View>
         </TouchableOpacity>}
       </View>
