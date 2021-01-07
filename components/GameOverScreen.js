@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   flower_0: {
-    width: 105,
+    width: 108,
     height: 110
   }
 })
