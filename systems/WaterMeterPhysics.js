@@ -4,8 +4,8 @@ import WaterMeter from '../components/WaterMeter';
 
 const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
-let waterLevel = 160
-let newWaterMeterY = max_height - 300
+let waterLevel = 160;
+let newWaterMeterY = max_height - 300;
 
 const updateWaterMeter = (world, entities) => {
 
