@@ -11,7 +11,7 @@ const FlowerPhysics = (entities, { touches }) => {
   touches.filter(t => t.type === 'move').forEach(t => {
     const flowerDiameter = 60;
       Matter.Body.setPosition(flower, { x: t.event.locationX, y: max_height / 2 });
-    if (flower.position.x - 30 > max_width) {
+    if (flower.position.x - 30 > max_width - 30) {
       Matter.Body.setPosition(flower, { x: max_width - 30, y: max_height / 2});
     } if (flower.position.x < min_width) {
       Matter.Body.setPosition(flower, { x: min_width, y: max_height / 2});

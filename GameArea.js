@@ -35,7 +35,7 @@ export default class GameArea extends Component {
     let world = engine.world;
     engine.world.gravity.y = 0.05;
 
-    let flower = Matter.Bodies.circle(max_width / 2, max_height / 2, 30, {isStatic: true});
+    let flower = Matter.Bodies.rectangle(max_width / 2, max_height / 2, 60, 60, {isStatic: true});
     let grass = Matter.Bodies.rectangle(max_width / 2, max_height - 50, max_width, 200, { isStatic: true })
     let pot = Matter.Bodies.rectangle(max_width / 2, max_height - 120, 100, 80, { isStatic: true });
     // let test = Matter.Bodies.rectangle(100, max_height - 800, 50, 50, { isSensor: true });
@@ -89,7 +89,7 @@ export default class GameArea extends Component {
 
     return {
       physics: { engine: engine, world: world },
-      flower: { body: flower, size: [30], color: 'red', renderer: Flower },
+      flower: { body: flower, size: [60, 60], color: 'red', renderer: Flower },
       grass: { body: grass, size: [max_width, 200], color: 'green', renderer: Grass },
       pot: { body: pot, size: [100, 80], renderer: Pot},
       // badCloud1: { body: badCloud1, size: [117, 60], renderer: BadCloud},
