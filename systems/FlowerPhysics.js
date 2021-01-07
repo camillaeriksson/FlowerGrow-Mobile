@@ -1,32 +1,23 @@
 import Matter from 'matter-js';
 import { Dimensions } from 'react-native';
 
+const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
 const min_width = 0;
 
-const FlowerPhysics = (entities, { touches, time }) => {
-  let engine = entities.physics.engine;
+const FlowerPhysics = (entities, { touches }) => {
   let flower = entities.flower.body;
-
-  
   // Function for the touch movement of the flower
   touches.filter(t => t.type === 'move').forEach(t => {
-    const flowerRadius = 75;
-
-    if (t.event.locationX < max_width / 2) {
-      Matter.Body.translate(flower, { x: -3, y: 0 });
-    } else if (t.event.locationX > max_width / 2) {
-      Matter.Body.translate(flower, { x: +3, y: 0 });
-    } if (flower.position.x > max_width - flowerRadius) {
-      flower.position.x = max_width - flowerRadius;
+    const flowerDiameter = 76;
+      Matter.Body.setPosition(flower, { x: t.event.locationX - 38, y: max_height / 2 });
+    if (flower.position.x > max_width - flowerDiameter) {
+      Matter.Body.setPosition(flower, { x: max_width - flowerDiameter, y: max_height / 2});
     } if (flower.position.x < min_width) {
-      flower.position.x = min_width;
+      Matter.Body.setPosition(flower, { x: min_width, y: max_height / 2});
     }
-    return flower.position.x;
   });
 
-
-  Matter.Engine.update(engine, time.delta); 
 
   return entities;
 }
