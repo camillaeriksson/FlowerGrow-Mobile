@@ -10,7 +10,6 @@ import { Dimensions } from 'react-native';
 import Grass from './components/Grass';
 import Pot from './components/Pot';
 import Flower from './components/Flower';
-// import WaterMeter from './components/WaterMeter';
 import Test from './components/Test';
 import WaterMeterBackground from './components/WaterMeterBackground'
 

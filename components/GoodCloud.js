@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Image, View } from 'react-native';
 import Images from '../assets/Images';
 
-export default class BadCloud extends Component {
+export default class GoodCloud extends Component {
   render() {
   const width = this.props.size[0];
   const height = this.props.size[1]; 
