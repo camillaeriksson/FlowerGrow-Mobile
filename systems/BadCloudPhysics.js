@@ -13,7 +13,7 @@ const randomizeNumber = (min, max) => {
 
 const spawnBadClouds = (world, entities) => {
 
-  let badCloud = Matter.Bodies.rectangle(max_width / 2, 0, 117, 60, {isSensor: true });
+  let badCloud = Matter.Bodies.rectangle(randomizeNumber(0, max_width), randomizeNumber(-30, -max_height), 117, 60, {isSensor: true });
 
   Matter.World.add(world, [badCloud]);
 
@@ -44,17 +44,17 @@ const BadCloudPhysics = (entities) => {
 
   if (total_time > 2100 && total_time < 2135){
     spawnBadClouds(world, entities);
-    // spawnBadClouds(world, entities);
-    // spawnBadClouds(world, entities);
-    // spawnBadClouds(world, entities);
+    spawnBadClouds(world, entities);
+    spawnBadClouds(world, entities);
+    spawnBadClouds(world, entities);
   }
 
   Object.keys(entities).forEach(key => {
     if (key.indexOf("badCloud") === 0) {
       if (entities[key].body.position.y > max_height + 200) {
         Matter.Body.setPosition(entities[key].body, {
-          x: max_width / 2, 
-          y: 0
+          x: randomizeNumber(0, max_width), 
+          y: randomizeNumber(-30, -max_height)
         });
       }
     }

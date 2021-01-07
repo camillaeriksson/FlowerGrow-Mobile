@@ -8,7 +8,7 @@ import { View, StyleSheet, Text } from 'react-native';
 import { Dimensions } from 'react-native';
 
 import Grass from './components/Grass';
-// import Pot from './components/Pot';
+import Pot from './components/Pot';
 import Flower from './components/Flower';
 import Test from './components/Test';
 import WaterMeterBackground from './components/WaterMeterBackground'
@@ -35,19 +35,15 @@ export default class GameArea extends Component {
     let world = engine.world;
     engine.world.gravity.y = 0.05;
 
-    // let pot = Matter.Bodies.rectangle(max_width / 2, max_height - 140, 100, 80, { isStatic: true });
-    let flower = Matter.Bodies.rectangle(max_width / 2, 500, 50, 50, {isStatic: true});
-    let grass = Matter.Bodies.rectangle(max_width / 2, max_height - 25, max_width, 50, { isStatic: true })
-
-    // let waterMeter = Matter.Bodies.rectangle(20, max_height - 300, 30, 170, { isStatic: true });
-    //let badCloud1 = Matter.Bodies.rectangle(this.randomizeXpos(0, max_width), -30, 117, 60, {isStatic: true });
-    // let badCloud2 = Matter.Bodies.rectangle(this.randomizeXpos(0, max_width), -30, 117, 60, {isStatic: true });
+    let flower = Matter.Bodies.circle(max_width / 2, max_height / 2, 30, {isStatic: true});
+    let grass = Matter.Bodies.rectangle(max_width / 2, max_height - 50, max_width, 200, { isStatic: true })
+    let pot = Matter.Bodies.rectangle(max_width / 2, max_height - 120, 100, 80, { isStatic: true });
     // let test = Matter.Bodies.rectangle(100, max_height - 800, 50, 50, { isSensor: true });
     //let test2 = Matter.Bodies.rectangle(200, max_height - 700, 50, 50, { isSensor: true });
-    // let waterMeterBackground = Matter.Bodies.rectangle(20, max_height - 300, 30, 160, { isStatic: true });
+    let waterMeterBackground = Matter.Bodies.rectangle(20, max_height - 300, 30, 160, { isStatic: true });
     
 
-    Matter.World.add(world, [grass, flower]);
+    Matter.World.add(world, [grass, flower, pot, waterMeterBackground]);
 
     // test.collisionFilter = {
     // 'group': -4,
@@ -61,9 +57,9 @@ export default class GameArea extends Component {
     'mask': 10
     }
     
-    // pot.collisionFilter = {
-    //   'group': 7
-    // }
+    pot.collisionFilter = {
+      'group': 7
+    }
 
     grass.collisionFilter = {
       'group': 7
@@ -93,15 +89,14 @@ export default class GameArea extends Component {
 
     return {
       physics: { engine: engine, world: world },
-      flower: { body: flower, size: [50, 50], color: 'red', renderer: Flower },
-      grass: { body: grass, size: [max_width, 50], color: 'green', renderer: Grass },
-      // pot: { body: pot, size: [100, 80], renderer: Pot},
+      flower: { body: flower, size: [30], color: 'red', renderer: Flower },
+      grass: { body: grass, size: [max_width, 200], color: 'green', renderer: Grass },
+      pot: { body: pot, size: [100, 80], renderer: Pot},
       // badCloud1: { body: badCloud1, size: [117, 60], renderer: BadCloud},
       // badCloud2: { body: badCloud2, size: [117, 60], renderer: BadCloud},
-      // waterMeter: { body: waterMeter, color: 'blue', size: [30, 170], renderer: WaterMeter},
       // test: { body: test, color: 'red', size: [50, 50], renderer: Test},
       //test2: { body: test2, color: 'blue', size: [50, 50], renderer: Test},
-      // waterMeterBackground: { body: waterMeterBackground, color: 'grey', size: [30, 160], renderer: WaterMeterBackground}
+      waterMeterBackground: { body: waterMeterBackground, color: 'grey', size: [30, 160], renderer: WaterMeterBackground}
     }
   }
 
