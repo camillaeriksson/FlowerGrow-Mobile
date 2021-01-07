@@ -11,10 +11,10 @@ import Images from './assets/Images';
 import Grass from './components/Grass';
 import Pot from './components/Pot';
 import Flower from './components/Flower';
-import Test from './components/Test';
 import WaterMeterBackground from './components/WaterMeterBackground';
 import { resetWaterLevel } from './systems/WaterMeterPhysics';
 import StartScreen from './components/StartScreen';
+import GameOverScreen from './components/GameOverScreen';
 
 const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
@@ -153,13 +153,12 @@ export default class GameArea extends Component {
           systems={Systems}
           entities={this.entities}
           onEvent={this.onEvent}
+          running={this.state.running}
         />
         <Text style={styles.score}>{this.state.waterLevel}</Text>
         <Text style={styles.scoreMeter}>{this.state.time}m</Text>
         {this.state.showGameOverScreen && !this.state.running && <TouchableOpacity onPress={this.resetGame} style={styles.fullScreenButton}>
-          <ImageBackground source={Images['background']} style={styles.fullScreen}>
-            <Text style={styles.gameOverText}>GROW OVER! You grew meter</Text>
-          </ImageBackground>
+          <GameOverScreen />
         </TouchableOpacity>}
         {this.state.showStartScreen && !this.state.running && <TouchableOpacity onPress={this.startGame} style={styles.fullScreenButton}>
           <StartScreen />
@@ -207,24 +206,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    flex: 1,
-    opacity: 1
-  },
-  fullScreen: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: 'black',
-    opacity: 0.8,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  gameOverText: {
-    color: 'white',
-    fontSize: 48,
-    textAlign: 'center'
+    flex: 1
   }
 });
 
