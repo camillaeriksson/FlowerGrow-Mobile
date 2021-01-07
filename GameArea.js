@@ -119,7 +119,6 @@ export default class GameArea extends Component {
     resetWaterLevel();
     this.gameEngine.swap(this.setupWorld());
     this.setState({
-      running: false,
       waterLevel: 160,
       showStartScreen: true,
       showGameOverScreen: false,
