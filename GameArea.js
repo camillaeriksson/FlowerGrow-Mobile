@@ -24,7 +24,9 @@ export default class GameArea extends Component {
     this.state = {
       time: 0,
       waterLevel: 160,
-      running: true
+      running: false,
+      showStartScreen: true,
+      showGameOverScreen: false
     };
 
     this.GameEngine = null;
@@ -117,7 +119,9 @@ export default class GameArea extends Component {
       }
     } if (e.type === "game_over") {
       this.setState({
-        running: false
+        running: false,
+        showGameOverScreen: true,
+        showStartScreen: false
       });
     }
   }
@@ -126,12 +130,15 @@ export default class GameArea extends Component {
     resetWaterLevel();
     this.gameEngine.swap(this.setupWorld());
     this.setState({
-      running: true,
-      waterLevel: 160
+      waterLevel: 160,
+      showStartScreen: true,
+      showGameOverScreen: false,
+      running: false
     });
   }
 
   startGame = () => {
+    this.reset();
     this.setState({
       running: true
     })
@@ -149,16 +156,16 @@ export default class GameArea extends Component {
         />
         <Text style={styles.score}>{this.state.waterLevel}</Text>
         <Text style={styles.scoreMeter}>{this.state.time}m</Text>
-        {!this.state.running && <TouchableOpacity onPress={this.reset} style={styles.fullScreenButton}>
+        {this.state.showGameOverScreen && !this.state.running && <TouchableOpacity onPress={this.reset} style={styles.fullScreenButton}>
           <View style={styles.fullScreen}>
             <Text style={styles.gameOverText}>GAME OVER</Text>
           </View>
         </TouchableOpacity>}
-        {/* {this.state.running && <TouchableOpacity onPress={this.startGame} style={styles.fullScreenButton}>
+        {this.state.showStartScreen && !this.state.running && <TouchableOpacity onPress={this.startGame} style={styles.fullScreenButton}>
           <View style={styles.fullScreen}>
             <Text style={styles.gameOverText}>START SCREEN</Text>
           </View>
-        </TouchableOpacity>} */}
+        </TouchableOpacity>}
       </View>
     )
   }
