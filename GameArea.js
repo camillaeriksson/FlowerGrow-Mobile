@@ -40,7 +40,7 @@ export default class GameArea extends Component {
     engine.world.gravity.y = 0.05;
 
     let flower = Matter.Bodies.rectangle(max_width / 2, max_height / 2, 60, 60, {isStatic: true});
-    let grass = Matter.Bodies.rectangle(max_width / 2, max_height - 50, max_width, 200, { isStatic: true })
+    let grass = Matter.Bodies.rectangle(max_width / 2, max_height - 50, max_width, 200, { isStatic: true });
     let pot = Matter.Bodies.rectangle(max_width / 2, max_height - 120, 100, 80, { isStatic: true });
     // let test = Matter.Bodies.rectangle(100, max_height - 800, 50, 50, { isSensor: true });
     //let test2 = Matter.Bodies.rectangle(200, max_height - 700, 50, 50, { isSensor: true });
