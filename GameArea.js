@@ -4,14 +4,15 @@ import Systems from './systems'
 import { GameEngine } from 'react-native-game-engine';
 import Matter from 'matter-js';
 
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Dimensions } from 'react-native';
 
 import Grass from './components/Grass';
 import Pot from './components/Pot';
 import Flower from './components/Flower';
 import Test from './components/Test';
-import WaterMeterBackground from './components/WaterMeterBackground'
+import WaterMeterBackground from './components/WaterMeterBackground';
+import { resetWaterLevel } from './systems/WaterMeterPhysics';
 
 const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
@@ -22,7 +23,10 @@ export default class GameArea extends Component {
 
     this.state = {
       time: 0,
-      waterLevel: 160
+      waterLevel: 160,
+      running: false,
+      showStartScreen: true,
+      showGameOverScreen: false
     };
 
     this.GameEngine = null;
@@ -38,7 +42,6 @@ export default class GameArea extends Component {
     let grass = Matter.Bodies.rectangle(0, max_height - 150, max_width, 150, { isStatic: true });
     let pot = Matter.Bodies.rectangle(max_width / 2 - 50, max_height - 140, 100, 80, { isStatic: true });
     let flower = Matter.Bodies.circle(max_width / 2 - 38 , max_height / 2, 76, { isStatic: true });
-    // let waterMeter = Matter.Bodies.rectangle(20, max_height - 300, 30, 170, { isStatic: true });
     //let badCloud1 = Matter.Bodies.rectangle(this.randomizeXpos(0, max_width), -30, 117, 60, {isStatic: true });
     // let badCloud2 = Matter.Bodies.rectangle(this.randomizeXpos(0, max_width), -30, 117, 60, {isStatic: true });
     let test = Matter.Bodies.rectangle(100, max_height - 800, 50, 50, { isSensor: true });
@@ -83,7 +86,7 @@ export default class GameArea extends Component {
       let total_seconds = parseInt(Math.floor(engine.timing.timestamp / 1000));
       this.setState({
         time: total_seconds
-      })
+      });
       if (this.state.waterLevel === 0) {
         this.gameEngine.dispatch({ type: "game_over"});
       }
@@ -97,7 +100,6 @@ export default class GameArea extends Component {
       // badCloud1: { body: badCloud1, size: [117, 60], renderer: BadCloud},
       // badCloud2: { body: badCloud2, size: [117, 60], renderer: BadCloud},
       flower: { body: flower, color: 'blue', size: [76], renderer: Flower},
-      // waterMeter: { body: waterMeter, color: 'blue', size: [30, 170], renderer: WaterMeter},
       test: { body: test, color: 'red', size: [50, 50], renderer: Test},
       //test2: { body: test2, color: 'blue', size: [50, 50], renderer: Test},
       waterMeterBackground: { body: waterMeterBackground, color: 'grey', size: [30, 160], renderer: WaterMeterBackground}
@@ -116,8 +118,30 @@ export default class GameArea extends Component {
         });
       }
     } if (e.type === "game_over") {
-      console.log("GAME OVER")
+      this.setState({
+        running: false,
+        showGameOverScreen: true,
+        showStartScreen: false
+      });
     }
+  }
+
+  resetGame = () => {
+    resetWaterLevel();
+    this.gameEngine.swap(this.setupWorld());
+    this.setState({
+      waterLevel: 160,
+      showStartScreen: true,
+      showGameOverScreen: false,
+      running: false
+    });
+  }
+
+  startGame = () => {
+    this.resetGame();
+    this.setState({
+      running: true
+    });
   }
 
   render() {
@@ -132,6 +156,16 @@ export default class GameArea extends Component {
         />
         <Text style={styles.score}>{this.state.waterLevel}</Text>
         <Text style={styles.scoreMeter}>{this.state.time}m</Text>
+        {this.state.showGameOverScreen && !this.state.running && <TouchableOpacity onPress={this.resetGame} style={styles.fullScreenButton}>
+          <View style={styles.fullScreen}>
+            <Text style={styles.gameOverText}>GAME OVER</Text>
+          </View>
+        </TouchableOpacity>}
+        {this.state.showStartScreen && !this.state.running && <TouchableOpacity onPress={this.startGame} style={styles.fullScreenButton}>
+          <View style={styles.fullScreen}>
+            <Text style={styles.gameOverText}>START SCREEN</Text>
+          </View>
+        </TouchableOpacity>}
       </View>
     )
   }
@@ -169,5 +203,28 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 2, height: 2},
     textShadowRadius: 2
   },
+  fullScreenButton: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    flex: 1
+  },
+  fullScreen: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'black',
+    opacity: 0.8,
+    justifyContent: 'center'
+  },
+  gameOverText: {
+    color: 'white',
+    fontSize: 48,
+    textAlign: 'center'
+  }
 });
 
