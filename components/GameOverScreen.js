@@ -35,6 +35,6 @@ const styles = StyleSheet.create({
   },
   flower_0: {
     width: 108,
-    height: 112
+    height: 112.5
   }
 })

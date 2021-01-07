@@ -86,7 +86,7 @@ export default class GameArea extends Component {
 
     return {
       physics: { engine: engine, world: world },
-      flower: { body: flower, size: [60, 60], color: 'red', renderer: Flower },
+      flower: { body: flower, size: [60, 60], renderer: Flower },
       grass: { body: grass, size: [max_width, 200], color: 'green', renderer: Grass },
       pot: { body: pot, size: [100, 80], renderer: Pot},
       // badCloud1: { body: badCloud1, size: [117, 60], renderer: BadCloud},
@@ -119,15 +119,14 @@ export default class GameArea extends Component {
     resetWaterLevel();
     this.gameEngine.swap(this.setupWorld());
     this.setState({
+      running: false,
       waterLevel: 160,
       showStartScreen: true,
       showGameOverScreen: false,
-      running: false
     });
   }
 
   startGame = () => {
-    this.resetGame();
     this.setState({
       running: true
     });

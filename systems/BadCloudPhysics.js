@@ -22,7 +22,6 @@ const spawnBadClouds = (world, entities) => {
   entities["badCloud" + (badClouds + 1)] = {
     body: badCloud,
     size: [117, 60],
-    color: 'red',
     cloudNumber: cloudNumber,
     renderer: BadCloud
   }
