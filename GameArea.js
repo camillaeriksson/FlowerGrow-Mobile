@@ -76,15 +76,15 @@ export default class GameArea extends Component {
       }
     })
 
-    // Matter.Events.on(engine, 'beforeUpdate', (event) => {
-    //   let total_seconds = parseInt(Math.floor(engine.timing.timestamp / 1000));
-    //   this.setState({
-    //     time: total_seconds
-    //   })
-    //   if (this.state.waterLevel === 0) {
-    //     this.gameEngine.dispatch({ type: "game_over"});
-    //   }
-    // });
+    Matter.Events.on(engine, 'beforeUpdate', (event) => {
+      let total_seconds = parseInt(Math.floor(engine.timing.timestamp / 1000));
+      this.setState({
+        time: total_seconds
+      })
+      if (this.state.waterLevel === 0) {
+        this.gameEngine.dispatch({ type: "game_over"});
+      }
+    });
 
 
     return {
