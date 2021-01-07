@@ -9,13 +9,16 @@ const FlowerPhysics = (entities, { touches }) => {
   let flower = entities.flower.body;
   // Function for the touch movement of the flower
   touches.filter(t => t.type === 'move').forEach(t => {
-    const flowerDiameter = 76;
-      Matter.Body.setPosition(flower, { x: t.event.locationX - 38, y: max_height / 2 });
-    if (flower.position.x > max_width - flowerDiameter) {
-      Matter.Body.setPosition(flower, { x: max_width - flowerDiameter, y: max_height / 2});
+    const flowerDiameter = 60;
+      Matter.Body.setPosition(flower, { x: t.event.locationX, y: max_height / 2 });
+    if (flower.position.x - 30 > max_width - 30) {
+      Matter.Body.setPosition(flower, { x: max_width - 30, y: max_height / 2});
     } if (flower.position.x < min_width) {
       Matter.Body.setPosition(flower, { x: min_width, y: max_height / 2});
     }
+    // console.log('max wodth: ', max_width)
+    // console.log('flower positon: ', flower.position.x)
+    // console.log('touch: ', t.event.locationX)
   });
 
 
