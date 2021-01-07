@@ -4,16 +4,22 @@ import WaterMeter from '../components/WaterMeter';
 
 const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
-let waterLevel = 160;
-let newWaterMeterY = max_height - 300;
+let waterLevel = 100;
+let newWaterMeterY = max_height - 240;
+
 
 const updateWaterMeter = (world, entities) => {
 
+  this.state = {
+    waterLevel: 100,
+    newWaterMeterY: max_height - 300
+  }
+  
   let waterMeter = Matter.Bodies.rectangle(20, newWaterMeterY, 30, waterLevel, { isStatic: true });
 
   Matter.World.add(world, [waterMeter]);
 
-  entities["waterMeter"] = {
+  entities['waterMeter'] = {
     body: waterMeter, 
     color: '#1F63E0', 
     size: [30, waterLevel], 
@@ -31,8 +37,13 @@ const WaterMeterPhysics = (entities, onEvent) => {
   if (onEvent.events.length) {
     if (onEvent.events[0].type === 'score_down') {
       waterLevel -= 20;
-      newWaterMeterY +=20
-      delete(entities["waterMeter"])
+      newWaterMeterY +=20;
+      delete(entities['waterMeter'])
+      updateWaterMeter(world, entities)
+    } else if (onEvent.events[0].type === 'game_over') {
+      waterLevel += 0;
+      newWaterMeterY -= 0;
+      delete(entities['waterMeter'])
       updateWaterMeter(world, entities)
     }
   }

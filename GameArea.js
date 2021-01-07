@@ -4,7 +4,7 @@ import Systems from './systems'
 import { GameEngine } from 'react-native-game-engine';
 import Matter from 'matter-js';
 
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Dimensions } from 'react-native';
 
 import Grass from './components/Grass';
@@ -22,7 +22,8 @@ export default class GameArea extends Component {
 
     this.state = {
       time: 0,
-      waterLevel: 160
+      waterLevel: 100,
+      running: true
     };
 
     this.GameEngine = null;
@@ -112,8 +113,18 @@ export default class GameArea extends Component {
         score: this.state.waterLevel + 20
       });
     } if (e.type === "game_over") {
-      console.log("GAME OVER")
+      this.setState({
+        running: false
+      });
     }
+  }
+
+  reset = () => {
+    this.gameEngine.swap(this.setupWorld());
+    this.setState({
+      running: true,
+      waterLevel: 160
+    });
   }
 
   render() {
@@ -128,6 +139,11 @@ export default class GameArea extends Component {
         />
         <Text style={styles.score}>{this.state.waterLevel}</Text>
         <Text style={styles.scoreMeter}>{this.state.time}m</Text>
+        {!this.state.running && <TouchableOpacity onPress={this.reset} style={styles.fullScreenButton}>
+          <View style={styles.fullScreen}>
+            <Text style={styles.gameOverText}>GAME OVER</Text>
+          </View>
+        </TouchableOpacity>}
       </View>
     )
   }
@@ -165,5 +181,28 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 2, height: 2},
     textShadowRadius: 2
   },
+  fullScreenButton: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    flex: 1
+  },
+  fullScreen: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'black',
+    opacity: 0.8,
+    justifyContent: 'center'
+  },
+  gameOverText: {
+    color: 'white',
+    fontSize: 48,
+    textAlign: 'center'
+  }
 });
 
