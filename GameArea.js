@@ -4,8 +4,9 @@ import Systems from './systems'
 import { GameEngine } from 'react-native-game-engine';
 import Matter from 'matter-js';
 
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, ImageBackground, Image } from 'react-native';
 import { Dimensions } from 'react-native';
+import Images from './assets/Images';
 
 import Grass from './components/Grass';
 import Pot from './components/Pot';
@@ -13,6 +14,7 @@ import Flower from './components/Flower';
 import Test from './components/Test';
 import WaterMeterBackground from './components/WaterMeterBackground';
 import { resetWaterLevel } from './systems/WaterMeterPhysics';
+import StartScreen from './components/StartScreen';
 
 const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
@@ -157,14 +159,12 @@ export default class GameArea extends Component {
         <Text style={styles.score}>{this.state.waterLevel}</Text>
         <Text style={styles.scoreMeter}>{this.state.time}m</Text>
         {this.state.showGameOverScreen && !this.state.running && <TouchableOpacity onPress={this.resetGame} style={styles.fullScreenButton}>
-          <View style={styles.fullScreen}>
-            <Text style={styles.gameOverText}>GAME OVER</Text>
-          </View>
+          <ImageBackground source={Images['background']} style={styles.fullScreen}>
+            <Text style={styles.gameOverText}>GROW OVER! You grew meter</Text>
+          </ImageBackground>
         </TouchableOpacity>}
         {this.state.showStartScreen && !this.state.running && <TouchableOpacity onPress={this.startGame} style={styles.fullScreenButton}>
-          <View style={styles.fullScreen}>
-            <Text style={styles.gameOverText}>START SCREEN</Text>
-          </View>
+          <StartScreen />
         </TouchableOpacity>}
       </View>
     )
@@ -209,7 +209,8 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    flex: 1
+    flex: 1,
+    opacity: 1
   },
   fullScreen: {
     position: 'absolute',
@@ -219,7 +220,8 @@ const styles = StyleSheet.create({
     right: 0,
     backgroundColor: 'black',
     opacity: 0.8,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   gameOverText: {
     color: 'white',
