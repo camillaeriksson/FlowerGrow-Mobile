@@ -4,9 +4,8 @@ import Systems from './systems'
 import { GameEngine } from 'react-native-game-engine';
 import Matter from 'matter-js';
 
-import { View, StyleSheet, Text, TouchableOpacity, ImageBackground, Image } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Dimensions } from 'react-native';
-import Images from './assets/Images';
 
 import Grass from './components/Grass';
 import Pot from './components/Pot';
@@ -44,19 +43,11 @@ export default class GameArea extends Component {
     let flower = Matter.Bodies.rectangle(max_width / 2, max_height / 2, 60, 60, {isStatic: true});
     let grass = Matter.Bodies.rectangle(max_width / 2, max_height - 50, max_width, 200, { isStatic: true });
     let pot = Matter.Bodies.rectangle(max_width / 2, max_height - 120, 100, 80, { isStatic: true });
-    // let test = Matter.Bodies.rectangle(100, max_height - 800, 50, 50, { isSensor: true });
-    //let test2 = Matter.Bodies.rectangle(200, max_height - 700, 50, 50, { isSensor: true });
     let waterMeterBackground = Matter.Bodies.rectangle(20, max_height - 300, 30, 160, { isStatic: true });
     
 
     Matter.World.add(world, [grass, flower, pot, waterMeterBackground]);
 
-    // test.collisionFilter = {
-    // 'group': -4,
-    // 'category': 30,
-    // 'mask': 30
-    // }
-    
     flower.collisionFilter = {
     'group': 5,
     'category': 20,
@@ -100,8 +91,6 @@ export default class GameArea extends Component {
       pot: { body: pot, size: [100, 80], renderer: Pot},
       // badCloud1: { body: badCloud1, size: [117, 60], renderer: BadCloud},
       // badCloud2: { body: badCloud2, size: [117, 60], renderer: BadCloud},
-      // test: { body: test, color: 'red', size: [50, 50], renderer: Test},
-      //test2: { body: test2, color: 'blue', size: [50, 50], renderer: Test},
       waterMeterBackground: { body: waterMeterBackground, color: 'grey', size: [30, 160], renderer: WaterMeterBackground}
     }
   }
