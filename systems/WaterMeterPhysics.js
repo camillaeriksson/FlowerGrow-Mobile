@@ -15,7 +15,7 @@ const updateWaterMeter = (world, entities) => {
 
   entities["waterMeter"] = {
     body: waterMeter, 
-    color: 'blue', 
+    color: '#1F63E0', 
     size: [30, waterLevel], 
     renderer: WaterMeter
   }
