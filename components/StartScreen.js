@@ -3,9 +3,7 @@ import { Dimensions, View } from 'react-native';
 import { ImageBackground, Text, StyleSheet, Image } from 'react-native';
 import Images from '../assets/Images';
 
-const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
-
 export default class Grass extends Component {
   render() {
     return (
@@ -20,7 +18,7 @@ export default class Grass extends Component {
             Avoid the dark clouds, go through rain clouds to water the flower.
           </Text>
           <Text style={styles.startScreenText}>
-            Click on the screen to start!
+            Touch the screen to start!
           </Text>
         </View>
       </ImageBackground>
@@ -35,6 +33,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
+    justifyContent: 'center',
     alignItems: 'center'
   },
   startScreenText: {
@@ -42,15 +41,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     width: max_width / 1.5,
-    marginBottom: 10
-  },
-  startScreenTextContainer: {
-    position: 'absolute',
-    top: 350,
+    marginBottom: 10,
+    marginTop: 20
   },
   logo: {
-    position: 'absolute',
-    top: 150,
     width: 300,
     height: 150
   }
