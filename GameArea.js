@@ -4,14 +4,15 @@ import Systems from './systems'
 import { GameEngine } from 'react-native-game-engine';
 import Matter from 'matter-js';
 
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Dimensions } from 'react-native';
 
 import Grass from './components/Grass';
 import Pot from './components/Pot';
 import Flower from './components/Flower';
 import Test from './components/Test';
-import WaterMeterBackground from './components/WaterMeterBackground'
+import WaterMeterBackground from './components/WaterMeterBackground';
+import { resetWaterLevel } from './systems/WaterMeterPhysics';
 
 const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
@@ -22,7 +23,10 @@ export default class GameArea extends Component {
 
     this.state = {
       time: 0,
-      waterLevel: 160
+      waterLevel: 160,
+      running: false,
+      showStartScreen: true,
+      showGameOverScreen: false
     };
 
     this.GameEngine = null;
@@ -80,7 +84,7 @@ export default class GameArea extends Component {
       let total_seconds = parseInt(Math.floor(engine.timing.timestamp / 1000));
       this.setState({
         time: total_seconds
-      })
+      });
       if (this.state.waterLevel === 0) {
         this.gameEngine.dispatch({ type: "game_over"});
       }
@@ -112,8 +116,30 @@ export default class GameArea extends Component {
         });
       }
     } if (e.type === "game_over") {
-      console.log("GAME OVER")
+      this.setState({
+        running: false,
+        showGameOverScreen: true,
+        showStartScreen: false
+      });
     }
+  }
+
+  resetGame = () => {
+    resetWaterLevel();
+    this.gameEngine.swap(this.setupWorld());
+    this.setState({
+      waterLevel: 160,
+      showStartScreen: true,
+      showGameOverScreen: false,
+      running: false
+    });
+  }
+
+  startGame = () => {
+    this.resetGame();
+    this.setState({
+      running: true
+    });
   }
 
   render() {
@@ -128,6 +154,16 @@ export default class GameArea extends Component {
         />
         <Text style={styles.score}>{this.state.waterLevel}</Text>
         <Text style={styles.scoreMeter}>{this.state.time}m</Text>
+        {this.state.showGameOverScreen && !this.state.running && <TouchableOpacity onPress={this.resetGame} style={styles.fullScreenButton}>
+          <View style={styles.fullScreen}>
+            <Text style={styles.gameOverText}>GAME OVER</Text>
+          </View>
+        </TouchableOpacity>}
+        {this.state.showStartScreen && !this.state.running && <TouchableOpacity onPress={this.startGame} style={styles.fullScreenButton}>
+          <View style={styles.fullScreen}>
+            <Text style={styles.gameOverText}>START SCREEN</Text>
+          </View>
+        </TouchableOpacity>}
       </View>
     )
   }
@@ -165,5 +201,28 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 2, height: 2},
     textShadowRadius: 2
   },
+  fullScreenButton: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    flex: 1
+  },
+  fullScreen: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'black',
+    opacity: 0.8,
+    justifyContent: 'center'
+  },
+  gameOverText: {
+    color: 'white',
+    fontSize: 48,
+    textAlign: 'center'
+  }
 });
 
