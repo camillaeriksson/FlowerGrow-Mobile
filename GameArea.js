@@ -11,7 +11,8 @@ import Grass from './components/Grass';
 import Pot from './components/Pot';
 import Flower from './components/Flower';
 import Test from './components/Test';
-import WaterMeterBackground from './components/WaterMeterBackground'
+import WaterMeterBackground from './components/WaterMeterBackground';
+import { resetWaterLevel } from './systems/WaterMeterPhysics';
 
 const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
@@ -22,7 +23,7 @@ export default class GameArea extends Component {
 
     this.state = {
       time: 0,
-      waterLevel: 100,
+      waterLevel: 160,
       running: true
     };
 
@@ -120,6 +121,7 @@ export default class GameArea extends Component {
   }
 
   reset = () => {
+    resetWaterLevel();
     this.gameEngine.swap(this.setupWorld());
     this.setState({
       running: true,
