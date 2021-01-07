@@ -40,6 +40,14 @@ const WaterMeterPhysics = (entities, onEvent) => {
       newWaterMeterY +=20;
       delete(entities['waterMeter'])
       updateWaterMeter(world, entities)
+    } 
+    if (onEvent.events[0].type === 'score_up') {
+      if (waterLevel < 160) {
+        waterLevel += 20;
+        newWaterMeterY -=20;
+        delete(entities["waterMeter"]);
+        updateWaterMeter(world, entities);
+      }
     } /* else if (onEvent.events[0].type === 'game_over') {
       resetWaterLevel()
       delete(entities['waterMeter'])

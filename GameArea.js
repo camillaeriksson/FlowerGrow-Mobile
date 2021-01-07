@@ -107,12 +107,14 @@ export default class GameArea extends Component {
   onEvent = (e) => {
     if (e.type === "score_down"){
       this.setState({
-          waterLevel: this.state.waterLevel - 20
+        waterLevel: this.state.waterLevel - 20
       });
     } if (e.type === "score_up") {
-      this.setState({
-        score: this.state.waterLevel + 20
-      });
+      if (this.state.waterLevel < 160) {
+        this.setState({
+          waterLevel: this.state.waterLevel + 20
+        });
+      }
     } if (e.type === "game_over") {
       this.setState({
         running: false
@@ -152,11 +154,11 @@ export default class GameArea extends Component {
             <Text style={styles.gameOverText}>GAME OVER</Text>
           </View>
         </TouchableOpacity>}
-        {this.state.running && <TouchableOpacity onPress={this.startGame} style={styles.fullScreenButton}>
+        {/* {this.state.running && <TouchableOpacity onPress={this.startGame} style={styles.fullScreenButton}>
           <View style={styles.fullScreen}>
             <Text style={styles.gameOverText}>START SCREEN</Text>
           </View>
-        </TouchableOpacity>}
+        </TouchableOpacity>} */}
       </View>
     )
   }
