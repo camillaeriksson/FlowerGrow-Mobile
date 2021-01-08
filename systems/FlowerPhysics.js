@@ -7,6 +7,7 @@ const min_width = 0;
 
 const FlowerPhysics = (entities, { touches }) => {
   let flower = entities.flower.body;
+  let stem = entities.stem.body;
   
   // Function for the touch movement of the flower
   touches.filter(t => t.type === 'move').forEach(t => {
@@ -19,6 +20,10 @@ const FlowerPhysics = (entities, { touches }) => {
     }
   });
 
+
+  Matter.Vertices.create([{ x: 0, y: 1 }, { x: 25, y: 50 }, { x: 0, y: 10 }], stem)
+
+ // console.log('stjälk', stem)
 
   return entities;
 }
