@@ -16,7 +16,8 @@ export default class GoodCloud extends Component {
         width: width,
         height: height,
         top: y,
-        left: x
+        left: x,
+        zIndex: 100
       }}
       resizeMode='stretch'
       source={Images['goodCloud']}
