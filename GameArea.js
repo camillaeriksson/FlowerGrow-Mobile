@@ -111,12 +111,12 @@ export default class GameArea extends Component {
   onEvent = (e) => {
     if (e.type === "score_down"){
       this.setState({
-        waterLevel: this.state.waterLevel - 20
+        waterLevel: this.state.waterLevel - 32
       });
     } if (e.type === "score_up") {
       if (this.state.waterLevel < 160) {
         this.setState({
-          waterLevel: this.state.waterLevel + 20
+          waterLevel: this.state.waterLevel + 32
         });
       }
     } if (e.type === "game_over") {
