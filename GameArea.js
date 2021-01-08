@@ -38,11 +38,13 @@ export default class GameArea extends Component {
   setupWorld = () => {
     let engine = Matter.Engine.create({ enableSleeping: false });
     let world = engine.world;
-    engine.world.gravity.y = 0.05;
+    engine.world.gravity.y = 0.00;
+
+
 
     let flower = Matter.Bodies.rectangle(max_width / 2, max_height / 2, 60, 60, {isStatic: true});
-    let grass = Matter.Bodies.rectangle(max_width / 2, max_height - 50, max_width, 200, { isStatic: true });
-    let pot = Matter.Bodies.rectangle(max_width / 2, max_height - 120, 100, 80, { isStatic: true });
+    let grass = Matter.Bodies.rectangle(max_width / 2, max_height - 100, max_width, 200, {isSensor: true});
+    let pot = Matter.Bodies.rectangle(max_width / 2, max_height - 140, 100, 80, {isSensor: true});
     let waterMeterBackground = Matter.Bodies.rectangle(20, max_height - 300, 30, 160, { isStatic: true });
     
 
@@ -80,6 +82,9 @@ export default class GameArea extends Component {
       });
       if (this.state.waterLevel === 0) {
         this.gameEngine.dispatch({ type: "game_over"});
+      }
+      if (this.state.time === 2) {
+        engine.world.gravity.y = 0.05;
       }
     });
 
