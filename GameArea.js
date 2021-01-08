@@ -47,7 +47,12 @@ export default class GameArea extends Component {
     let grass = Matter.Bodies.rectangle(max_width / 2, max_height - 100, max_width, 200, {isSensor: true});
     let pot = Matter.Bodies.rectangle(max_width / 2, max_height - 140, 100, 80, {isSensor: true});
     let waterMeterBackground = Matter.Bodies.rectangle(20, max_height - 300, 30, 160, { isStatic: true });
-    let stem = Matter.Bodies.rectangle(max_width / 2, max_height / 2 + 35, 10, 10);
+    let stem = Matter.Bodies.rectangle(max_width / 2, max_height / 2 + 35, 10, 10, {
+      render: {
+        fillStyle: 'green',
+        strokeStyle: 'green'
+      }
+    });
     
 
     Matter.World.add(world, [grass, flower, pot, waterMeterBackground, stem]);
