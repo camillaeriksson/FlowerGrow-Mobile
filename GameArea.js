@@ -10,9 +10,10 @@ import { Dimensions } from 'react-native';
 import Grass from './components/Grass';
 import Pot from './components/Pot';
 import Flower from './components/Flower';
-import Test from './components/Test';
 import WaterMeterBackground from './components/WaterMeterBackground';
 import { resetWaterLevel } from './systems/WaterMeterPhysics';
+import StartScreen from './components/StartScreen';
+import GameOverScreen from './components/GameOverScreen';
 
 const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
@@ -42,19 +43,11 @@ export default class GameArea extends Component {
     let flower = Matter.Bodies.rectangle(max_width / 2, max_height / 2, 60, 60, {isStatic: true});
     let grass = Matter.Bodies.rectangle(max_width / 2, max_height - 50, max_width, 200, { isStatic: true });
     let pot = Matter.Bodies.rectangle(max_width / 2, max_height - 120, 100, 80, { isStatic: true });
-    // let test = Matter.Bodies.rectangle(100, max_height - 800, 50, 50, { isSensor: true });
-    //let test2 = Matter.Bodies.rectangle(200, max_height - 700, 50, 50, { isSensor: true });
     let waterMeterBackground = Matter.Bodies.rectangle(20, max_height - 300, 30, 160, { isStatic: true });
     
 
     Matter.World.add(world, [grass, flower, pot, waterMeterBackground]);
 
-    // test.collisionFilter = {
-    // 'group': -4,
-    // 'category': 30,
-    // 'mask': 30
-    // }
-    
     flower.collisionFilter = {
     'group': 5,
     'category': 20,
@@ -93,13 +86,11 @@ export default class GameArea extends Component {
 
     return {
       physics: { engine: engine, world: world },
-      flower: { body: flower, size: [60, 60], color: 'red', renderer: Flower },
+      flower: { body: flower, size: [60, 60], renderer: Flower },
       grass: { body: grass, size: [max_width, 200], color: 'green', renderer: Grass },
       pot: { body: pot, size: [100, 80], renderer: Pot},
       // badCloud1: { body: badCloud1, size: [117, 60], renderer: BadCloud},
       // badCloud2: { body: badCloud2, size: [117, 60], renderer: BadCloud},
-      // test: { body: test, color: 'red', size: [50, 50], renderer: Test},
-      //test2: { body: test2, color: 'blue', size: [50, 50], renderer: Test},
       waterMeterBackground: { body: waterMeterBackground, color: 'grey', size: [30, 160], renderer: WaterMeterBackground}
     }
   }
@@ -131,12 +122,10 @@ export default class GameArea extends Component {
       waterLevel: 160,
       showStartScreen: true,
       showGameOverScreen: false,
-      running: false
     });
   }
 
   startGame = () => {
-    this.resetGame();
     this.setState({
       running: true
     });
@@ -151,18 +140,15 @@ export default class GameArea extends Component {
           systems={Systems}
           entities={this.entities}
           onEvent={this.onEvent}
+          running={this.state.running}
         />
         <Text style={styles.score}>{this.state.waterLevel}</Text>
         <Text style={styles.scoreMeter}>{this.state.time}m</Text>
         {this.state.showGameOverScreen && !this.state.running && <TouchableOpacity onPress={this.resetGame} style={styles.fullScreenButton}>
-          <View style={styles.fullScreen}>
-            <Text style={styles.gameOverText}>GAME OVER</Text>
-          </View>
+          <GameOverScreen />
         </TouchableOpacity>}
         {this.state.showStartScreen && !this.state.running && <TouchableOpacity onPress={this.startGame} style={styles.fullScreenButton}>
-          <View style={styles.fullScreen}>
-            <Text style={styles.gameOverText}>START SCREEN</Text>
-          </View>
+          <StartScreen />
         </TouchableOpacity>}
       </View>
     )
@@ -208,21 +194,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     flex: 1
-  },
-  fullScreen: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: 'black',
-    opacity: 0.8,
-    justifyContent: 'center'
-  },
-  gameOverText: {
-    color: 'white',
-    fontSize: 48,
-    textAlign: 'center'
   }
 });
 

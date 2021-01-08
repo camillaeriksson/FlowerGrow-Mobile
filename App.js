@@ -1,13 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, View, ImageBackground } from 'react-native';
+import Images from './assets/Images';
 import GameArea from './GameArea';
 
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('./assets/background.png')} style={styles.backgroundImage}>
+      <ImageBackground source={Images['background']} style={styles.backgroundImage}>
         <GameArea />
         <StatusBar style='auto' />
       </ImageBackground>

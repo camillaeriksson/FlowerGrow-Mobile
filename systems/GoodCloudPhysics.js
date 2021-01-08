@@ -11,14 +11,13 @@ const randomizeNumber = (min, max) => {
 
 const spawnGoodClouds = (world, entities) => {
 
-  let goodCloud = Matter.Bodies.rectangle(randomizeNumber(0, max_width - 60), randomizeNumber(0, -max_height), 117, 60, {isSensor: true });
+  let goodCloud = Matter.Bodies.rectangle(randomizeNumber(0, max_width - 60), randomizeNumber(0, -max_height), 117, 110, {isSensor: true });
 
   Matter.World.add(world, [goodCloud]);
 
   entities["goodCloud"] = {
     body: goodCloud,
-    size: [117, 60],
-    color: 'green',
+    size: [117, 110],
     renderer: GoodCloud
   }
 

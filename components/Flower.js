@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import Images from '../assets/Images';
+import { Image } from 'react-native';
 
 export default class Flower extends Component {
   render() {
@@ -9,15 +10,17 @@ export default class Flower extends Component {
     const y = this.props.body.position.y - height / 2;
 
     return (
-      <View 
+      <Image 
         style={{
           position: 'absolute',
           top: y,
           left: x,
           width: width,
-          height: height,
-          backgroundColor: this.props.color
-        }} />
+          height: height
+        }} 
+        resizeMode="stretch"
+        source={Images['flower_100']}
+        />
     )
   }
 }
