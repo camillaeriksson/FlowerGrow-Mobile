@@ -43,7 +43,7 @@ export default class GameArea extends Component {
 
 
 
-    let flower = Matter.Bodies.rectangle(max_width / 2, max_height / 2, 60, 60, {isStatic: true});
+    let flower = Matter.Bodies.rectangle(max_width / 2, max_height - 140, 60, 60, {isStatic: true});
     let grass = Matter.Bodies.rectangle(max_width / 2, max_height - 100, max_width, 200, {isSensor: true});
     let pot = Matter.Bodies.rectangle(max_width / 2, max_height - 140, 100, 80, {isSensor: true});
     let waterMeterBackground = Matter.Bodies.rectangle(20, max_height - 300, 30, 160, { isStatic: true });
