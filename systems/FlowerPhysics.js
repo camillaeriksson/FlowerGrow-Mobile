@@ -6,36 +6,12 @@ const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
 const min_width = 0;
 
-// export const updateFlower = (world, entities, flowerNumber, flowerX, flowerY) => {
-//   Matter.World.remove(world, entities.flower.body)
-
-//   let flower = Matter.Bodies.rectangle(flowerX, flowerY, 60, 60, {isStatic: true});
-
-//   Matter.World.add(world, [flower]);
-
-//   entities['flower'] = { 
-//     body: flower, 
-//     size: [60, 60],
-//     flowerNumber: flowerNumber,
-//     renderer: Flower 
-//   }
-
-//   // flower.collisionFilter = {
-//   //   'group': 5,
-//   //   'category': 20,
-//   //   'mask': 10
-//   //   }
-// }
-
 const FlowerPhysics = (entities, { touches }) => {
   let flower = entities.flower.body;
+  let waterLevel = entities.flower.waterLevel
   let engine = entities.physics.engine;
   let world = entities.physics.world;
   let total_seconds = parseInt(Math.floor(engine.timing.timestamp / 1000));
-
-  if (total_seconds * 1000 < 1000) {
-  // console.log(engine)
-  }
   
   if (total_seconds < 2) {
     Matter.Body.translate(flower, { x: 0, y: -4 });
@@ -52,9 +28,11 @@ const FlowerPhysics = (entities, { touches }) => {
       Matter.Body.setPosition(flower, { x: min_width + flowerRadius, y: flower.position.y });
     }
   });
-
+  // console.log(waterLevel)
 
   return entities;
+
+
 }
 
 export default FlowerPhysics;
