@@ -28,9 +28,20 @@ const FlowerPhysics = (entities, { touches }) => {
     }
   });
 
+  if (waterLevel === 160) {
+    entities.flower.flowerNumber = 100;
+  }
+  if (waterLevel <= 128) {
+    entities.flower.flowerNumber = 75;
+  }
+  if (waterLevel <= 64) {
+    entities.flower.flowerNumber = 25;
+  }
+  if (waterLevel <= 32) {
+    entities.flower.flowerNumber = 0;
+  }
 
   return entities;
-
 
 }
 
