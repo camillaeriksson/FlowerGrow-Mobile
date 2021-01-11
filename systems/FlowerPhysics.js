@@ -27,19 +27,33 @@ const FlowerPhysics = (entities, { touches }) => {
       Matter.Body.setPosition(flower, { x: min_width + flowerRadius, y: flower.position.y });
     }
   });
+  
+  Matter.Events.on(engine, "collisionStart", (event) => {
+    for (var i = 0; i < event.pairs.length; i++) {
+      let pairs = event.pairs[i];
+      if (pairs.bodyA.collisionFilter.group === 5 && pairs.bodyB.collisionFilter.group === -5) {
+      entities.flower.flowerNumber = 'hurt';
+      } if (pairs.bodyA.collisionFilter.group === 5 && pairs.bodyB.collisionFilter.group === -4) {
+      entities.flower.flowerNumber = 100;
+      }
+    }
+  })
 
-  if (waterLevel === 160) {
-    entities.flower.flowerNumber = 100;
-  }
-  if (waterLevel <= 128) {
-    entities.flower.flowerNumber = 75;
-  }
-  if (waterLevel <= 64) {
-    entities.flower.flowerNumber = 25;
-  }
-  if (waterLevel <= 32) {
-    entities.flower.flowerNumber = 0;
-  }
+  Matter.Events.on(engine, "collisionEnd", (event) => {
+    if (waterLevel === 160) {
+      entities.flower.flowerNumber = 100;
+    }
+    if (waterLevel <= 128) {
+      entities.flower.flowerNumber = 75;
+    }
+    if (waterLevel <= 64) {
+      entities.flower.flowerNumber = 25;
+    }
+    if (waterLevel <= 32) {
+      entities.flower.flowerNumber = 0;
+    }
+  })
+
 
   return entities;
 
