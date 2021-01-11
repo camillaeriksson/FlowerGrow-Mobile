@@ -91,7 +91,7 @@ export default class GameArea extends Component {
 
     return {
       physics: { engine: engine, world: world },
-      flower: { body: flower, size: [60, 60], renderer: Flower },
+      flower: { body: flower, size: [60, 60], flowerNumber: 100, renderer: Flower },
       grass: { body: grass, size: [max_width, 200], color: 'green', renderer: Grass },
       pot: { body: pot, size: [100, 80], renderer: Pot},
       // badCloud1: { body: badCloud1, size: [117, 60], renderer: BadCloud},

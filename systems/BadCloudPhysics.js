@@ -33,7 +33,6 @@ const spawnBadClouds = (world, entities) => {
     'category': 10,
     'mask': 20
   }
-
 }
 
 const BadCloudPhysics = (entities) => {
