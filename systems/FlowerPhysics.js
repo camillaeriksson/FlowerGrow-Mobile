@@ -6,25 +6,26 @@ const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
 const min_width = 0;
 
-export const updateFlower = (world, entities, flowerNumber) => {
+// export const updateFlower = (world, entities, flowerNumber, flowerX, flowerY) => {
+//   Matter.World.remove(world, entities.flower.body)
 
-  let flower = Matter.Bodies.rectangle(max_width / 2, max_height / 2, 60, 60, {isStatic: true});
+//   let flower = Matter.Bodies.rectangle(flowerX, flowerY, 60, 60, {isStatic: true});
 
-  Matter.World.add(world, [flower]);
+//   Matter.World.add(world, [flower]);
 
-  entities['flower'] = { 
-    body: flower, 
-    size: [60, 60],
-    flowerNumber: flowerNumber,
-    renderer: Flower 
-  }
+//   entities['flower'] = { 
+//     body: flower, 
+//     size: [60, 60],
+//     flowerNumber: flowerNumber,
+//     renderer: Flower 
+//   }
 
-  flower.collisionFilter = {
-    'group': 5,
-    'category': 20,
-    'mask': 10
-    }
-}
+//   // flower.collisionFilter = {
+//   //   'group': 5,
+//   //   'category': 20,
+//   //   'mask': 10
+//   //   }
+// }
 
 const FlowerPhysics = (entities, { touches }) => {
   let flower = entities.flower.body;

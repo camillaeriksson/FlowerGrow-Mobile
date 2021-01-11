@@ -32,6 +32,9 @@ const WaterMeterPhysics = (entities, onEvent) => {
   let engine = entities.physics.engine;
   let total_time = parseInt(Math.floor(engine.timing.timestamp));
   let flowerNumber = 0;
+  let flower = entities.flower.body;
+  // let flowerX = flower.position.x
+  // let flowerY = flower.position.y
   // let flowerNumber = '';
 
   // if (waterLevel < 128) {
@@ -44,10 +47,11 @@ const WaterMeterPhysics = (entities, onEvent) => {
 
   if (onEvent.events.length) {
     if (onEvent.events[0].type === 'score_down') {
-      delete(entities['flower'])
-      updateFlower(world, entities, flowerNumber)
-      waterLevel -= 20;
-      newWaterMeterY +=20;
+      flower.flowerNumber = 0
+      // // delete(entities['flower'])
+      // updateFlower(world, entities, flowerNumber, flowerX, flowerY)
+      waterLevel -= 32;
+      newWaterMeterY +=32;
       delete(entities['waterMeter'])
       updateWaterMeter(world, entities)
       if (waterLevel === 0) {
