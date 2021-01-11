@@ -47,10 +47,10 @@ export default class GameArea extends Component {
     let grass = Matter.Bodies.rectangle(max_width / 2, max_height - 100, max_width, 200, {isSensor: true});
     let pot = Matter.Bodies.rectangle(max_width / 2, max_height - 140, 100, 80, {isSensor: true});
     let waterMeterBackground = Matter.Bodies.rectangle(20, max_height - 300, 30, 160, { isStatic: true });
-    //let stem = Matter.Bodies.rectangle(max_width / 2, max_height / 2 + 35, 5, 20);
+    let stem = Matter.Bodies.rectangle(max_width / 2, max_height / 2 + 35, 5, 20);
     
 
-    Matter.World.add(world, [grass, flower, pot, waterMeterBackground]);
+    Matter.World.add(world, [grass, flower, pot, waterMeterBackground, stem]);
 
     flower.collisionFilter = {
     'group': 5,
@@ -99,7 +99,7 @@ export default class GameArea extends Component {
       // badCloud1: { body: badCloud1, size: [117, 60], renderer: BadCloud},
       // badCloud2: { body: badCloud2, size: [117, 60], renderer: BadCloud},
       waterMeterBackground: { body: waterMeterBackground, color: 'grey', size: [30, 160], renderer: WaterMeterBackground},
-      //stem: { body: stem, color: 'green', size: [5, 20], renderer: Stem }
+      stem: { body: stem, color: 'green', size: [5, 20], renderer: Stem }
     }
   }
 
