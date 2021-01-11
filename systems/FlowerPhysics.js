@@ -8,9 +8,8 @@ const min_width = 0;
 
 const FlowerPhysics = (entities, { touches }) => {
   let flower = entities.flower.body;
-  let waterLevel = entities.flower.waterLevel
+  let waterLevel = entities.waterMeter.waterLevel
   let engine = entities.physics.engine;
-  let world = entities.physics.world;
   let total_seconds = parseInt(Math.floor(engine.timing.timestamp / 1000));
   
   if (total_seconds < 2) {
@@ -28,7 +27,7 @@ const FlowerPhysics = (entities, { touches }) => {
       Matter.Body.setPosition(flower, { x: min_width + flowerRadius, y: flower.position.y });
     }
   });
-  // console.log(waterLevel)
+
 
   return entities;
 
