@@ -121,7 +121,6 @@ export default class GameArea extends Component {
   }
 
   resetGame = () => {
-    resetWaterLevel();
     this.gameEngine.swap(this.setupWorld());
     this.setState({
       waterLevel: 160,
