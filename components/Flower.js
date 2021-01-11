@@ -9,6 +9,8 @@ export default class Flower extends Component {
     const x = this.props.body.position.x - width / 2;
     const y = this.props.body.position.y - height / 2;
 
+    let flowerImage = Images['flower_' + this.props.flowerNumber];
+
     return (
       <Image 
         style={{
@@ -19,7 +21,7 @@ export default class Flower extends Component {
           height: height
         }} 
         resizeMode="stretch"
-        source={Images['flower_100']}
+        source={flowerImage}
         />
     )
   }
