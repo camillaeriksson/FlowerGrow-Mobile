@@ -16,7 +16,8 @@ export default class Flower extends Component {
           top: y,
           left: x,
           width: width,
-          height: height
+          height: height,
+          zIndex: 100
         }} 
         resizeMode="stretch"
         source={Images['flower_100']}
