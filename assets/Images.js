@@ -9,5 +9,7 @@ export default Images = {
   goodCloud: require('./good_cloud.png'),
   flower_100: require('./flower_100.png'),
   logo: require('./logo.png'),
-  flower_0: require('./flower_0.png')
+  flower_0: require('./flower_0.png'),
+  bee_left: require('./beeLeft.png'),
+  bee_right: require('./beeRight.png')
 }
