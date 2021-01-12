@@ -14,7 +14,7 @@ import WaterMeterBackground from './components/WaterMeterBackground';
 import { resetWaterLevel } from './systems/WaterMeterPhysics';
 import StartScreen from './components/StartScreen';
 import GameOverScreen from './components/GameOverScreen';
-import Stem from './components/Stem';
+//import Stem from './components/Stem';
 
 const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
