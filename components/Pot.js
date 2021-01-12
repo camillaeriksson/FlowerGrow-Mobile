@@ -16,7 +16,8 @@ export default class Pot extends Component {
         width: width,
         height: height,
         top: y,
-        left: x
+        left: x,
+        zIndex: 100
       }}
       source={Images['pot']} />
     ) 

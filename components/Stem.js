@@ -16,7 +16,7 @@ export default class Stem extends Component {
         height: height,
         top: y,
         left: x,
-        backgroundColor: this.props.color,
+        backgroundColor: this.props.color
       }}
       />
     ) 
