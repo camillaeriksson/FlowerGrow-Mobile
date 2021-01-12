@@ -11,6 +11,7 @@ import Grass from './components/Grass';
 import Pot from './components/Pot';
 import Flower from './components/Flower';
 import WaterMeterBackground from './components/WaterMeterBackground';
+import WaterMeter from './components/WaterMeter';
 import { resetWaterLevel } from './systems/WaterMeterPhysics';
 import StartScreen from './components/StartScreen';
 import GameOverScreen from './components/GameOverScreen';
@@ -46,9 +47,9 @@ export default class GameArea extends Component {
     let grass = Matter.Bodies.rectangle(max_width / 2, max_height - 100, max_width, 200, {isSensor: true});
     let pot = Matter.Bodies.rectangle(max_width / 2, max_height - 140, 100, 80, {isSensor: true});
     let waterMeterBackground = Matter.Bodies.rectangle(20, max_height - 300, 30, 160, { isStatic: true });
-    
+    let waterMeter = Matter.Bodies.rectangle(20, max_height - 300, 30, 160, { isStatic: true });
 
-    Matter.World.add(world, [grass, flower, pot, waterMeterBackground]);
+    Matter.World.add(world, [grass, flower, pot, waterMeterBackground, waterMeter]);
 
     flower.collisionFilter = {
     'group': 5,
@@ -91,12 +92,11 @@ export default class GameArea extends Component {
 
     return {
       physics: { engine: engine, world: world },
-      flower: { body: flower, size: [60, 60], renderer: Flower },
+      flower: { body: flower, size: [60, 60], flowerNumber: 100, renderer: Flower },
       grass: { body: grass, size: [max_width, 200], color: 'green', renderer: Grass },
       pot: { body: pot, size: [100, 80], renderer: Pot},
-      // badCloud1: { body: badCloud1, size: [117, 60], renderer: BadCloud},
-      // badCloud2: { body: badCloud2, size: [117, 60], renderer: BadCloud},
-      waterMeterBackground: { body: waterMeterBackground, color: 'grey', size: [30, 160], renderer: WaterMeterBackground}
+      waterMeterBackground: { body: waterMeterBackground, color: 'grey', size: [30, 160], renderer: WaterMeterBackground},
+      waterMeter: { body: waterMeter, color: '#1F63E0', size: [30, 160], waterLevel: 160, newWaterMeterY: max_height - 300, renderer: WaterMeter}
     }
   }
 
@@ -121,7 +121,6 @@ export default class GameArea extends Component {
   }
 
   resetGame = () => {
-    resetWaterLevel();
     this.gameEngine.swap(this.setupWorld());
     this.setState({
       waterLevel: 160,
