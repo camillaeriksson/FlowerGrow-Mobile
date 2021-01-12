@@ -7,13 +7,15 @@ const max_width = Dimensions.get('screen').width;
 
 let bees = 0;
 
-const randomizeNumber = (min, max) => {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
 const spawnBees = (world, entities) => {
 
-  let bee = Matter.Bodies.rectangle(0, randomizeNumber(0, max_height), 40, 40, {isStatic: true});
+  let beeStartingPointX = [0, max_width];
+  let beeStartingPointXToUse = beeStartingPointX[Math.floor(Math.random() * beeStartingPointX.length)]
+
+  let beeStartingPointY = [0, max_height];
+  let beeStartingPointYToUse = beeStartingPointY[Math.floor(Math.random() * beeStartingPointY.length)]
+
+  let bee = Matter.Bodies.rectangle(beeStartingPointXToUse, beeStartingPointYToUse, 40, 40, {isStatic: true});
 
   Matter.World.add(world, [bee]);
 
@@ -67,14 +69,14 @@ const BeePhysics = (entities) => {
         if (entities[key].body.position.y <= flower.position.y) {
           // If bee is to the left of flower
           if (entities[key].body.position.x <= flower.position.x) {
-            entities[key].beeDirection = 'left'
+            entities[key].beeDirection = 'right'
           Matter.Body.translate(entities[key].body, {
             x: +1,
             y: +1
           })
           // If bee is to the right of flower
           } else {
-            entities[key].beeDirection = 'right'
+            entities[key].beeDirection = 'left'
             Matter.Body.translate(entities[key].body, {
               x: -1,
               y: +1
@@ -84,14 +86,14 @@ const BeePhysics = (entities) => {
         } else {
           // If bee is to the left of flower
           if (entities[key].body.position.x <= flower.position.x) {
-            entities[key].beeDirection = 'left'
+            entities[key].beeDirection = 'right'
             Matter.Body.translate(entities[key].body, {
               x: +1,
               y: -1
             })
             // If bee is to the right of flower
             } else {
-              entities[key].beeDirection = 'right'
+              entities[key].beeDirection = 'left'
               Matter.Body.translate(entities[key].body, {
                 x: -1,
                 y: -1
