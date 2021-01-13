@@ -38,7 +38,7 @@ const spawnBees = (world, entities) => {
 
 }
 
-const BeePhysics = (entities) => {
+const BeePhysics = (entities, {touches}) => {
   let world = entities.physics.world;
   let engine = entities.physics.engine;
   let total_time = parseInt(Math.floor(engine.timing.timestamp));
@@ -136,12 +136,20 @@ const BeePhysics = (entities) => {
         // If bee goes off screen
         if (beePositionX < 0 || beePositionX > max_width) {
           bee.beeHitFlower = false;
-          Matter.Body.setPosition(entities[key].body, {
+          Matter.Body.setPosition(bee.body, {
             x: beeStartingPointXToUse, 
             y: beeStartingPointYToUse
           });
         }
       }
+      // Check for press on bee
+      touches.filter(t => t.type === 'press').forEach(t => {
+        let touchX = Math.floor(t.event.locationX);
+        let touchY = Math.floor(t.event.locationY);
+        if (touchX === beePositionX && touchY === beePositionY) {
+          console.log('träff')
+        }
+      });
     }
   });
 
