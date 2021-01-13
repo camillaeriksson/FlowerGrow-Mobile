@@ -1,4 +1,4 @@
-import Matter from 'matter-js';
+import Matter, { Constraint, World } from 'matter-js';
 import { Dimensions } from 'react-native';
 import Stem from '../components/Stem';
 
@@ -7,7 +7,7 @@ import Stem from '../components/Stem';
 const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
 
-const createStemPoints = (world, entities) => {
+/* const createStemPoints = (world, entities) => {
 
   let stemPoint = Matter.Bodies.rectangle(max_width / 2, max_height / 2 + 250, 3, 350);
 
@@ -21,32 +21,38 @@ const createStemPoints = (world, entities) => {
     renderer: Stem
   }
 
-}
+} */
 
 const StemPhysics = (entities) => {
-  let world = entities.physics.world;
+  let engine = entities.physics.engine;
   let flower = entities.flower.body;
+  let stem = entities.stem.body;
 
-  createStemPoints(world, entities)
+  Matter.Body.setPosition(stem, {x: flower.position.x, y: flower.position.y + 200});
 
-  /*   var options = {
-      bodyA: stem,
-      bodyB: flower,
-      length: 0.5,
-    }
+  //createStemPoints(world, entities)
 
-    var constraint = Constraint.create(options);
-    World.add(engine.world, constraint);
-  */
+  /* var options = {
+    bodyA: stem,
+    bodyB: flower,
+    pointA: {x: 0, y: 0},
+    pointB: {x: 0, y: 170},
+    stiffness: 1,
+    length: 0,
+  }
 
-  Object.keys(entities).forEach(key => {
+  var constraint = Constraint.create(options);
+  World.add(engine.world, constraint); */
+  
+
+  /* Object.keys(entities).forEach(key => {
     if (key.indexOf('stemPoint') === 0) {
       Matter.Body.setPosition(entities[key].body, {
         x: flower.position.x, 
         y: max_height / 2 + 250
       });
     }
-  });
+  }); */
 
   return entities;
 
