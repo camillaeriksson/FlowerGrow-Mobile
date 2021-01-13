@@ -60,6 +60,8 @@ const BeePhysics = (entities, {touches}) => {
       let beePositionX = Math.floor(entities[key].body.position.x);
       let beePositionY = Math.floor(entities[key].body.position.y);
       let bee = entities[key];
+      let beePointsToMoveTo = [1, 5];
+      let beeShakeYPoint = beePointsToMoveTo[Math.floor(Math.random() * beePointsToMoveTo.length)];
 
       // Check for press on bee
       touches.filter(t => t.type === 'press').forEach(t => {
@@ -75,7 +77,7 @@ const BeePhysics = (entities, {touches}) => {
           console.log('träff')
         }
       });
-
+    
       // Applies force to the bee upwards in the same pace as the gravity, since the bee can't be static
       Matter.Body.applyForce(bee.body, bee.body.position, { x: bee.body.mass * 0, y: -(bee.body.mass * engine.world.gravity.y) / 1000 })
       // If the bee hasn't hit the flower
@@ -90,13 +92,13 @@ const BeePhysics = (entities, {touches}) => {
           if (beePositionY <= flowerPositionY) {
             Matter.Body.translate(bee.body, {
               x: 0,
-              y: +1
+              y: beeShakeYPoint
             })
           } else {
             // If bee is over flower
             Matter.Body.translate(bee.body, {
               x: 0,
-              y: -1
+              y: -beeShakeYPoint
             });
           }
           // If bee and flower dosen't have same x position
@@ -108,14 +110,14 @@ const BeePhysics = (entities, {touches}) => {
               bee.beeDirection = 'right'
               Matter.Body.translate(bee.body, {
                 x: +1,
-                y: +1
+                y: beeShakeYPoint
               })
             // If bee is to the right of flower
             } else {
               bee.beeDirection = 'left'
               Matter.Body.translate(bee.body, {
                 x: -1,
-                y: +1
+                y: beeShakeYPoint
               });
             }
           // If bee is over flower
@@ -125,14 +127,14 @@ const BeePhysics = (entities, {touches}) => {
               bee.beeDirection = 'right'
               Matter.Body.translate(bee.body, {
                 x: +1,
-                y: -1
+                y: -beeShakeYPoint
               })
             // If bee is to the right of flower
             } else {
               bee.beeDirection = 'left'
               Matter.Body.translate(bee.body, {
                 x: -1,
-                y: -1
+                y: -beeShakeYPoint
               });
             }
           }
@@ -142,12 +144,12 @@ const BeePhysics = (entities, {touches}) => {
         if (bee.beeDirection === 'right') {
           Matter.Body.translate(bee.body, {
             x: +2,
-            y: -2
+            y: -beeShakeYPoint
           });
         } else {
           Matter.Body.translate(bee.body, {
             x: -2,
-            y: -2
+            y: -beeShakeYPoint
           });
         }
         // If bee goes off screen

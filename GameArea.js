@@ -4,7 +4,7 @@ import Systems from './systems'
 import { GameEngine } from 'react-native-game-engine';
 import Matter from 'matter-js';
 
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, Pressable } from 'react-native';
 import { Dimensions } from 'react-native';
 
 import Grass from './components/Grass';
@@ -150,12 +150,12 @@ export default class GameArea extends Component {
         />
         <Text style={styles.score}>{this.state.waterLevel}</Text>
         <Text style={styles.scoreMeter}>{this.state.time}m</Text>
-        {this.state.showGameOverScreen && !this.state.running && <TouchableOpacity onPress={this.resetGame} style={styles.fullScreenButton}>
-          <GameOverScreen />
-        </TouchableOpacity>}
-        {this.state.showStartScreen && !this.state.running && <TouchableOpacity onPress={this.startGame} style={styles.fullScreenButton}>
+        {this.state.showGameOverScreen && !this.state.running && <Pressable onPress={this.resetGame} style={styles.fullScreenButton}>
+          <GameOverScreen score={this.state.time}/>
+        </Pressable>}
+        {this.state.showStartScreen && !this.state.running && <Pressable onPress={this.startGame} style={styles.fullScreenButton}>
           <StartScreen />
-        </TouchableOpacity>}
+        </Pressable>}
       </View>
     )
   }
