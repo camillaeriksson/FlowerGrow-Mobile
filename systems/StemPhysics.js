@@ -19,7 +19,7 @@ const max_width = Dimensions.get('screen').width;
     color: 'green',
     size: [3, 350],
     renderer: Stem
-  }
+  } 
 
 } */
 
@@ -27,8 +27,13 @@ const StemPhysics = (entities) => {
   let engine = entities.physics.engine;
   let flower = entities.flower.body;
   let stem = entities.stem.body;
+  let stemHeight = max_height - flower.position.y
 
-  Matter.Body.setPosition(stem, {x: flower.position.x, y: flower.position.y + 200});
+  stem.stemHeight = stemHeight
+
+  Matter.Body.setPosition(stem, {x: flower.position.x, y: flower.position.y + 230 });
+
+  //console.log('flower', max_height - flower.position.y, 'stemheight', stemHeight)
 
   //createStemPoints(world, entities)
 
