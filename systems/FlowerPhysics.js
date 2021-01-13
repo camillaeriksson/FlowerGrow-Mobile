@@ -15,16 +15,18 @@ const FlowerPhysics = (entities, { touches }) => {
   }
   
   // Function for the touch movement of the flower
-  touches.filter(t => t.type === 'move').forEach(t => {
-    let touchEvent = t.delta.pageX
-    const flowerRadius = 30;
-      Matter.Body.translate(flower, { x: touchEvent, y: 0 });
-    if (flower.position.x + flowerRadius > max_width) {
-      Matter.Body.setPosition(flower, { x: max_width - flowerRadius, y: flower.position.y });
-    } if (flower.position.x - flowerRadius < min_width) {
-      Matter.Body.setPosition(flower, { x: min_width + flowerRadius, y: flower.position.y });
-    }
-  });
+  if (total_seconds > 2.6) {
+    touches.filter(t => t.type === 'move').forEach(t => {
+      let touchEvent = t.delta.pageX
+      const flowerRadius = 30;
+        Matter.Body.translate(flower, { x: touchEvent, y: 0 });
+      if (flower.position.x + flowerRadius > max_width) {
+        Matter.Body.setPosition(flower, { x: max_width - flowerRadius, y: flower.position.y });
+      } if (flower.position.x - flowerRadius < min_width) {
+        Matter.Body.setPosition(flower, { x: min_width + flowerRadius, y: flower.position.y });
+      }
+    });
+  }
   
   Matter.Events.on(engine, "collisionStart", (event) => {
     for (var i = 0; i < event.pairs.length; i++) {
