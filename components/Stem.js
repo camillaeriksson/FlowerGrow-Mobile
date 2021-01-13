@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Image } from 'react-native';
-import Images from '../assets/Images';
+import { View } from 'react-native';
 
-export default class Pot extends Component {
+export default class Stem extends Component {
   render() {
   const width = this.props.size[0];
   const height = this.props.size[1]; 
@@ -10,16 +9,16 @@ export default class Pot extends Component {
   const y = this.props.body.position.y - height / 2;
 
     return (
-      <Image 
+      <View 
       style={{
         position: 'absolute',
         width: width,
         height: height,
         top: y,
         left: x,
-        zIndex: 100
+        backgroundColor: this.props.color
       }}
-      source={Images['pot']} />
+      />
     ) 
   } 
 }

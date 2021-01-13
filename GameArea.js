@@ -12,9 +12,9 @@ import Pot from './components/Pot';
 import Flower from './components/Flower';
 import WaterMeterBackground from './components/WaterMeterBackground';
 import WaterMeter from './components/WaterMeter';
-import { resetWaterLevel } from './systems/WaterMeterPhysics';
 import StartScreen from './components/StartScreen';
 import GameOverScreen from './components/GameOverScreen';
+import Stem from './components/Stem';
 
 const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
@@ -47,9 +47,10 @@ export default class GameArea extends Component {
     let grass = Matter.Bodies.rectangle(max_width / 2, max_height - 100, max_width, 200, {isSensor: true});
     let pot = Matter.Bodies.rectangle(max_width / 2, max_height - 140, 100, 80, {isSensor: true});
     let waterMeterBackground = Matter.Bodies.rectangle(20, max_height - 300, 30, 160, { isStatic: true });
+    let stem = Matter.Bodies.rectangle(max_width / 2, max_height + 500, 5, 800);
     let waterMeter = Matter.Bodies.rectangle(20, max_height - 300, 30, 160, { isStatic: true });
 
-    Matter.World.add(world, [grass, flower, pot, waterMeterBackground, waterMeter]);
+    Matter.World.add(world, [grass, flower, pot, waterMeterBackground, waterMeter, stem]);
 
     flower.collisionFilter = {
     'group': 5,
@@ -84,7 +85,7 @@ export default class GameArea extends Component {
       if (this.state.waterLevel === 0) {
         this.gameEngine.dispatch({ type: "game_over"});
       }
-      if (this.state.time === 2) {
+      if (this.state.time === 1) {
         engine.world.gravity.y = 0.05;
       }
     });
@@ -95,6 +96,9 @@ export default class GameArea extends Component {
       flower: { body: flower, size: [60, 60], flowerNumber: 100, renderer: Flower },
       grass: { body: grass, size: [max_width, 200], color: 'green', renderer: Grass },
       pot: { body: pot, size: [100, 80], renderer: Pot},
+      // badCloud1: { body: badCloud1, size: [117, 60], renderer: BadCloud},
+      // badCloud2: { body: badCloud2, size: [117, 60], renderer: BadCloud},
+      stem: { body: stem, color: 'green', size: [5, 800], renderer: Stem },
       waterMeterBackground: { body: waterMeterBackground, color: 'grey', size: [30, 160], renderer: WaterMeterBackground},
       waterMeter: { body: waterMeter, color: '#1F63E0', size: [30, 160], waterLevel: 160, newWaterMeterY: max_height - 300, renderer: WaterMeter}
     }
