@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Image } from 'react-native';
 import Images from '../assets/Images';
 
-export default class Pot extends Component {
+export default class GoodCloud extends Component {
   render() {
   const width = this.props.size[0];
   const height = this.props.size[1]; 
@@ -19,7 +19,9 @@ export default class Pot extends Component {
         left: x,
         zIndex: 100
       }}
-      source={Images['pot']} />
+      resizeMode='stretch'
+      source={Images['goodCloud']}
+      />
     ) 
   } 
 }

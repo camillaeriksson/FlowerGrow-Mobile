@@ -4,9 +4,9 @@ import { View } from 'react-native';
 export default class WaterMeter extends Component {
   render() {
   const width = this.props.size[0];
-  const height = this.props.size[1]; 
+  const height = this.props.waterLevel; 
   const x = this.props.body.position.x;
-  const y = this.props.body.position.y;
+  const y = this.props.newWaterMeterY;
 
     return (
         <View style={{
