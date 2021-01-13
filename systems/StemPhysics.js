@@ -31,7 +31,7 @@ const StemPhysics = (entities) => {
 
   stem.stemHeight = stemHeight
 
-  Matter.Body.setPosition(stem, {x: flower.position.x, y: flower.position.y + 230 });
+  Matter.Body.setPosition(stem, {x: flower.position.x, y: flower.position.y + 400});
 
   //console.log('flower', max_height - flower.position.y, 'stemheight', stemHeight)
 
