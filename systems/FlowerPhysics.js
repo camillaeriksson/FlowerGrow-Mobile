@@ -10,7 +10,7 @@ const FlowerPhysics = (entities, { touches }) => {
   let engine = entities.physics.engine;
   let total_seconds = parseInt(Math.floor(engine.timing.timestamp / 1000));
   
-  if (total_seconds < 2.2) {
+  if (total_seconds < 2) {
     Matter.Body.translate(flower, { x: 0, y: -4 });
   }
   

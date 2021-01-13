@@ -96,8 +96,6 @@ export default class GameArea extends Component {
       flower: { body: flower, size: [60, 60], flowerNumber: 100, renderer: Flower },
       grass: { body: grass, size: [max_width, 200], color: 'green', renderer: Grass },
       pot: { body: pot, size: [100, 80], renderer: Pot},
-      // badCloud1: { body: badCloud1, size: [117, 60], renderer: BadCloud},
-      // badCloud2: { body: badCloud2, size: [117, 60], renderer: BadCloud},
       stem: { body: stem, color: 'green', size: [5, 800], renderer: Stem },
       waterMeterBackground: { body: waterMeterBackground, color: 'grey', size: [30, 160], renderer: WaterMeterBackground},
       waterMeter: { body: waterMeter, color: '#1F63E0', size: [30, 160], waterLevel: 160, newWaterMeterY: max_height - 300, renderer: WaterMeter}
