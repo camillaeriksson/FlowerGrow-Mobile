@@ -41,10 +41,10 @@ const BadCloudPhysics = (entities) => {
   let total_time = parseInt(Math.floor(engine.timing.timestamp));
 
   if (total_time > 2100 && total_time < 2135){
-    spawnBadClouds(world, entities);
-    spawnBadClouds(world, entities);
-    spawnBadClouds(world, entities);
-    spawnBadClouds(world, entities);
+    // spawnBadClouds(world, entities);
+    // spawnBadClouds(world, entities);
+    // spawnBadClouds(world, entities);
+    // spawnBadClouds(world, entities);
   }
 
   Object.keys(entities).forEach(key => {

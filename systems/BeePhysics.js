@@ -16,7 +16,7 @@ const spawnBees = (world, entities) => {
   let beeStartingPointXToUse = beeStartingPointX[Math.floor(Math.random() * beeStartingPointX.length)];
   let beeStartingPointYToUse = beeStartingPointY[Math.floor(Math.random() * beeStartingPointY.length)];
 
-  let bee = Matter.Bodies.rectangle(beeStartingPointXToUse, beeStartingPointYToUse, 40, 40, {isStatic: true});
+  let bee = Matter.Bodies.rectangle(beeStartingPointXToUse, beeStartingPointYToUse, 40, 40, {isSensor: true});
 
   Matter.World.add(world, [bee]);
 
@@ -30,19 +30,12 @@ const spawnBees = (world, entities) => {
 
   bees += 1;
 
-  // badCloud.collisionFilter = {
-  //   'group': -5,
-  //   'category': 10,
-  //   'mask': 20
-  // }
+  bee.collisionFilter = {
+    'group': -5,
+    'category': 10,
+    'mask': 20
+  }
 
-}
-
-const buzzAwayAfterHitFlower = (bee) => {
-  Matter.Body.translate(bee, {
-    x: +2,
-    y: +2
-  });
 }
 
 const BeePhysics = (entities) => {
@@ -66,6 +59,8 @@ const BeePhysics = (entities) => {
       let beePositionX = Math.floor(entities[key].body.position.x);
       let beePositionY = Math.floor(entities[key].body.position.y);
       let bee = entities[key];
+      // Applies force to the bee upwards in the same pace as the gravity, since the bee can't be static
+      Matter.Body.applyForce(bee.body, bee.body.position, { x: bee.body.mass * 0, y: -(bee.body.mass * engine.world.gravity.y) / 1000 })
       // If the bee hasn't hit the flower
       if (!bee.beeHitFlower) {
         // If bee and flower have same x position
