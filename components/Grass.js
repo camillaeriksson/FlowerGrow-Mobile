@@ -19,6 +19,7 @@ export default class Grass extends Component {
             top: y,
             width: width,
             height: height,
+            zIndex: 100
         }}
         resizeMode="stretch"
         source={grassImage} />
