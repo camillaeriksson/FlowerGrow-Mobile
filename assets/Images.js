@@ -15,4 +15,7 @@ export default Images = {
   flower_100: require('./flower_100.png'),
   flower_hurt: require('./flower_hurt.png'),
   logo: require('./logo.png'),
+  flower_0: require('./flower_0.png'),
+  bee_left: require('./beeLeft.png'),
+  bee_right: require('./beeRight.png')
 }
