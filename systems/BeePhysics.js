@@ -42,6 +42,8 @@ const BeePhysics = (entities) => {
   let engine = entities.physics.engine;
   let total_time = parseInt(Math.floor(engine.timing.timestamp));
   let flower = entities.flower.body;
+  let flowerPositionX = Math.floor(flower.position.x)
+  let flowerPositionY = Math.floor(flower.position.y)
 
   // Spawn a bee if time is between the given values
   if (total_time > 2100 && total_time < 2135){
@@ -52,9 +54,16 @@ const BeePhysics = (entities) => {
   Object.keys(entities).forEach(key => {
     if (key.indexOf("bee") === 0) {
       // If bee and flower have same x position
-      if (entities[key].body.position.x === Math.floor(flower.position.x)) {
+      if (entities[key].body.position.x === flowerPositionX) {
+        // If bee and flower has same position
+        if (entities[key].body.position.y === flowerPositionY) {
+          Matter.Body.translate(entities[key].body, {
+            x: +2,
+            y: +2
+          })
+        }
         // If bee is under flower
-        if (entities[key].body.position.y < flower.position.y) {
+        if (entities[key].body.position.y <= flowerPositionY) {
           Matter.Body.translate(entities[key].body, {
             x: 0,
             y: +1
@@ -69,9 +78,9 @@ const BeePhysics = (entities) => {
         // If bee and flower dosen't have same x position
       } else {
         // If bee is under flower
-        if (entities[key].body.position.y < flower.position.y) {
+        if (entities[key].body.position.y <= flowerPositionY) {
           // If bee is to the left of flower
-          if (entities[key].body.position.x < flower.position.x) {
+          if (entities[key].body.position.x <= flowerPositionX) {
             entities[key].beeDirection = 'right'
             Matter.Body.translate(entities[key].body, {
               x: +1,
@@ -88,7 +97,7 @@ const BeePhysics = (entities) => {
           // If bee is over flower
         } else {
           // If bee is to the left of flower
-          if (entities[key].body.position.x < flower.position.x) {
+          if (entities[key].body.position.x <= flowerPositionX) {
             entities[key].beeDirection = 'right'
             Matter.Body.translate(entities[key].body, {
               x: +1,
@@ -104,6 +113,13 @@ const BeePhysics = (entities) => {
           }
         }
       }
+      // If the bee is at the same position as flower
+      // if (entities[key].body.position.x === flowerPositionX && entities[key].body.position.y === flowerPositionY){
+      //   Matter.Body.translate(entities[key].body, {
+      //     x: +2,
+      //     y: +2
+      //   });
+      // }
     }
   });
 
