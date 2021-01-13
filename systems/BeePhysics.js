@@ -11,10 +11,10 @@ let bees = 0;
 const spawnBees = (world, entities) => {
 
   let beeStartingPointX = [0, max_width];
-  let beeStartingPointXToUse = beeStartingPointX[Math.floor(Math.random() * beeStartingPointX.length)]
+  let beeStartingPointXToUse = beeStartingPointX[Math.floor(Math.random() * beeStartingPointX.length)];
 
   let beeStartingPointY = [0, max_height];
-  let beeStartingPointYToUse = beeStartingPointY[Math.floor(Math.random() * beeStartingPointY.length)]
+  let beeStartingPointYToUse = beeStartingPointY[Math.floor(Math.random() * beeStartingPointY.length)];
 
   let bee = Matter.Bodies.rectangle(beeStartingPointXToUse, beeStartingPointYToUse, 40, 40, {isStatic: true});
 
