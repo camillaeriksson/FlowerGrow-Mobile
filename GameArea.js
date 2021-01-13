@@ -151,7 +151,7 @@ export default class GameArea extends Component {
         <Text style={styles.score}>{this.state.waterLevel}</Text>
         <Text style={styles.scoreMeter}>{this.state.time}m</Text>
         {this.state.showGameOverScreen && !this.state.running && <TouchableOpacity onPress={this.resetGame} style={styles.fullScreenButton}>
-          <GameOverScreen />
+          <GameOverScreen score={this.state.time}/>
         </TouchableOpacity>}
         {this.state.showStartScreen && !this.state.running && <TouchableOpacity onPress={this.startGame} style={styles.fullScreenButton}>
           <StartScreen />
