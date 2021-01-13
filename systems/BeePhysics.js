@@ -10,6 +10,7 @@ let beeStartingPointY = [0, max_height];
 
 let bees = 0;
 
+
  // Function for creating a bee at random position and adding it to the world
 const spawnBees = (world, entities) => {
 
@@ -59,6 +60,22 @@ const BeePhysics = (entities, {touches}) => {
       let beePositionX = Math.floor(entities[key].body.position.x);
       let beePositionY = Math.floor(entities[key].body.position.y);
       let bee = entities[key];
+
+      // Check for press on bee
+      touches.filter(t => t.type === 'press').forEach(t => {
+        let touchX = Math.floor(t.event.locationX);
+        let touchY = Math.floor(t.event.locationY);
+        let beeMinX = beePositionX -30
+        let beeMaxX = beePositionX +30
+        let beeMinY = beePositionY -30
+        let beeMaxY = beePositionY +30
+        //console.log('x', touchX, 'y', touchY, 'beeX', beePositionX, 'beeY', beePositionY)
+        if (touchX <= beePositionX && touchX >= beeMinX && touchY <= beePositionY && touchY >= beeMinY ||
+          touchX >= beePositionX && touchX <= beeMaxX && touchY >= beePositionY && touchY <= beeMaxY) {
+          console.log('träff')
+        }
+      });
+
       // Applies force to the bee upwards in the same pace as the gravity, since the bee can't be static
       Matter.Body.applyForce(bee.body, bee.body.position, { x: bee.body.mass * 0, y: -(bee.body.mass * engine.world.gravity.y) / 1000 })
       // If the bee hasn't hit the flower
@@ -142,14 +159,6 @@ const BeePhysics = (entities, {touches}) => {
           });
         }
       }
-      // Check for press on bee
-      touches.filter(t => t.type === 'press').forEach(t => {
-        let touchX = Math.floor(t.event.locationX);
-        let touchY = Math.floor(t.event.locationY);
-        if (touchX === beePositionX && touchY === beePositionY) {
-          console.log('träff')
-        }
-      });
     }
   });
 

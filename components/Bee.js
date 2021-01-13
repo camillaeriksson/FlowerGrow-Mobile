@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Image } from 'react-native';
+import { Image, Pressable } from 'react-native';
 import Images from '../assets/Images';
-
 export default class Bee extends Component {
   render() {
   const width = this.props.size[0];
@@ -10,6 +9,7 @@ export default class Bee extends Component {
   const y = this.props.body.position.y - height / 2;
 
   let beeImage = Images['bee_' + this.props.beeDirection];
+
 
     return (
       <Image 
@@ -23,7 +23,7 @@ export default class Bee extends Component {
       }}
       resizeMode="stretch"
       source={beeImage}
-      />
+      ></Image>
     ) 
   } 
 }
