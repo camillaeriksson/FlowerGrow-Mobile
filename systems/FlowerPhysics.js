@@ -13,6 +13,10 @@ const FlowerPhysics = (entities, { touches }) => {
   if (total_seconds < 2) {
     Matter.Body.translate(flower, { x: 0, y: -4 });
   }
+
+  if (total_seconds === 2) {
+    entities.flower.flowerNumber = 100;
+  }
   
   // Function for the touch movement of the flower
   if (total_seconds > 2.6) {
