@@ -77,6 +77,13 @@ const BeePhysics = (entities, {touches}) => {
           bee.beeisDead = true;
         }
       });
+
+      if (bee.beeisDead) {
+        Matter.Body.translate(bee.body, {
+          x: 0,
+          y: 15
+        });
+      }
       
       // If bee is dead and falls out of screen
       if (bee.beeisDead && beePositionY > max_height ) {
