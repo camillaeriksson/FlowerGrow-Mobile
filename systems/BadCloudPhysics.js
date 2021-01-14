@@ -12,7 +12,7 @@ const randomizeNumber = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-// Function for creating a badCloud matter body, adding it to the world and to the entites, and adding collision filter
+// Function for creating a badCloud matter body at random position, adding it to the world and to the entites, and adding collision filter
 const spawnBadClouds = (world, entities) => {
 
   let badCloud = Matter.Bodies.rectangle(randomizeNumber(0, max_width), randomizeNumber(-30, -max_height), 117, 60, {isSensor: true });

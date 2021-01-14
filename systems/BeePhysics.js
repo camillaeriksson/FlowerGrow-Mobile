@@ -5,12 +5,13 @@ import Bee from '../components/Bee';
 const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
 
+// Arrays containing possible starting positions for bee
 let beeStartingPointX = [0, max_width];
 let beeStartingPointY = [0, max_height];
 
 let bees = 0;
 
- // Function for creating a bee at random position and adding it to the world
+// Function for creating a bee matter body at random position, adding it to the world and to the entites, and adding collision filter
 const spawnBees = (world, entities) => {
 
   let beeStartingPointXToUse = beeStartingPointX[Math.floor(Math.random() * beeStartingPointX.length)];
@@ -35,7 +36,6 @@ const spawnBees = (world, entities) => {
     'category': 10,
     'mask': 20
   }
-
 }
 
 const BeePhysics = (entities) => {
@@ -48,7 +48,7 @@ const BeePhysics = (entities) => {
   let beeStartingPointXToUse = beeStartingPointX[Math.floor(Math.random() * beeStartingPointX.length)];
   let beeStartingPointYToUse = beeStartingPointY[Math.floor(Math.random() * beeStartingPointY.length)];
 
-  // Spawn a bee if time is between the given values
+  // Spawning a bee at around 2 sec (can't put a whole second since the engine updates many times during one sec)
   if (total_time > 2100 && total_time < 2135){
     spawnBees(world, entities);
   }
@@ -62,9 +62,9 @@ const BeePhysics = (entities) => {
       let beePointsToMoveTo = [1, 5];
       let beeShakeYPoint = beePointsToMoveTo[Math.floor(Math.random() * beePointsToMoveTo.length)];
 
-
       // Applies force to the bee upwards in the same pace as the gravity, since the bee can't be static
       Matter.Body.applyForce(bee.body, bee.body.position, { x: bee.body.mass * 0, y: -(bee.body.mass * engine.world.gravity.y) / 1000 })
+      
       // If the bee hasn't hit the flower
       if (!bee.beeHitFlower) {
         // If bee and flower have same x position
