@@ -7,6 +7,7 @@ export default Images = {
   badCloud2: require('./bad_cloud2.png'),
   badCloud3: require('./bad_cloud3.png'),
   goodCloud: require('./good_cloud.png'),
+  flower_bud: require('./bud.png'),
   flower_0: require('./flower_0.png'),
   flower_25_brown: require('./flower_25_brown.png'),
   flower_25: require('./flower_25.png'),
