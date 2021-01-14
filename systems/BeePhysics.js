@@ -26,6 +26,7 @@ const spawnBees = (world, entities) => {
     size: [40, 40],
     beeDirection: 'right',
     beeHitFlower: false,
+    beeisDead: false,
     renderer: Bee
   }
 
@@ -71,94 +72,99 @@ const BeePhysics = (entities, {touches}) => {
         let beeMaxX = beePositionX +30
         let beeMinY = beePositionY -30
         let beeMaxY = beePositionY +30
+        console.log('1', bee.beeisDead)
         //console.log('x', touchX, 'y', touchY, 'beeX', beePositionX, 'beeY', beePositionY)
         if (touchX <= beePositionX && touchX >= beeMinX && touchY <= beePositionY && touchY >= beeMinY ||
           touchX >= beePositionX && touchX <= beeMaxX && touchY >= beePositionY && touchY <= beeMaxY) {
           console.log('träff')
+          bee.beeisDead = true
+          console.log('2', bee.beeisDead)
         }
       });
-    
-      // Applies force to the bee upwards in the same pace as the gravity, since the bee can't be static
-      Matter.Body.applyForce(bee.body, bee.body.position, { x: bee.body.mass * 0, y: -(bee.body.mass * engine.world.gravity.y) / 1000 })
-      // If the bee hasn't hit the flower
-      if (!bee.beeHitFlower) {
-        // If bee and flower have same x position
-        if (beePositionX === flowerPositionX) {
-          // If bee and flower has same x and y position
-          if (beePositionY === flowerPositionY) {
-            bee.beeHitFlower = true
-          }
-          // If bee is under flower
-          if (beePositionY <= flowerPositionY) {
-            Matter.Body.translate(bee.body, {
-              x: 0,
-              y: beeShakeYPoint
-            })
+      
+      if (!bee.beeisDead) {
+        // Applies force to the bee upwards in the same pace as the gravity, since the bee can't be static
+        Matter.Body.applyForce(bee.body, bee.body.position, { x: bee.body.mass * 0, y: -(bee.body.mass * engine.world.gravity.y) / 1000 })
+        // If the bee hasn't hit the flower
+        if (!bee.beeHitFlower) {
+          // If bee and flower have same x position
+          if (beePositionX === flowerPositionX) {
+            // If bee and flower has same x and y position
+            if (beePositionY === flowerPositionY) {
+              bee.beeHitFlower = true
+            }
+            // If bee is under flower
+            if (beePositionY <= flowerPositionY) {
+              Matter.Body.translate(bee.body, {
+                x: 0,
+                y: beeShakeYPoint
+              })
+            } else {
+              // If bee is over flower
+              Matter.Body.translate(bee.body, {
+                x: 0,
+                y: -beeShakeYPoint
+              });
+            }
+            // If bee and flower dosen't have same x position
           } else {
+            // If bee is under flower
+            if (beePositionY <= flowerPositionY) {
+              // If bee is to the left of flower
+              if (beePositionX <= flowerPositionX) {
+                bee.beeDirection = 'right'
+                Matter.Body.translate(bee.body, {
+                  x: +1,
+                  y: beeShakeYPoint
+                })
+              // If bee is to the right of flower
+              } else {
+                bee.beeDirection = 'left'
+                Matter.Body.translate(bee.body, {
+                  x: -1,
+                  y: beeShakeYPoint
+                });
+              }
             // If bee is over flower
+            } else {
+              // If bee is to the left of flower
+              if (beePositionX <= flowerPositionX) {
+                bee.beeDirection = 'right'
+                Matter.Body.translate(bee.body, {
+                  x: +1,
+                  y: -beeShakeYPoint
+                })
+              // If bee is to the right of flower
+              } else {
+                bee.beeDirection = 'left'
+                Matter.Body.translate(bee.body, {
+                  x: -1,
+                  y: -beeShakeYPoint
+                });
+              }
+            }
+          }
+        // If the bee hits the flower  
+        } else {
+          if (bee.beeDirection === 'right') {
             Matter.Body.translate(bee.body, {
-              x: 0,
+              x: +2,
+              y: -beeShakeYPoint
+            });
+          } else {
+            Matter.Body.translate(bee.body, {
+              x: -2,
               y: -beeShakeYPoint
             });
           }
-          // If bee and flower dosen't have same x position
-        } else {
-          // If bee is under flower
-          if (beePositionY <= flowerPositionY) {
-            // If bee is to the left of flower
-            if (beePositionX <= flowerPositionX) {
-              bee.beeDirection = 'right'
-              Matter.Body.translate(bee.body, {
-                x: +1,
-                y: beeShakeYPoint
-              })
-            // If bee is to the right of flower
-            } else {
-              bee.beeDirection = 'left'
-              Matter.Body.translate(bee.body, {
-                x: -1,
-                y: beeShakeYPoint
-              });
-            }
-          // If bee is over flower
-          } else {
-            // If bee is to the left of flower
-            if (beePositionX <= flowerPositionX) {
-              bee.beeDirection = 'right'
-              Matter.Body.translate(bee.body, {
-                x: +1,
-                y: -beeShakeYPoint
-              })
-            // If bee is to the right of flower
-            } else {
-              bee.beeDirection = 'left'
-              Matter.Body.translate(bee.body, {
-                x: -1,
-                y: -beeShakeYPoint
-              });
-            }
+          // If bee goes off screen
+          if (beePositionX < 0 || beePositionX > max_width) {
+            bee.beeHitFlower = false;
+            Matter.Body.setPosition(bee.body, {
+              x: beeStartingPointXToUse, 
+              y: beeStartingPointYToUse
+            });
           }
-        }
-      // If the bee hits the flower  
-      } else {
-        if (bee.beeDirection === 'right') {
-          Matter.Body.translate(bee.body, {
-            x: +2,
-            y: -beeShakeYPoint
-          });
-        } else {
-          Matter.Body.translate(bee.body, {
-            x: -2,
-            y: -beeShakeYPoint
-          });
-        }
-        // If bee goes off screen
-        if (beePositionX < 0 || beePositionX > max_width) {
-          bee.beeHitFlower = false;
-          Matter.Body.setPosition(bee.body, {
-            x: beeStartingPointXToUse, 
-            y: beeStartingPointYToUse
-          });
         }
       }
     }
