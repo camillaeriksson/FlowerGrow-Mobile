@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Image } from 'react-native';
 import Images from '../assets/Images';
-
 export default class Bee extends Component {
   render() {
   const width = this.props.size[0];
@@ -11,6 +10,7 @@ export default class Bee extends Component {
 
   // Let the image of the bee depend on the string of the prop (that is depending on location of bee)
   let beeImage = Images['bee_' + this.props.beeDirection];
+
 
     return (
       <Image 
