@@ -78,6 +78,7 @@ const BeePhysics = (entities, {touches}) => {
         }
       });
 
+      // If bee is dead it will fall down with translation only
       if (bee.beeisDead) {
         Matter.Body.translate(bee.body, {
           x: 0,
