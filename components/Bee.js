@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Pressable } from 'react-native';
+import { Image } from 'react-native';
 import Images from '../assets/Images';
 export default class Bee extends Component {
   render() {
@@ -24,7 +24,7 @@ export default class Bee extends Component {
       }}
       resizeMode="stretch"
       source={beeImage}
-      ></Image>
+      />
     ) 
   } 
 }
