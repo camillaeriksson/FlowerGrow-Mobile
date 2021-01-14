@@ -35,13 +35,12 @@ export default class GameArea extends Component {
     this.entities = this.setupWorld();
   }
 
-  
+  // Function for creating a matter engine, all the matter bodies and adding them to the world,
+  // adding collision filters on the bodies, and returning them to entities
   setupWorld = () => {
     let engine = Matter.Engine.create({ enableSleeping: false });
     let world = engine.world;
     engine.world.gravity.y = 0.00;
-
-
 
     let flower = Matter.Bodies.rectangle(max_width / 2, max_height - 140, 60, 60, {isStatic: true});
     let grass = Matter.Bodies.rectangle(max_width / 2, max_height - 100, max_width, 200, {isSensor: true});
@@ -66,25 +65,32 @@ export default class GameArea extends Component {
       'group': 7
     }
 
+    // Function for checking start of collisions
     Matter.Events.on(engine, "collisionStart", (event) => {
       for (var i = 0; i < event.pairs.length; i++) {
         let pairs = event.pairs[i];
+        // If flower collides with bad clouds or bees
         if (pairs.bodyA.collisionFilter.group === 5 && pairs.bodyB.collisionFilter.group === -5) {
         this.gameEngine.dispatch({ type: "score_down"});
+        // If flower collides with good clouds
         } if (pairs.bodyA.collisionFilter.group === 5 && pairs.bodyB.collisionFilter.group === -4) {
         this.gameEngine.dispatch({ type: "score_up"});
         }
       }
     })
 
+    // Function for every time the engine updates
     Matter.Events.on(engine, 'beforeUpdate', (event) => {
+      // Set the run time (which is also the score) to the state
       let total_seconds = parseInt(Math.floor(engine.timing.timestamp / 1000));
       this.setState({
         time: total_seconds
       });
+      // Checking if the water level is 0 and if so, the game is over
       if (this.state.waterLevel === 0) {
         this.gameEngine.dispatch({ type: "game_over"});
       }
+      // Let the gravity start after 1 sec
       if (this.state.time === 1) {
         engine.world.gravity.y = 0.05;
       }
@@ -102,18 +108,25 @@ export default class GameArea extends Component {
     }
   }
 
+  // Function for checking all the dispatched values
   onEvent = (e) => {
+    // Reduce the water level if "score down" is dispatched
     if (e.type === "score_down"){
       this.setState({
         waterLevel: this.state.waterLevel - 32
       });
-    } if (e.type === "score_up") {
+    } 
+    // Increase the water level if "score up" is dispatched
+    if (e.type === "score_up") {
+      // Only if the water level is not full (160 px high)
       if (this.state.waterLevel < 160) {
         this.setState({
-          waterLevel: this.state.waterLevel + 32
-        });
+        waterLevel: this.state.waterLevel + 32
+      });
       }
-    } if (e.type === "game_over") {
+    } 
+    // Stop game loop and show game over screen if "game over" is dispatched
+    if (e.type === "game_over") {
       this.setState({
         running: false,
         showGameOverScreen: true,
@@ -122,6 +135,7 @@ export default class GameArea extends Component {
     }
   }
 
+  // Function for resetting the game loop
   resetGame = () => {
     this.gameEngine.swap(this.setupWorld());
     this.setState({
@@ -131,6 +145,7 @@ export default class GameArea extends Component {
     });
   }
 
+  // Function for start the game loop
   startGame = () => {
     this.setState({
       running: true
