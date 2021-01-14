@@ -26,7 +26,7 @@ const spawnBees = (world, entities) => {
     size: [60, 60],
     beeDirection: 'right',
     beeHitFlower: false,
-    beeisDead: false,
+    beeIsDead: false,
     renderer: Bee
   }
 
@@ -74,23 +74,31 @@ const BeePhysics = (entities, {touches}) => {
         if (touchX <= beePositionX && touchX >= beeMinX && touchY <= beePositionY && touchY >= beeMinY ||
           touchX >= beePositionX && touchX <= beeMaxX && touchY >= beePositionY && touchY <= beeMaxY) {
           bee.beeDirection = 'dead';
-          bee.beeisDead = true;
+          bee.beeIsDead = true;
         }
       });
+
+      // If bee is dead it will fall down with translation only
+      if (bee.beeIsDead) {
+        Matter.Body.translate(bee.body, {
+          x: 0,
+          y: 15
+        });
+      }
       
       // If bee is dead and falls out of screen
-      if (bee.beeisDead && beePositionY > max_height ) {
+      if (bee.beeIsDead && beePositionY > max_height ) {
         Matter.Body.setPosition(bee.body, {
           x: beeStartingPointXToUse, 
           y: beeStartingPointYToUse
         });
-        bee.beeisDead = false;
+        bee.beeIsDead = false;
       }
       
-      // If the bee has been hit/is dead, no force will be added. Gravity will make it fall down
-      if (!bee.beeisDead) {
-        // Applies force to the bee upwards in the same pace as the gravity, since the bee can't be static
-        Matter.Body.applyForce(bee.body, bee.body.position, { x: bee.body.mass * 0, y: -(bee.body.mass * engine.world.gravity.y) / 1000 });
+      // Applies force to the bee upwards in the same pace as the gravity, since the bee can't be static
+      Matter.Body.applyForce(bee.body, bee.body.position, { x: bee.body.mass * 0, y: -(bee.body.mass * engine.world.gravity.y) / 1000 });
+      
+      if (!bee.beeIsDead) {
         // If the bee hasn't hit the flower
         if (!bee.beeHitFlower) {
           // If bee and flower have same x position
