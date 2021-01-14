@@ -10,15 +10,17 @@ const FlowerPhysics = (entities, { touches }) => {
   let engine = entities.physics.engine;
   let total_seconds = parseInt(Math.floor(engine.timing.timestamp / 1000));
   
+  // Make the flower move up from the pot for 2 sec at beginning of game
   if (total_seconds < 2) {
     Matter.Body.translate(flower, { x: 0, y: -4 });
   }
 
+  //Change from bud to flower at 2 sec
   if (total_seconds === 2) {
     entities.flower.flowerNumber = 100;
   }
   
-  // Function for the touch movement of the flower
+  // Moving the flower by touches on the screen
   if (total_seconds > 2.6) {
     touches.filter(t => t.type === 'move').forEach(t => {
       let touchEvent = t.delta.pageX
@@ -32,6 +34,7 @@ const FlowerPhysics = (entities, { touches }) => {
     });
   }
   
+  // Check the start of collisions and changing the flowers face
   Matter.Events.on(engine, "collisionStart", (event) => {
     for (var i = 0; i < event.pairs.length; i++) {
       let pairs = event.pairs[i];
@@ -43,6 +46,7 @@ const FlowerPhysics = (entities, { touches }) => {
     }
   })
 
+  // Check the end of collisions and changing the flowers face depending on water level
   Matter.Events.on(engine, "collisionEnd", (event) => {
     if (waterLevel === 160) {
       entities.flower.flowerNumber = 100;
