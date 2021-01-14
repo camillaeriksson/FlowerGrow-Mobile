@@ -73,6 +73,7 @@ const BeePhysics = (entities, {touches}) => {
         let beeMaxY = beePositionY + 30;
         if (touchX <= beePositionX && touchX >= beeMinX && touchY <= beePositionY && touchY >= beeMinY ||
           touchX >= beePositionX && touchX <= beeMaxX && touchY >= beePositionY && touchY <= beeMaxY) {
+          bee.beeDirection = 'dead'
           bee.beeisDead = true
         }
       });
