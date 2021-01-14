@@ -94,10 +94,10 @@ const BeePhysics = (entities, {touches}) => {
         bee.beeisDead = false;
       }
       
-      // If the bee has been hit/is dead, no force will be added. Gravity will make it fall down
+      // Applies force to the bee upwards in the same pace as the gravity, since the bee can't be static
+      Matter.Body.applyForce(bee.body, bee.body.position, { x: bee.body.mass * 0, y: -(bee.body.mass * engine.world.gravity.y) / 1000 });
+      
       if (!bee.beeisDead) {
-        // Applies force to the bee upwards in the same pace as the gravity, since the bee can't be static
-        Matter.Body.applyForce(bee.body, bee.body.position, { x: bee.body.mass * 0, y: -(bee.body.mass * engine.world.gravity.y) / 1000 });
         // If the bee hasn't hit the flower
         if (!bee.beeHitFlower) {
           // If bee and flower have same x position
