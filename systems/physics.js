@@ -1,3 +1,4 @@
+// File for applying the physics on whole game and updating the loop 
 import Matter from 'matter-js';
 
 const Physics = (entities, {time}) => {
