@@ -99,7 +99,7 @@ export default class GameArea extends Component {
 
     return {
       physics: { engine: engine, world: world },
-      flower: { body: flower, size: [60, 60], flowerNumber: 100, renderer: Flower },
+      flower: { body: flower, size: [60, 60], flowerNumber: "bud", renderer: Flower },
       grass: { body: grass, size: [max_width, 200], color: 'green', renderer: Grass },
       pot: { body: pot, size: [100, 80], renderer: Pot},
       stem: { body: stem, color: 'green', size: [5, 800], renderer: Stem },
