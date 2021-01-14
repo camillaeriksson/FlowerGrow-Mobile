@@ -1,4 +1,4 @@
-import Matter from 'matter-js'
+import Matter from 'matter-js';
 import { Dimensions } from 'react-native';
 import Bee from '../components/Bee';
 
@@ -21,7 +21,7 @@ const spawnBees = (world, entities) => {
 
   Matter.World.add(world, [bee]);
 
-  entities["bee" + (bees + 1)] = {
+  entities['bee' + (bees + 1)] = {
     body: bee,
     size: [60, 60],
     beeDirection: 'right',
@@ -56,7 +56,7 @@ const BeePhysics = (entities, {touches}) => {
 
   // Loop through all the bees and moving them depending on current position
   Object.keys(entities).forEach(key => {
-    if (key.indexOf("bee") === 0) {
+    if (key.indexOf('bee') === 0) {
       let beePositionX = Math.floor(entities[key].body.position.x);
       let beePositionY = Math.floor(entities[key].body.position.y);
       let bee = entities[key];
@@ -73,8 +73,8 @@ const BeePhysics = (entities, {touches}) => {
         let beeMaxY = beePositionY + 30;
         if (touchX <= beePositionX && touchX >= beeMinX && touchY <= beePositionY && touchY >= beeMinY ||
           touchX >= beePositionX && touchX <= beeMaxX && touchY >= beePositionY && touchY <= beeMaxY) {
-          bee.beeDirection = 'dead'
-          bee.beeisDead = true
+          bee.beeDirection = 'dead';
+          bee.beeisDead = true;
         }
       });
       
@@ -90,7 +90,7 @@ const BeePhysics = (entities, {touches}) => {
       // If the bee has been hit/is dead, no force will be added. Gravity will make it fall down
       if (!bee.beeisDead) {
         // Applies force to the bee upwards in the same pace as the gravity, since the bee can't be static
-        Matter.Body.applyForce(bee.body, bee.body.position, { x: bee.body.mass * 0, y: -(bee.body.mass * engine.world.gravity.y) / 1000 })
+        Matter.Body.applyForce(bee.body, bee.body.position, { x: bee.body.mass * 0, y: -(bee.body.mass * engine.world.gravity.y) / 1000 });
         // If the bee hasn't hit the flower
         if (!bee.beeHitFlower) {
           // If bee and flower have same x position
@@ -104,7 +104,7 @@ const BeePhysics = (entities, {touches}) => {
               Matter.Body.translate(bee.body, {
                 x: 0,
                 y: beeShakeYPoint
-              })
+              });
             } else {
               // If bee is over flower
               Matter.Body.translate(bee.body, {
@@ -122,7 +122,7 @@ const BeePhysics = (entities, {touches}) => {
                 Matter.Body.translate(bee.body, {
                   x: +1,
                   y: beeShakeYPoint
-                })
+                });
               // If bee is to the right of flower
               } else {
                 bee.beeDirection = 'left'
@@ -139,7 +139,7 @@ const BeePhysics = (entities, {touches}) => {
                 Matter.Body.translate(bee.body, {
                   x: +1,
                   y: -beeShakeYPoint
-                })
+                });
               // If bee is to the right of flower
               } else {
                 bee.beeDirection = 'left'
