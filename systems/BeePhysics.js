@@ -17,13 +17,13 @@ const spawnBees = (world, entities) => {
   let beeStartingPointXToUse = beeStartingPointX[Math.floor(Math.random() * beeStartingPointX.length)];
   let beeStartingPointYToUse = beeStartingPointY[Math.floor(Math.random() * beeStartingPointY.length)];
 
-  let bee = Matter.Bodies.rectangle(beeStartingPointXToUse, beeStartingPointYToUse, 40, 40, {isSensor: true});
+  let bee = Matter.Bodies.rectangle(beeStartingPointXToUse, beeStartingPointYToUse, 60, 60, {isSensor: true});
 
   Matter.World.add(world, [bee]);
 
   entities["bee" + (bees + 1)] = {
     body: bee,
-    size: [40, 40],
+    size: [60, 60],
     beeDirection: 'right',
     beeHitFlower: false,
     beeisDead: false,
@@ -66,20 +66,26 @@ const BeePhysics = (entities, {touches}) => {
 
       // Check for press on bee
       touches.filter(t => t.type === 'press').forEach(t => {
-        let touchX = Math.floor(t.event.locationX);
-        let touchY = Math.floor(t.event.locationY);
+        let touchX = Math.floor(t.event.pageX);
+        let touchY = Math.floor(t.event.pageY);
         let beeMinX = beePositionX - 30;
         let beeMaxX = beePositionX + 30;
         let beeMinY = beePositionY - 30;
         let beeMaxY = beePositionY + 30;
-        console.log('1', bee.beeisDead)
         if (touchX <= beePositionX && touchX >= beeMinX && touchY <= beePositionY && touchY >= beeMinY ||
           touchX >= beePositionX && touchX <= beeMaxX && touchY >= beePositionY && touchY <= beeMaxY) {
-          console.log('träff')
           bee.beeisDead = true
-          console.log('2', bee.beeisDead)
         }
       });
+      
+      // If bee is dead and falls out of screen
+      if (bee.beeisDead && beePositionY > max_height ) {
+        Matter.Body.setPosition(bee.body, {
+          x: beeStartingPointXToUse, 
+          y: beeStartingPointYToUse
+        });
+        bee.beeisDead = false;
+      }
       
       // If the bee has been hit/is dead, no force will be added. Gravity will make it fall down
       if (!bee.beeisDead) {
