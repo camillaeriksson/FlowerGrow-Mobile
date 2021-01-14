@@ -8,6 +8,7 @@ export default class Bee extends Component {
   const x = this.props.body.position.x - width / 2;
   const y = this.props.body.position.y - height / 2;
 
+  // Let the image of the bee depend on the string of the prop (that is depending on location of bee)
   let beeImage = Images['bee_' + this.props.beeDirection];
 
 

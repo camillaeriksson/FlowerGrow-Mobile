@@ -1,3 +1,4 @@
+// File for exporting all the images with names
 export default Images = {
   background: require('./background.png'),
   pot: require('./pot.png'),

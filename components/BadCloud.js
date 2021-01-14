@@ -9,6 +9,7 @@ export default class BadCloud extends Component {
   const x = this.props.body.position.x - width / 2;
   const y = this.props.body.position.y - height / 2;
 
+  // Let the image of the cloud depend on the number of the prop (that is randomized)
   let cloudImage = Images['badCloud' + this.props.cloudNumber];
 
     return (
