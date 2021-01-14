@@ -3,6 +3,7 @@ export default Images = {
   background: require('./background.png'),
   pot: require('./pot.png'),
   grass: require('./grass.png'),
+  stem: require('./stem_2.png'),
   new_grass: require('./new_grass.png'),
   badCloud1: require('./bad_cloud1.png'),
   badCloud2: require('./bad_cloud2.png'),

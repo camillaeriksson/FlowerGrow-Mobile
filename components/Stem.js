@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { Image } from 'react-native';
 
 export default class Stem extends Component {
   render() {
@@ -8,16 +8,19 @@ export default class Stem extends Component {
   const x = this.props.body.position.x - width / 2;
   const y = this.props.body.position.y - height / 2;
 
+  let stemImage = Images['stem'];
+
     return (
-      <View 
-      style={{
-        position: 'absolute',
-        width: width,
-        height: height,
-        top: y,
-        left: x,
-        backgroundColor: this.props.color
-      }}
+      <Image 
+        style={{
+          position: 'absolute',
+          width: width,
+          height: height,
+          top: y,
+          left: x,
+        }}
+      resizeMode="stretch"
+      source={stemImage}
       />
     ) 
   } 
