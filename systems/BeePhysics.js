@@ -68,12 +68,11 @@ const BeePhysics = (entities, {touches}) => {
       touches.filter(t => t.type === 'press').forEach(t => {
         let touchX = Math.floor(t.event.locationX);
         let touchY = Math.floor(t.event.locationY);
-        let beeMinX = beePositionX -30
-        let beeMaxX = beePositionX +30
-        let beeMinY = beePositionY -30
-        let beeMaxY = beePositionY +30
+        let beeMinX = beePositionX - 30;
+        let beeMaxX = beePositionX + 30;
+        let beeMinY = beePositionY - 30;
+        let beeMaxY = beePositionY + 30;
         console.log('1', bee.beeisDead)
-        //console.log('x', touchX, 'y', touchY, 'beeX', beePositionX, 'beeY', beePositionY)
         if (touchX <= beePositionX && touchX >= beeMinX && touchY <= beePositionY && touchY >= beeMinY ||
           touchX >= beePositionX && touchX <= beeMaxX && touchY >= beePositionY && touchY <= beeMaxY) {
           console.log('träff')
@@ -82,6 +81,7 @@ const BeePhysics = (entities, {touches}) => {
         }
       });
       
+      // If the bee has been hit/is dead, no force will be added. Gravity will make it fall down
       if (!bee.beeisDead) {
         // Applies force to the bee upwards in the same pace as the gravity, since the bee can't be static
         Matter.Body.applyForce(bee.body, bee.body.position, { x: bee.body.mass * 0, y: -(bee.body.mass * engine.world.gravity.y) / 1000 })
