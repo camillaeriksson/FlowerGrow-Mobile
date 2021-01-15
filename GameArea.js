@@ -15,6 +15,7 @@ import WaterMeter from './components/WaterMeter';
 import StartScreen from './components/StartScreen';
 import GameOverScreen from './components/GameOverScreen';
 import Stem from './components/Stem';
+import { Audio } from 'expo-av';
 
 const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
@@ -35,6 +36,20 @@ export default class GameArea extends Component {
     this.entities = this.setupWorld();
   }
 
+  async componentDidMount() {
+    this.backgroundMusic = new Audio.Sound();
+    try {
+      await this.backgroundMusic.loadAsync(
+        require('./assets/')
+      );
+      await this.backgroundMusic.setIsLoopingAsync(true);
+      await this.backgroundMusic.playAsync();
+      // Your sound is playing!
+    } catch (error) {
+      // An error occurred!
+    }
+  }
+  
   // Function for creating a matter engine, all the matter bodies and adding them to the world,
   // adding collision filters on the bodies, and returning them to entities
   setupWorld = () => {
