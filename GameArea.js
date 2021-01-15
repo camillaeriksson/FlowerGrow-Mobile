@@ -94,6 +94,7 @@ export default class GameArea extends Component {
       if (this.state.time === 1) {
         engine.world.gravity.y = 0.05;
       }
+      engine.world.gravity.y *= 1.0002;
     });
 
 
