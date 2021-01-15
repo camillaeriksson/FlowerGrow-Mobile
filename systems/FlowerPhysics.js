@@ -8,11 +8,9 @@ let steerFlower = false;
 
 const FlowerPhysics = (entities, { touches }) => {
   let flower = entities.flower.body;
-  let waterLevel = entities.waterMeter.waterLevel
+  let waterLevel = entities.waterMeter.waterLevel;
   let engine = entities.physics.engine;
   let total_seconds = parseInt(Math.floor(engine.timing.timestamp / 1000));
-
-  console.log('waterlevel :', waterLevel)
   
   // Make the flower move up as long as it's under half of the screen
   if (flower.position.y >= max_height / 2) {
@@ -30,7 +28,7 @@ const FlowerPhysics = (entities, { touches }) => {
   // Moving the flower by touches on the screen
   if (steerFlower) {
     touches.filter(t => t.type === 'move').forEach(t => {
-      let touchEvent = t.delta.pageX
+      let touchEvent = t.delta.pageX;
       const flowerRadius = 30;
         Matter.Body.translate(flower, { x: touchEvent, y: 0 });
       if (flower.position.x + flowerRadius > max_width) {
