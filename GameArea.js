@@ -59,11 +59,11 @@ export default class GameArea extends Component {
     }
   }
   
-  onPlayPress = () => {
+  soundOnScoreDown = () => {
     this.sadFlowerCloudSound.replayAsync();
   }
 
-  onScoreUp = () => {
+  soundOnScoreUp = () => {
     this.happyFlowerLaugh.replayAsync();
   }
 
@@ -104,11 +104,11 @@ export default class GameArea extends Component {
         // If flower collides with bad clouds or bees
         if (pairs.bodyA.collisionFilter.group === 5 && pairs.bodyB.collisionFilter.group === -5) {
         this.gameEngine.dispatch({ type: "score_down"});
-        this.onPlayPress();
+        this.soundOnScoreDown();
         // If flower collides with good clouds
         } if (pairs.bodyA.collisionFilter.group === 5 && pairs.bodyB.collisionFilter.group === -4) {
         this.gameEngine.dispatch({ type: "score_up"});
-        this.onScoreUp();
+        this.soundOnScoreUp();
         }
       }
     })
