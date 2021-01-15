@@ -18,7 +18,8 @@ export default class WaterMeterBackground extends Component {
           backgroundColor: this.props.color,
           borderRadius: 15,
           borderWidth: 4,
-          borderColor: 'cornflowerblue'
+          borderColor: 'cornflowerblue',
+          zIndex: 200
           }}
         />
     ) 

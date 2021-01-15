@@ -1,12 +1,15 @@
+// File for exporting all the images with names
 export default Images = {
   background: require('./background.png'),
   pot: require('./pot.png'),
   grass: require('./grass.png'),
+  stem: require('./stem_2.png'),
   new_grass: require('./new_grass.png'),
   badCloud1: require('./bad_cloud1.png'),
   badCloud2: require('./bad_cloud2.png'),
   badCloud3: require('./bad_cloud3.png'),
   goodCloud: require('./good_cloud.png'),
+  flower_bud: require('./bud.png'),
   flower_0: require('./flower_0.png'),
   flower_25_brown: require('./flower_25_brown.png'),
   flower_25: require('./flower_25.png'),

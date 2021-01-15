@@ -7,7 +7,7 @@ export default class Grass extends Component {
       <ImageBackground source={Images['background']} style={styles.fullScreen}>
         <Image source={Images['flower_0']} style={styles.flower_0} />
         <Text style={styles.gameOverText}>GROW OVER!</Text>
-        <Text style={styles.scoreText}>You grew 300 meter</Text>
+        <Text style={styles.scoreText}>You grew {this.props.score} meter</Text>
       </ImageBackground>
     ) 
   } 
