@@ -58,11 +58,13 @@ export default class GameArea extends Component {
       // An error occurred!
     }
   }
-  
+
+  //Function for playing sad flower sound
   soundOnScoreDown = () => {
     this.sadFlowerCloudSound.replayAsync();
   }
 
+  //Function for playing happy flower sound
   soundOnScoreUp = () => {
     this.happyFlowerLaugh.replayAsync();
   }
