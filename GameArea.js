@@ -53,10 +53,7 @@ export default class GameArea extends Component {
       );
       await this.backgroundMusic.setIsLoopingAsync(true);
       await this.backgroundMusic.playAsync();
-      // Your sound is playing!
-    } catch (error) {
-      // An error occurred!
-    }
+    } catch (error) {}
   }
 
   //Function for playing sad flower sound
