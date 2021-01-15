@@ -84,8 +84,20 @@ const BeePhysics = (entities, {touches}) => {
           x: 0,
           y: 15
         });
+        bee.body.collisionFilter = {
+          'group': 7
+        }
       }
-      
+
+      // Put collisionfilter back if bee is not dead
+      if (!bee.beeIsDead) {
+        bee.body.collisionFilter = {
+          'group': -5,
+          'category': 10,
+          'mask': 20
+        }
+      }
+
       // If bee is dead and falls out of screen
       if (bee.beeIsDead && beePositionY > max_height ) {
         Matter.Body.setPosition(bee.body, {
