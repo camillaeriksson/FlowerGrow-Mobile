@@ -1,6 +1,7 @@
 import Matter from 'matter-js';
 import { Dimensions } from 'react-native';
 import Bee from '../components/Bee';
+import { Audio } from 'expo-av';
 
 const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
@@ -10,6 +11,22 @@ let beeStartingPointX = [0, max_width];
 let beeStartingPointY = [-max_height / 2, max_height * 1.5];
 
 let bees = 0;
+
+/* const loadMusic = async () => {
+  beeBuzzToSound = new Audio.Sound();
+  try {
+    await this.beeBuzzToSound.loadAsync(
+      require('../assets/sounds/beeBuzzAwaySound.wav')
+    );
+  } catch (error) {}
+};
+
+loadMusic();
+
+const beeSound = () => {
+  this.beeBuzzToSound.replayAsync();
+} */
+
 
 // Function for creating a bee matter body at random position, adding it to the world and to the entites, and adding collision filter
 const spawnBees = (world, entities) => {
