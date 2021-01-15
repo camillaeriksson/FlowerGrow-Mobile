@@ -1,29 +1,34 @@
 import Matter from 'matter-js';
 import { Dimensions } from 'react-native';
 
+const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
 const min_width = 0;
+let steerFlower = false;
 
 const FlowerPhysics = (entities, { touches }) => {
   let flower = entities.flower.body;
-  let waterLevel = entities.waterMeter.waterLevel
+  let waterLevel = entities.waterMeter.waterLevel;
   let engine = entities.physics.engine;
   let total_seconds = parseInt(Math.floor(engine.timing.timestamp / 1000));
   
-  // Make the flower move up from the pot for 2 sec at beginning of game
-  if (total_seconds < 2) {
+  // Make the flower move up as long as it's under half of the screen
+  if (flower.position.y >= max_height / 2) {
     Matter.Body.translate(flower, { x: 0, y: -4 });
+  } else {
+    steerFlower = true;
   }
 
   //Change from bud to flower at 2 sec
   if (total_seconds === 2) {
     entities.flower.flowerNumber = 100;
   }
+
   
   // Moving the flower by touches on the screen
-  if (total_seconds > 2.6) {
+  if (steerFlower) {
     touches.filter(t => t.type === 'move').forEach(t => {
-      let touchEvent = t.delta.pageX
+      let touchEvent = t.delta.pageX;
       const flowerRadius = 30;
         Matter.Body.translate(flower, { x: touchEvent, y: 0 });
       if (flower.position.x + flowerRadius > max_width) {

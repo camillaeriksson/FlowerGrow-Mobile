@@ -19,7 +19,7 @@ export default class WaterMeter extends Component {
           borderRadius: 15,
           borderWidth: 4,
           borderColor: 'cornflowerblue',
-          zIndex: 110
+          zIndex: 300
           }}
         />
     ) 
