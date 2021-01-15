@@ -36,18 +36,23 @@ export default class GameArea extends Component {
     this.entities = this.setupWorld();
   }
   
+  // Initialize the sound effects to the game
   async componentDidMount() {
     this.backgroundMusic = new Audio.Sound();
     this.sadFlowerCloudSound = new Audio.Sound();
+    this.happyFlowerLaugh = new Audio.Sound();
     try {
       await this.backgroundMusic.loadAsync(
         require('./assets/sounds/backgroundMusic.mp3')
       );
-      await this.backgroundMusic.setIsLoopingAsync(true);
-      await this.backgroundMusic.playAsync();
       await this.sadFlowerCloudSound.loadAsync(
         require('./assets/sounds/sadFlowerCloudSound.wav')
       );
+      await this.happyFlowerLaugh.loadAsync(
+        require('./assets/sounds/happyFlowerLaugh.wav')
+      );
+      await this.backgroundMusic.setIsLoopingAsync(true);
+      await this.backgroundMusic.playAsync();
       // Your sound is playing!
     } catch (error) {
       // An error occurred!
@@ -56,6 +61,10 @@ export default class GameArea extends Component {
   
   onPlayPress = () => {
     this.sadFlowerCloudSound.replayAsync();
+  }
+
+  onScoreUp = () => {
+    this.happyFlowerLaugh.replayAsync();
   }
 
   // Function for creating a matter engine, all the matter bodies and adding them to the world,
@@ -99,6 +108,7 @@ export default class GameArea extends Component {
         // If flower collides with good clouds
         } if (pairs.bodyA.collisionFilter.group === 5 && pairs.bodyB.collisionFilter.group === -4) {
         this.gameEngine.dispatch({ type: "score_up"});
+        this.onScoreUp();
         }
       }
     })
