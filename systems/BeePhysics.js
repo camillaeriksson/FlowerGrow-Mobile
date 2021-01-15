@@ -7,7 +7,7 @@ const max_width = Dimensions.get('screen').width;
 
 // Arrays containing possible starting positions for bee
 let beeStartingPointX = [0, max_width];
-let beeStartingPointY = [0, max_height];
+let beeStartingPointY = [-max_height / 2, max_height * 1.5];
 
 let bees = 0;
 
