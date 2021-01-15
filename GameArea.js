@@ -35,12 +35,12 @@ export default class GameArea extends Component {
     this.GameEngine = null;
     this.entities = this.setupWorld();
   }
-
+  
   async componentDidMount() {
     this.backgroundMusic = new Audio.Sound();
     try {
       await this.backgroundMusic.loadAsync(
-        require('./assets/')
+        require('./assets/sounds/backgroundMusic.mp3')
       );
       await this.backgroundMusic.setIsLoopingAsync(true);
       await this.backgroundMusic.playAsync();
@@ -49,7 +49,6 @@ export default class GameArea extends Component {
       // An error occurred!
     }
   }
-  
   // Function for creating a matter engine, all the matter bodies and adding them to the world,
   // adding collision filters on the bodies, and returning them to entities
   setupWorld = () => {
