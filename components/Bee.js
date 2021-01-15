@@ -20,7 +20,7 @@ export default class Bee extends Component {
         height: height,
         top: y,
         left: x,
-        zIndex: 100
+        zIndex: 300
       }}
       resizeMode="stretch"
       source={beeImage}
