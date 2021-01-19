@@ -27,6 +27,8 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "Mobile game developed by Camilla Eriksson & Lisa Bengtsson.",
+    "githubUrl": "https://github.com/camillaeriksson/FlowerGrow-Mobile"
   }
 }
