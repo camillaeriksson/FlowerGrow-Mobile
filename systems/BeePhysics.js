@@ -72,11 +72,12 @@ const BeePhysics = (entities, {touches}) => {
     const sound = new Audio.Sound();
     try {
       await sound.loadAsync(require('../assets/sounds/beeBuzzToSound.wav'));
-      console.log('hej')
-        await sound.replayAsync();
-        await sound.setIsLoopingAsync(true);
+      //console.log('hej')
+      await sound.replayAsync();
+      await sound.setIsLoopingAsync(true);
       if (!beeIsOnScreen) {
-        await sound.setIsMutedAsync(true);
+        console.log('if sats')
+        await sound.setIsMutedAsync();
       }
 
     } catch (error) {
@@ -132,7 +133,7 @@ const BeePhysics = (entities, {touches}) => {
           'mask': 20
         } 
       }
-    console.log(beeIsOnScreen)
+    //console.log(beeIsOnScreen)
     //console.log('beeY', beePositionY, 'max', Math.floor(max_height))
 
       if (beePositionY === 0 || beePositionY === Math.floor(max_height)) {
