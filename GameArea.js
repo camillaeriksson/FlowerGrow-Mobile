@@ -197,7 +197,6 @@ export default class GameArea extends Component {
           onEvent={this.onEvent}
           running={this.state.running}
         />
-        <Text style={styles.score}>{this.state.waterLevel}</Text>
         <Text style={styles.scoreMeter}>{this.state.time}m</Text>
         {this.state.showGameOverScreen && !this.state.running && <Pressable onPress={this.resetGame} style={styles.fullScreenButton}>
           <GameOverScreen score={this.state.time}/>
