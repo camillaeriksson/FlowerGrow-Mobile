@@ -19,7 +19,6 @@ import { Audio } from 'expo-av';
 
 const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
-
 export default class GameArea extends Component {
   constructor(props) {
     super(props);
@@ -41,6 +40,7 @@ export default class GameArea extends Component {
     this.backgroundMusic = new Audio.Sound();
     this.sadFlowerCloudSound = new Audio.Sound();
     this.happyFlowerLaugh = new Audio.Sound();
+    this.bee = new Audio.Sound();
     try {
       await this.backgroundMusic.loadAsync(
         require('./assets/sounds/backgroundMusic.mp3')
@@ -51,10 +51,14 @@ export default class GameArea extends Component {
       await this.happyFlowerLaugh.loadAsync(
         require('./assets/sounds/happyFlowerLaugh.wav')
       );
+      await this.happyFlowerLaugh.loadAsync(
+        require('./assets/sounds/beeBuzzToSound.wav')
+      );
       await this.backgroundMusic.setIsLoopingAsync(true);
       await this.backgroundMusic.playAsync();
     } catch (error) {}
   }
+
 
   //Function for playing sad flower sound
   soundOnScoreDown = () => {
