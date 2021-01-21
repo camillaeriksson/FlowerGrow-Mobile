@@ -1,8 +1,6 @@
 import Matter from 'matter-js';
 import { Dimensions } from 'react-native';
 import Bee from '../components/Bee';
-import { Audio } from 'expo-av';
-import * as React from 'react';
 
 const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
@@ -12,23 +10,6 @@ let beeStartingPointX = [0, max_width];
 let beeStartingPointY = [-max_height / 2, max_height * 1.5];
 
 let bees = 0;
-
-let beeIsOnScreen = false;
-
-/* const componentDidMount = async () => {
-  beeBuzzToSound = new Audio.Sound();
-  try {
-    await this.beeBuzzToSound.loadAsync(
-      require('../assets/sounds/beeBuzzAwaySound.wav')
-    );
-  } catch (error) {}
-};
-
-
-const beeSound = () => {
-  this.beeBuzzToSound.replayAsync();
-} */
-
 
 // Function for creating a bee matter body at random position, adding it to the world and to the entites, and adding collision filter
 const spawnBees = (world, entities) => {
@@ -67,23 +48,6 @@ const BeePhysics = (entities, {touches}) => {
   let flowerPositionY = Math.floor(flower.position.y);
   let beeStartingPointXToUse = beeStartingPointX[Math.floor(Math.random() * beeStartingPointX.length)];
   let beeStartingPointYToUse = beeStartingPointY[Math.floor(Math.random() * beeStartingPointY.length)];
-  
-  async function hello() {
-    const sound = new Audio.Sound();
-    try {
-      await sound.loadAsync(require('../assets/sounds/beeBuzzToSound.wav'));
-      //console.log('hej')
-      await sound.replayAsync();
-      await sound.setIsLoopingAsync(true);
-      if (!beeIsOnScreen) {
-        console.log('if sats')
-        await sound.setIsMutedAsync();
-      }
-
-    } catch (error) {
-      // An error occurred!
-    }
-  }
 
   // Spawning a bee at around 2 sec (can't put a whole second since the engine updates many times during one sec)
   if (total_time > 2100 && total_time < 2135){
@@ -133,20 +97,16 @@ const BeePhysics = (entities, {touches}) => {
           'mask': 20
         } 
       }
-    //console.log(beeIsOnScreen)
-    //console.log('beeY', beePositionY, 'max', Math.floor(max_height))
 
-      if (beePositionY === 0 || beePositionY === Math.floor(max_height)) {
-        hello();
-      }
+      // if (beePositionY === 0 || beePositionY === Math.floor(max_height)) {
+      //   hello();
+      // }
 
-      if (beePositionY > 0 && beePositionY < Math.floor(max_height)) {
-        beeIsOnScreen =  true;
-      } else {
-        beeIsOnScreen = false;
-      }
-
-
+      // if (beePositionY > 0 && beePositionY < Math.floor(max_height)) {
+      //   beeIsOnScreen =  true;
+      // } else {
+      //   beeIsOnScreen = false;
+      // }
 
 
       // If bee is dead and falls out of screen

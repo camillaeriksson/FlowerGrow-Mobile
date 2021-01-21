@@ -16,6 +16,7 @@ import StartScreen from './components/StartScreen';
 import GameOverScreen from './components/GameOverScreen';
 import Stem from './components/Stem';
 import { Audio } from 'expo-av';
+import Sounds from './assets/Images';
 
 const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
@@ -37,10 +38,10 @@ export default class GameArea extends Component {
   
   // Initialize the sound effects to the game
   async componentDidMount() {
+    this.beeSound = new Audio.Sound();
     this.backgroundMusic = new Audio.Sound();
     this.sadFlowerCloudSound = new Audio.Sound();
     this.happyFlowerLaugh = new Audio.Sound();
-    this.bee = new Audio.Sound();
     try {
       await this.backgroundMusic.loadAsync(
         require('./assets/sounds/backgroundMusic.mp3')
@@ -51,10 +52,11 @@ export default class GameArea extends Component {
       await this.happyFlowerLaugh.loadAsync(
         require('./assets/sounds/happyFlowerLaugh.wav')
       );
-      await this.happyFlowerLaugh.loadAsync(
+      await this.beeSound.loadAsync(
         require('./assets/sounds/beeBuzzToSound.wav')
-      );
+      )
       await this.backgroundMusic.setIsLoopingAsync(true);
+      await this.backgroundMusic.setVolumeAsync(0.3)
       await this.backgroundMusic.playAsync();
     } catch (error) {}
   }
@@ -68,6 +70,15 @@ export default class GameArea extends Component {
   //Function for playing happy flower sound
   soundOnScoreUp = () => {
     this.happyFlowerLaugh.replayAsync();
+  }
+
+  soundBeeOnScreen = () => {
+    this.beeSound.setIsLoopingAsync(true);
+    this.beeSound.replayAsync();
+  }
+
+  stopBeeSound = () => {
+    this.beeSound.pauseAsync();
   }
 
   // Function for creating a matter engine, all the matter bodies and adding them to the world,
@@ -118,6 +129,27 @@ export default class GameArea extends Component {
 
     // Function for every time the engine updates
     Matter.Events.on(engine, 'beforeUpdate', (event) => {
+      
+      Object.keys(this.entities).forEach(key => {
+        // Checking if bee enters or leaves screen and playing or stopping bee sound
+        if (key.indexOf("bee") === 0) {
+          let beePositionY = Math.floor(this.entities[key].body.position.y);
+          let maxHeight = Math.floor(max_height);
+          // Arrays for possible bee positions, since it moves by random 5 steps at a time
+          // and might not be at exactly 0 or max_height when entering screen
+          let possibleBeeYPositionsOverScreen = [0, 1, 2, 3, 4, 5];
+          let possibleBeeYPositionsUnderScreen = [maxHeight, maxHeight-1, maxHeight-2, maxHeight-3, maxHeight-4, maxHeight-5]
+          // If bee enters screen
+          if (possibleBeeYPositionsOverScreen.indexOf(beePositionY) > -1 || possibleBeeYPositionsUnderScreen.indexOf(beePositionY) > -1) {
+            this.soundBeeOnScreen();
+          }
+          // If bee is off screen or dead
+          if (beePositionY < 0 || beePositionY > Math.floor(max_height) || this.entities[key].beeIsDead) {
+            this.stopBeeSound();
+          }
+        }
+      });
+
       // Set the run time (which is also the score) to the state
       let total_seconds = parseInt(Math.floor(engine.timing.timestamp / 1000));
       this.setState({
@@ -165,6 +197,7 @@ export default class GameArea extends Component {
     } 
     // Stop game loop and show game over screen if "game over" is dispatched
     if (e.type === "game_over") {
+      this.stopBeeSound()
       this.setState({
         running: false,
         showGameOverScreen: true,
