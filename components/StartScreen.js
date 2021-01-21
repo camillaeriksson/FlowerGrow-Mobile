@@ -11,15 +11,15 @@ export default class Grass extends Component {
       <ImageBackground source={Images['background']} style={styles.fullScreen}>
         <Image source={Images['logo']} style={styles.logo} />
         <View style={styles.startScreenTextContainer}>
-          <Text style={styles.startGameText}>
+          <Text style={styles.startScreenText}>
             Help the flower grow as high as possible!
           </Text>
-          <Text style={styles.startScreenText}>
+          <Text style={styles.instructionText}>
             Slide your finger across the screen to steer the flower.
             Avoid the dark clouds, go through rain clouds to water the flower and watch out for the bees!
             Kill them with a click.
           </Text>
-          <Text style={styles.startGameText}>
+          <Text style={styles.startScreenText}>
             Touch the screen to start!
           </Text>
         </View>
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     padding: 35,
     backgroundColor: '#A8E5FC'
   },
-  startScreenText: {
+  instructionText: {
     color: 'white',
     fontSize: 20,
     textAlign: 'center',
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 20
   },
-  startGameText: {
+  startScreenText: {
     color: 'cornflowerblue',
     fontSize: 22,
     textAlign: 'center',
