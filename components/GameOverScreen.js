@@ -4,7 +4,6 @@ import { ImageBackground, Text, StyleSheet, Image, View } from 'react-native';
 import Images from '../assets/Images';
 
 const max_height = Dimensions.get('screen').height;
-const max_width = Dimensions.get('screen').width;
 export default class Grass extends Component {
   render() {
     return (
