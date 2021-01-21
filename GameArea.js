@@ -19,7 +19,6 @@ import { Audio } from 'expo-av';
 
 const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
-
 export default class GameArea extends Component {
   constructor(props) {
     super(props);
@@ -38,6 +37,7 @@ export default class GameArea extends Component {
   
   // Initialize the sound effects to the game
   async componentDidMount() {
+    this.beeSound = new Audio.Sound();
     this.backgroundMusic = new Audio.Sound();
     this.sadFlowerCloudSound = new Audio.Sound();
     this.happyFlowerLaugh = new Audio.Sound();
@@ -51,10 +51,15 @@ export default class GameArea extends Component {
       await this.happyFlowerLaugh.loadAsync(
         require('./assets/sounds/happyFlowerLaugh.wav')
       );
+      await this.beeSound.loadAsync(
+        require('./assets/sounds/beeBuzzToSound.wav')
+      )
       await this.backgroundMusic.setIsLoopingAsync(true);
+      await this.backgroundMusic.setVolumeAsync(0.3);
       await this.backgroundMusic.playAsync();
     } catch (error) {}
   }
+
 
   //Function for playing sad flower sound
   soundOnScoreDown = () => {
@@ -64,6 +69,15 @@ export default class GameArea extends Component {
   //Function for playing happy flower sound
   soundOnScoreUp = () => {
     this.happyFlowerLaugh.replayAsync();
+  }
+
+  soundBeeOnScreen = () => {
+    this.beeSound.setIsLoopingAsync(true);
+    this.beeSound.replayAsync();
+  }
+
+  stopBeeSound = () => {
+    this.beeSound.pauseAsync();
   }
 
   // Function for creating a matter engine, all the matter bodies and adding them to the world,
@@ -97,16 +111,16 @@ export default class GameArea extends Component {
     }
 
     // Function for checking start of collisions
-    Matter.Events.on(engine, "collisionStart", (event) => {
+    Matter.Events.on(engine, 'collisionStart', (event) => {
       for (var i = 0; i < event.pairs.length; i++) {
         let pairs = event.pairs[i];
         // If flower collides with bad clouds or bees
         if (pairs.bodyA.collisionFilter.group === 5 && pairs.bodyB.collisionFilter.group === -5) {
-        this.gameEngine.dispatch({ type: "score_down"});
+        this.gameEngine.dispatch({ type: 'score_down'});
         this.soundOnScoreDown();
         // If flower collides with good clouds
         } if (pairs.bodyA.collisionFilter.group === 5 && pairs.bodyB.collisionFilter.group === -4) {
-        this.gameEngine.dispatch({ type: "score_up"});
+        this.gameEngine.dispatch({ type: 'score_up'});
         this.soundOnScoreUp();
         }
       }
@@ -114,6 +128,27 @@ export default class GameArea extends Component {
 
     // Function for every time the engine updates
     Matter.Events.on(engine, 'beforeUpdate', (event) => {
+      
+      Object.keys(this.entities).forEach(key => {
+        // Checking if bee enters or leaves screen and playing or stopping bee sound
+        if (key.indexOf('bee') === 0) {
+          let beePositionY = Math.floor(this.entities[key].body.position.y);
+          let maxHeight = Math.floor(max_height);
+          // Arrays for possible bee positions, since it moves by random 5 steps at a time
+          // and might not be at exactly 0 or max_height when entering screen
+          let possibleBeeYPositionsOverScreen = [0, 1, 2, 3, 4];
+          let possibleBeeYPositionsUnderScreen = [maxHeight, maxHeight-1, maxHeight-2, maxHeight-3, maxHeight-4]
+          // If bee enters screen
+          if (possibleBeeYPositionsOverScreen.indexOf(beePositionY) > -1 || possibleBeeYPositionsUnderScreen.indexOf(beePositionY) > -1) {
+            this.soundBeeOnScreen();
+          }
+          // If bee is off screen or dead
+          if (beePositionY < 0 || beePositionY > Math.floor(max_height) || this.entities[key].beeIsDead) {
+            this.stopBeeSound();
+          }
+        }
+      });
+
       // Set the run time (which is also the score) to the state
       let total_seconds = parseInt(Math.floor(engine.timing.timestamp / 1000));
       this.setState({
@@ -121,7 +156,7 @@ export default class GameArea extends Component {
       });
       // Checking if the water level is 0 and if so, the game is over
       if (this.state.waterLevel === 0) {
-        this.gameEngine.dispatch({ type: "game_over"});
+        this.gameEngine.dispatch({ type: 'game_over'});
       }
       // Let the gravity start after 1 sec
       if (this.state.time === 1) {
@@ -133,7 +168,7 @@ export default class GameArea extends Component {
 
     return {
       physics: { engine: engine, world: world },
-      flower: { body: flower, size: [70, 70], flowerNumber: "bud", renderer: Flower },
+      flower: { body: flower, size: [70, 70], flowerNumber: 'bud', renderer: Flower },
       grass: { body: grass, size: [max_width, 200], color: 'green', renderer: Grass },
       pot: { body: pot, size: [100, 80], renderer: Pot},
       stem: { body: stem, size: [100, 800], renderer: Stem },
@@ -144,14 +179,14 @@ export default class GameArea extends Component {
 
   // Function for checking all the dispatched values
   onEvent = (e) => {
-    // Reduce the water level if "score down" is dispatched
-    if (e.type === "score_down"){
+    // Reduce the water level if 'score down' is dispatched
+    if (e.type === 'score_down'){
       this.setState({
         waterLevel: this.state.waterLevel - 32
       });
     } 
-    // Increase the water level if "score up" is dispatched
-    if (e.type === "score_up") {
+    // Increase the water level if 'score up' is dispatched
+    if (e.type === 'score_up') {
       // Only if the water level is not full (160 px high)
       if (this.state.waterLevel < 160) {
         this.setState({
@@ -159,8 +194,9 @@ export default class GameArea extends Component {
       });
       }
     } 
-    // Stop game loop and show game over screen if "game over" is dispatched
-    if (e.type === "game_over") {
+    // Stop game loop and show game over screen if 'game over' is dispatched
+    if (e.type === 'game_over') {
+      this.stopBeeSound();
       this.setState({
         running: false,
         showGameOverScreen: true,
