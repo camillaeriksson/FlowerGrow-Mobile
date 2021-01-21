@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   startGameText: {
-    color: '#000080',
+    color: 'cornflowerblue',
     fontSize: 22,
     textAlign: 'center',
     width: max_width / 1.5,
