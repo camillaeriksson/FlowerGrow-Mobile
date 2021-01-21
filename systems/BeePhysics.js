@@ -97,18 +97,7 @@ const BeePhysics = (entities, {touches}) => {
           'mask': 20
         } 
       }
-
-      // if (beePositionY === 0 || beePositionY === Math.floor(max_height)) {
-      //   hello();
-      // }
-
-      // if (beePositionY > 0 && beePositionY < Math.floor(max_height)) {
-      //   beeIsOnScreen =  true;
-      // } else {
-      //   beeIsOnScreen = false;
-      // }
-
-
+      
       // If bee is dead and falls out of screen
       if (bee.beeIsDead && beePositionY > max_height ) {
         Matter.Body.setPosition(bee.body, {
