@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   },
   startGameText: {
     color: '#000080',
-    fontSize: 20,
+    fontSize: 22,
     textAlign: 'center',
     width: max_width / 1.5,
     marginBottom: 10,
