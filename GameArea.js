@@ -55,7 +55,7 @@ export default class GameArea extends Component {
         require('./assets/sounds/beeBuzzToSound.wav')
       )
       await this.backgroundMusic.setIsLoopingAsync(true);
-      await this.backgroundMusic.setVolumeAsync(0.3);
+      await this.backgroundMusic.setVolumeAsync(0.2);
       await this.backgroundMusic.playAsync();
     } catch (error) {}
   }
@@ -63,11 +63,13 @@ export default class GameArea extends Component {
 
   //Function for playing sad flower sound
   soundOnScoreDown = () => {
+    this.sadFlowerCloudSound.setVolumeAsync(0.5);
     this.sadFlowerCloudSound.replayAsync();
   }
 
   //Function for playing happy flower sound
   soundOnScoreUp = () => {
+    this.happyFlowerLaugh.setVolumeAsync(0.5);
     this.happyFlowerLaugh.replayAsync();
   }
 
