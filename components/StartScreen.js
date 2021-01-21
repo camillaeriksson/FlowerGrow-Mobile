@@ -4,20 +4,22 @@ import { ImageBackground, Text, StyleSheet, Image } from 'react-native';
 import Images from '../assets/Images';
 
 const max_width = Dimensions.get('screen').width;
+const max_height = Dimensions.get('screen').height;
 export default class Grass extends Component {
   render() {
     return (
       <ImageBackground source={Images['background']} style={styles.fullScreen}>
         <Image source={Images['logo']} style={styles.logo} />
         <View style={styles.startScreenTextContainer}>
-          <Text style={styles.startScreenText}>
+          <Text style={styles.startGameText}>
             Help the flower grow as high as possible!
           </Text>
           <Text style={styles.startScreenText}>
             Slide your finger across the screen to steer the flower.
-            Avoid the dark clouds, go through rain clouds to water the flower.
+            Avoid the dark clouds, go through rain clouds to water the flower and watch out for the bees!
+            Kill them with a click.
           </Text>
-          <Text style={styles.startScreenText}>
+          <Text style={styles.startGameText}>
             Touch the screen to start!
           </Text>
         </View>
@@ -36,6 +38,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  startScreenTextContainer: {
+    position: 'absolute',
+    top: max_height / 4,
+    borderColor: 'cornflowerblue',
+    borderWidth: 5,
+    borderRadius: 10,
+    paddingTop: 45,
+    paddingBottom: 40,
+    padding: 35,
+    backgroundColor: '#A8E5FC'
+  },
   startScreenText: {
     color: 'white',
     fontSize: 20,
@@ -44,8 +57,19 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 20
   },
+  startGameText: {
+    color: '#000080',
+    fontSize: 20,
+    textAlign: 'center',
+    width: max_width / 1.5,
+    marginBottom: 10,
+    marginTop: 20
+  },
   logo: {
+    position: 'absolute',
+    top: max_height / 4 - 90,
     width: 300,
-    height: 150
+    height: 150,
+    zIndex: 1
   }
 })
