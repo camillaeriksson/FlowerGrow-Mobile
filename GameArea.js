@@ -15,6 +15,7 @@ import WaterMeter from './components/WaterMeter';
 import StartScreen from './components/StartScreen';
 import GameOverScreen from './components/GameOverScreen';
 import Stem from './components/Stem';
+import { Audio } from 'expo-av';
 
 const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
@@ -33,6 +34,36 @@ export default class GameArea extends Component {
 
     this.GameEngine = null;
     this.entities = this.setupWorld();
+  }
+  
+  // Initialize the sound effects to the game
+  async componentDidMount() {
+    this.backgroundMusic = new Audio.Sound();
+    this.sadFlowerCloudSound = new Audio.Sound();
+    this.happyFlowerLaugh = new Audio.Sound();
+    try {
+      await this.backgroundMusic.loadAsync(
+        require('./assets/sounds/backgroundMusic.mp3')
+      );
+      await this.sadFlowerCloudSound.loadAsync(
+        require('./assets/sounds/sadFlowerCloudSound.wav')
+      );
+      await this.happyFlowerLaugh.loadAsync(
+        require('./assets/sounds/happyFlowerLaugh.wav')
+      );
+      await this.backgroundMusic.setIsLoopingAsync(true);
+      await this.backgroundMusic.playAsync();
+    } catch (error) {}
+  }
+
+  //Function for playing sad flower sound
+  soundOnScoreDown = () => {
+    this.sadFlowerCloudSound.replayAsync();
+  }
+
+  //Function for playing happy flower sound
+  soundOnScoreUp = () => {
+    this.happyFlowerLaugh.replayAsync();
   }
 
   // Function for creating a matter engine, all the matter bodies and adding them to the world,
@@ -72,9 +103,11 @@ export default class GameArea extends Component {
         // If flower collides with bad clouds or bees
         if (pairs.bodyA.collisionFilter.group === 5 && pairs.bodyB.collisionFilter.group === -5) {
         this.gameEngine.dispatch({ type: "score_down"});
+        this.soundOnScoreDown();
         // If flower collides with good clouds
         } if (pairs.bodyA.collisionFilter.group === 5 && pairs.bodyB.collisionFilter.group === -4) {
         this.gameEngine.dispatch({ type: "score_up"});
+        this.soundOnScoreUp();
         }
       }
     })
@@ -164,7 +197,6 @@ export default class GameArea extends Component {
           onEvent={this.onEvent}
           running={this.state.running}
         />
-        <Text style={styles.score}>{this.state.waterLevel}</Text>
         <Text style={styles.scoreMeter}>{this.state.time}m</Text>
         {this.state.showGameOverScreen && !this.state.running && <Pressable onPress={this.resetGame} style={styles.fullScreenButton}>
           <GameOverScreen score={this.state.time}/>
