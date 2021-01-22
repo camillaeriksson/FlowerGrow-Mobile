@@ -4,7 +4,7 @@ import Systems from './systems'
 import { GameEngine } from 'react-native-game-engine';
 import Matter from 'matter-js';
 
-import { View, StyleSheet, Text, Pressable, Button } from 'react-native';
+import { View, StyleSheet, Text, Pressable, Button} from 'react-native';
 import { Dimensions } from 'react-native';
 
 import Grass from './components/Grass';
@@ -261,7 +261,7 @@ export default class GameArea extends Component {
           <Button title='mute' color='lightblue' onPress={this.muteAllSound}/>
         </View>}
         {this.state.soundIsMuted && <View style={styles.soundButton}>
-          <Button title='mute' onPress={this.playAllSound}/>
+          <Button title='sound on' onPress={this.playAllSound}/>
         </View>}
         <Text style={styles.scoreMeter}>{this.state.time}m</Text>
         {this.state.showGameOverScreen && !this.state.running && <Pressable onPress={this.resetGame} style={styles.fullScreenButton}>
