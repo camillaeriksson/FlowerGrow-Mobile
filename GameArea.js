@@ -258,10 +258,10 @@ export default class GameArea extends Component {
           running={this.state.running}
         />
         {!this.state.soundIsMuted && <View style={styles.soundButton}>
-          <Button title='mute' color='lightblue' onPress={this.muteAllSound}/>
+          <Button title='mute' onPress={this.muteAllSound}/>
         </View>}
         {this.state.soundIsMuted && <View style={styles.soundButton}>
-          <Button title='sound on' onPress={this.playAllSound}/>
+          <Button title='sound on' color='lightblue' onPress={this.playAllSound}/>
         </View>}
         <Text style={styles.scoreMeter}>{this.state.time}m</Text>
         {this.state.showGameOverScreen && !this.state.running && <Pressable onPress={this.resetGame} style={styles.fullScreenButton}>
