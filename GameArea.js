@@ -4,7 +4,7 @@ import Systems from './systems'
 import { GameEngine } from 'react-native-game-engine';
 import Matter from 'matter-js';
 
-import { View, StyleSheet, Text, Pressable } from 'react-native';
+import { View, StyleSheet, Text, Pressable, Button } from 'react-native';
 import { Dimensions } from 'react-native';
 
 import Grass from './components/Grass';
@@ -28,7 +28,8 @@ export default class GameArea extends Component {
       waterLevel: 160,
       running: false,
       showStartScreen: true,
-      showGameOverScreen: false
+      showGameOverScreen: false,
+      soundIsMuted: false
     };
 
     this.GameEngine = null;
@@ -80,6 +81,13 @@ export default class GameArea extends Component {
 
   stopBeeSound = () => {
     this.beeSound.pauseAsync();
+  }
+
+  muteAllSound = () => {
+    this.setState({
+      soundIsMuted: true
+    });
+    console.log(this.state.soundIsMuted)
   }
 
   // Function for creating a matter engine, all the matter bodies and adding them to the world,
@@ -235,6 +243,9 @@ export default class GameArea extends Component {
           onEvent={this.onEvent}
           running={this.state.running}
         />
+        <View style={styles.soundButton}>
+          <Button title='press' onPress={this.muteAllSound}/>
+        </View>
         <Text style={styles.scoreMeter}>{this.state.time}m</Text>
         {this.state.showGameOverScreen && !this.state.running && <Pressable onPress={this.resetGame} style={styles.fullScreenButton}>
           <GameOverScreen score={this.state.time}/>
@@ -286,6 +297,11 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     flex: 1
+  },
+  soundButton: {
+    position: 'absolute',
+    top: 300,
+    left: 60,
   }
 });
 
