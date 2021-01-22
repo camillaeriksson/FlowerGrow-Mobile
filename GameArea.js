@@ -7,6 +7,8 @@ import Matter from 'matter-js';
 import { View, StyleSheet, Text, Pressable, Image, TouchableOpacity} from 'react-native';
 import { Dimensions } from 'react-native';
 
+import { resetBees } from './systems/BeePhysics';
+
 import Grass from './components/Grass';
 import Pot from './components/Pot';
 import Flower from './components/Flower';
@@ -32,7 +34,7 @@ export default class GameArea extends Component {
       soundIsMuted: false
     };
 
-    this.GameEngine = null;
+    this.gameEngine = null;
     this.entities = this.setupWorld();
   }
   
@@ -170,6 +172,7 @@ export default class GameArea extends Component {
         // Checking for first bee
         if (key === 'bee1') {
           let firstBeePositionY = Math.floor(this.entities[key].body.position.y);
+          // console.log(firstBeePositionY)
           // If first bee enters screen
           if (possibleBeeYPositionsOverScreen.indexOf(firstBeePositionY) > -1 || possibleBeeYPositionsUnderScreen.indexOf(firstBeePositionY) > -1) {
             this.soundFirstBeeOnScreen();
@@ -252,6 +255,7 @@ export default class GameArea extends Component {
 
   // Function for resetting the game loop
   resetGame = () => {
+    resetBees();
     this.gameEngine.swap(this.setupWorld());
     this.setState({
       waterLevel: 160,

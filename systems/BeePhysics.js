@@ -9,6 +9,9 @@ const max_width = Dimensions.get('screen').width;
 let beeStartingPointX = [0, max_width];
 let beeStartingPointY = [-max_height, -max_height / 2, max_height, max_height * 1.5];
 
+export const resetBees = () => {
+
+}
 
 let bees = 0;
 
@@ -192,9 +195,6 @@ const BeePhysics = (entities, {touches}) => {
           }
           // If bee goes off screen
           if (beePositionX < 0 || beePositionX > max_width) {
-            console.log("X: ", beeStartingPointXToUse)
-            console.log("y: ", beeStartingPointyToUse)
-            console.log("off")
             bee.beeHitFlower = false;
             Matter.Body.setPosition(bee.body, {
               x: beeStartingPointXToUse, 
