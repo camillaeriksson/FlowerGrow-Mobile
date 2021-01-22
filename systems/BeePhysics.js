@@ -54,6 +54,11 @@ const BeePhysics = (entities, {touches}) => {
     spawnBees(world, entities);
   }
 
+  // Spawn one more bee at around 40 sec
+  if (total_time > 40000 && total_time < 40035) {
+    spawnBees(world, entities)
+  }
+
   // Loop through all the bees and moving them depending on current position
   Object.keys(entities).forEach(key => {
     if (key.indexOf('bee') === 0) {
