@@ -41,8 +41,8 @@ const styles = StyleSheet.create({
   startScreenTextContainer: {
     position: 'absolute',
     top: max_height / 4,
-    borderColor: 'cornflowerblue',
-    borderWidth: 5,
+    borderColor: 'steelblue',
+    //borderWidth: 5,
     borderRadius: 10,
     paddingTop: 45,
     paddingBottom: 40,
@@ -51,14 +51,14 @@ const styles = StyleSheet.create({
   },
   instructionText: {
     color: 'white',
-    fontSize: 20,
+    fontSize: 18,
     textAlign: 'center',
     width: max_width / 1.5,
     marginBottom: 10,
     marginTop: 20
   },
   startScreenText: {
-    color: 'cornflowerblue',
+    color: 'steelblue',
     fontSize: 22,
     textAlign: 'center',
     width: max_width / 1.5,

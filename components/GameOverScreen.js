@@ -12,6 +12,7 @@ export default class Grass extends Component {
         <View style={styles.textContainer}>
           <Text style={styles.gameOverText}>GROW OVER!</Text>
           <Text style={styles.scoreText}>You grew {this.props.score} meter</Text>
+          <Text style={styles.playAgainText}>Touch the screen to play again!</Text>
         </View>
       </ImageBackground>
     ) 
@@ -35,7 +36,13 @@ const styles = StyleSheet.create({
   scoreText: {
     color: 'white',
     fontSize: 30,
-    textAlign: 'center'
+    textAlign: 'center',
+  },
+  playAgainText: {
+    color: 'white',
+    fontSize: 18,
+    textAlign: 'center',
+    marginTop: 30
   },
   flower_0: {
     position: 'absolute',
@@ -48,7 +55,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: max_height / 3,
     borderColor: '#9B4C1B',
-    borderWidth: 5,
+    //borderWidth: 5,
     borderRadius: 10,
     paddingTop: 50,
     paddingBottom: 40,
