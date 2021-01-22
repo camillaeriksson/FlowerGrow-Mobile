@@ -4,7 +4,7 @@ import Systems from './systems'
 import { GameEngine } from 'react-native-game-engine';
 import Matter from 'matter-js';
 
-import { View, StyleSheet, Text, Pressable, Image, TouchableOpacity} from 'react-native';
+import { View, StyleSheet, Text, Pressable } from 'react-native';
 import { Dimensions } from 'react-native';
 
 import { resetBees } from './systems/BeePhysics';
@@ -30,8 +30,7 @@ export default class GameArea extends Component {
       waterLevel: 160,
       running: false,
       showStartScreen: true,
-      showGameOverScreen: false,
-      soundIsMuted: false
+      showGameOverScreen: false
     };
 
     this.gameEngine = null;
@@ -67,20 +66,17 @@ export default class GameArea extends Component {
     } catch (error) {}
   }
 
+
   //Function for playing sad flower sound
   soundOnScoreDown = () => {
-    if (!this.state.soundIsMuted) {
-      this.sadFlowerCloudSound.setVolumeAsync(0.5);
-      this.sadFlowerCloudSound.replayAsync();
-    }
+    this.sadFlowerCloudSound.setVolumeAsync(0.5);
+    this.sadFlowerCloudSound.replayAsync();
   }
 
   //Function for playing happy flower sound
   soundOnScoreUp = () => {
-    if (!this.state.soundIsMuted) {
-      this.happyFlowerLaugh.setVolumeAsync(0.5);
-      this.happyFlowerLaugh.replayAsync();
-    }
+    this.happyFlowerLaugh.setVolumeAsync(0.5);
+    this.happyFlowerLaugh.replayAsync();
   }
 
   muteAllSound = () => {
@@ -282,12 +278,6 @@ export default class GameArea extends Component {
           onEvent={this.onEvent}
           running={this.state.running}
         />
-        {!this.state.soundIsMuted && <TouchableOpacity style={styles.soundButton} onPress={this.muteAllSound}>
-          <Image source={require('./assets/volume.png')}/>
-        </TouchableOpacity>}
-        {this.state.soundIsMuted && <TouchableOpacity style={styles.soundButton} onPress={this.playAllSound}>
-          <Image source={require('./assets/mute.png')}/>
-        </TouchableOpacity>}
         <Text style={styles.scoreMeter}>{this.state.time}m</Text>
         {this.state.showGameOverScreen && !this.state.running && <Pressable onPress={this.resetGame} style={styles.fullScreenButton}>
           <GameOverScreen score={this.state.time}/>
@@ -339,11 +329,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     flex: 1
-  },
-  soundButton: {
-    position: 'absolute',
-    top: 40,
-    left: 20,
   }
 });
 
