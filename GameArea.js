@@ -166,7 +166,7 @@ export default class GameArea extends Component {
           if (possibleBeeYPositionsOverScreen.indexOf(beePositionY) > -1 || possibleBeeYPositionsUnderScreen.indexOf(beePositionY) > -1) {
             this.soundBeeOnScreen();
           }
-          // If bee is off screen or dead
+          // If bee is off screen or dead or if sound is muted while bee is on screen
           if (beePositionY < 0 || beePositionY > Math.floor(max_height) || this.entities[key].beeIsDead || this.state.soundIsMuted) {
             this.stopBeeSound();
           }
