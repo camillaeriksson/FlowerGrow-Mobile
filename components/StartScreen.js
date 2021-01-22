@@ -11,7 +11,7 @@ export default class Grass extends Component {
       <ImageBackground source={Images['background']} style={styles.fullScreen}>
         <Image source={Images['logo']} style={styles.logo} />
         <View style={styles.startScreenTextContainer}>
-          <Text style={styles.startScreenText}>
+          <Text style={styles.startScreenTitle}>
             Help the flower grow as high as possible!
           </Text>
           <Text style={styles.instructionText}>
@@ -47,19 +47,19 @@ const styles = StyleSheet.create({
     padding: 35,
     backgroundColor: '#A8E5FC'
   },
+  startScreenTitle: {
+    color: 'steelblue',
+    fontSize: 22,
+    textAlign: 'center',
+    marginTop: 20,
+    fontWeight: 'bold'
+  },
   instructionText: {
     color: 'white',
     fontSize: 18,
     textAlign: 'center',
     marginBottom: 20,
     marginTop: 20
-  },
-  startScreenText: {
-    color: 'steelblue',
-    fontSize: 22,
-    textAlign: 'center',
-    marginTop: 20,
-    fontWeight: 'bold'
   },
   startGameText: {
     color: 'steelblue',

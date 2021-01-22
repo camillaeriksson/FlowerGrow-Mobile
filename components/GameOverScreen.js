@@ -29,6 +29,15 @@ const styles = StyleSheet.create({
     right: 0,
     alignItems: 'center'
   },
+  textContainer: {
+    position: 'absolute',
+    top: max_height / 3,
+    borderRadius: 10,
+    paddingTop: 50,
+    paddingBottom: 40,
+    padding: 35,
+    backgroundColor: '#A8E5FC'
+  },
   gameOverText: {
     color: '#AC722A',
     fontSize: 42,
@@ -53,14 +62,5 @@ const styles = StyleSheet.create({
     width: 108,
     height: 112.5,
     zIndex: 1
-  },
-  textContainer: {
-    position: 'absolute',
-    top: max_height / 3,
-    borderRadius: 10,
-    paddingTop: 50,
-    paddingBottom: 40,
-    padding: 35,
-    backgroundColor: '#A8E5FC'
   }
 })
