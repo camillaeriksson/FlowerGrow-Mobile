@@ -9,13 +9,14 @@ const max_width = Dimensions.get('screen').width;
 let beeStartingPointX = [0, max_width];
 let beeStartingPointY = [-max_height, -max_height / 2, max_height, max_height * 1.5];
 
+// Randomizing starting point for bee
+let beeStartingPointXToUse = beeStartingPointX[Math.floor(Math.random() * beeStartingPointX.length)];
+let beeStartingPointYToUse = beeStartingPointY[Math.floor(Math.random() * beeStartingPointY.length)];
+
 let bees = 0;
 
 // Function for creating a bee matter body at random position, adding it to the world and to the entites, and adding collision filter
 const spawnBees = (world, entities) => {
-
-  let beeStartingPointXToUse = beeStartingPointX[Math.floor(Math.random() * beeStartingPointX.length)];
-  let beeStartingPointYToUse = beeStartingPointY[Math.floor(Math.random() * beeStartingPointY.length)];
 
   let bee = Matter.Bodies.rectangle(beeStartingPointXToUse, beeStartingPointYToUse, 60, 60, {isSensor: true});
 
@@ -50,7 +51,7 @@ const BeePhysics = (entities, {touches}) => {
   let beeStartingPointYToUse = beeStartingPointY[Math.floor(Math.random() * beeStartingPointY.length)];
 
   // Spawning a bee at around 2 sec (can't put a whole second since the engine updates many times during one sec)
-  if (total_time > 2100 && total_time < 2135){
+  if (total_time > 2100 && total_time < 2135) {
     spawnBees(world, entities);
   }
 
