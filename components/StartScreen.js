@@ -19,9 +19,8 @@ export default class Grass extends Component {
             Avoid the dark clouds, go through rain clouds to water the flower and watch out for the bees!
             Kill them with a click.
           </Text>
-          <Text style={styles.startScreenText}>
-            Touch the screen to start!
-          </Text>
+          <Text style={styles.startGameText}>Touch the screen</Text>
+          <Text style={styles.startGameText}>to start!</Text>
         </View>
       </ImageBackground>
     ) 
@@ -41,10 +40,9 @@ const styles = StyleSheet.create({
   startScreenTextContainer: {
     position: 'absolute',
     top: max_height / 4,
-    borderColor: 'steelblue',
-    //borderWidth: 5,
+    width: max_width / 1.3,
     borderRadius: 10,
-    paddingTop: 45,
+    paddingTop: 60,
     paddingBottom: 40,
     padding: 35,
     backgroundColor: '#A8E5FC'
@@ -53,17 +51,20 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     textAlign: 'center',
-    width: max_width / 1.5,
-    marginBottom: 10,
+    marginBottom: 20,
     marginTop: 20
   },
   startScreenText: {
     color: 'steelblue',
     fontSize: 22,
     textAlign: 'center',
-    width: max_width / 1.5,
-    marginBottom: 10,
-    marginTop: 20
+    marginTop: 20,
+    fontWeight: 'bold'
+  },
+  startGameText: {
+    color: 'steelblue',
+    fontSize: 18,
+    textAlign: 'center',
   },
   logo: {
     position: 'absolute',
