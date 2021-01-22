@@ -7,7 +7,7 @@ const max_width = Dimensions.get('screen').width;
 
 // Arrays containing possible starting positions for bee
 let beeStartingPointX = [0, max_width];
-let beeStartingPointY = [-max_height / 2, max_height * 1.5];
+let beeStartingPointY = [-max_height, -max_height / 2, max_height, max_height * 1.5];
 
 let bees = 0;
 
@@ -52,6 +52,11 @@ const BeePhysics = (entities, {touches}) => {
   // Spawning a bee at around 2 sec (can't put a whole second since the engine updates many times during one sec)
   if (total_time > 2100 && total_time < 2135){
     spawnBees(world, entities);
+  }
+
+  // Spawn one more bee at around 40 sec
+  if (total_time > 40000 && total_time < 40035) {
+    spawnBees(world, entities)
   }
 
   // Loop through all the bees and moving them depending on current position

@@ -52,9 +52,6 @@ export default class GameArea extends Component {
       await this.happyFlowerLaugh.loadAsync(
         require('./assets/sounds/happyFlowerLaugh.wav')
       );
-      await this.beeSound.loadAsync(
-        require('./assets/sounds/beeBuzzToSound.wav')
-      );
       await this.backgroundMusic.setIsLoopingAsync(true);
       await this.backgroundMusic.setVolumeAsync(0.2);
       await this.backgroundMusic.playAsync();
@@ -75,17 +72,6 @@ export default class GameArea extends Component {
       this.happyFlowerLaugh.setVolumeAsync(0.5);
       this.happyFlowerLaugh.replayAsync();
     }
-  }
-
-  soundBeeOnScreen = () => {
-    if (!this.state.soundIsMuted) {
-      this.beeSound.setIsLoopingAsync(true);
-      this.beeSound.replayAsync();
-    }
-  }
-
-  stopBeeSound = () => {
-    this.beeSound.pauseAsync();
   }
 
   muteAllSound = () => {
@@ -150,27 +136,6 @@ export default class GameArea extends Component {
 
     // Function for every time the engine updates
     Matter.Events.on(engine, 'beforeUpdate', (event) => {
-      
-      Object.keys(this.entities).forEach(key => {
-        // Checking if bee enters or leaves screen and playing or stopping bee sound
-        if (key.indexOf('bee') === 0) {
-          let beePositionY = Math.floor(this.entities[key].body.position.y);
-          let maxHeight = Math.floor(max_height);
-          // Arrays for possible bee positions, since it moves by random 5 steps at a time
-          // and might not be at exactly 0 or max_height when entering screen
-          let possibleBeeYPositionsOverScreen = [0, 1, 2, 3, 4];
-          let possibleBeeYPositionsUnderScreen = [maxHeight, maxHeight-1, maxHeight-2, maxHeight-3, maxHeight-4]
-          // If bee enters screen
-          if (possibleBeeYPositionsOverScreen.indexOf(beePositionY) > -1 || possibleBeeYPositionsUnderScreen.indexOf(beePositionY) > -1) {
-            this.soundBeeOnScreen();
-          }
-          // If bee is off screen or dead or if sound is muted while bee is on screen
-          if (beePositionY < 0 || beePositionY > Math.floor(max_height) || this.entities[key].beeIsDead || this.state.soundIsMuted) {
-            this.stopBeeSound();
-          }
-        }
-      });
-
       // Set the run time (which is also the score) to the state
       let total_seconds = parseInt(Math.floor(engine.timing.timestamp / 1000));
       this.setState({
@@ -218,7 +183,6 @@ export default class GameArea extends Component {
     } 
     // Stop game loop and show game over screen if 'game over' is dispatched
     if (e.type === 'game_over') {
-      this.stopBeeSound();
       this.setState({
         running: false,
         showGameOverScreen: true,
