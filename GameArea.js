@@ -4,7 +4,7 @@ import Systems from './systems'
 import { GameEngine } from 'react-native-game-engine';
 import Matter from 'matter-js';
 
-import { View, StyleSheet, Text, Pressable, Image, Button} from 'react-native';
+import { View, StyleSheet, Text, Pressable, Image, TouchableOpacity} from 'react-native';
 import { Dimensions } from 'react-native';
 
 import Grass from './components/Grass';
@@ -257,12 +257,12 @@ export default class GameArea extends Component {
           onEvent={this.onEvent}
           running={this.state.running}
         />
-        {!this.state.soundIsMuted && <View style={styles.soundButton}>
-          <Button title='mute' onPress={this.muteAllSound}/>
-        </View>}
-        {this.state.soundIsMuted && <View style={styles.soundButton}>
-          <Button title='sound on' onPress={this.playAllSound}/>
-        </View>}
+        {!this.state.soundIsMuted && <TouchableOpacity style={styles.soundButton} onPress={this.muteAllSound}>
+          <Image source={require('./assets/volume.png')}/>
+        </TouchableOpacity>}
+        {this.state.soundIsMuted && <TouchableOpacity style={styles.soundButton} onPress={this.playAllSound}>
+          <Image source={require('./assets/mute.png')}/>
+        </TouchableOpacity>}
         <Text style={styles.scoreMeter}>{this.state.time}m</Text>
         {this.state.showGameOverScreen && !this.state.running && <Pressable onPress={this.resetGame} style={styles.fullScreenButton}>
           <GameOverScreen score={this.state.time}/>
