@@ -52,23 +52,13 @@ export default class GameArea extends Component {
       await this.happyFlowerLaugh.loadAsync(
         require('./assets/sounds/happyFlowerLaugh.wav')
         );
-        await this.beeSound.loadAsync(
-          require('./assets/sounds/beeBuzzToSound.wav')
-          )
-     /*  if (!this.state.soundIsMuted) {
-        this.backgroundMusic.setIsLoopingAsync(true);
-        this.backgroundMusic.setVolumeAsync(0.2);
-        this.backgroundMusic.playAsync();
-      } */
+      await this.beeSound.loadAsync(
+        require('./assets/sounds/beeBuzzToSound.wav')
+        );
+      await this.backgroundMusic.setIsLoopingAsync(true);
+      await this.backgroundMusic.setVolumeAsync(0.2);
+      await this.backgroundMusic.playAsync();
     } catch (error) {}
-  }
-
-  playBackgroundMusic = () => {
-    if (!this.state.soundIsMuted) {
-        this.backgroundMusic.setIsLoopingAsync(true);
-        this.backgroundMusic.setVolumeAsync(0.2);
-        this.backgroundMusic.playAsync();
-      }
   }
 
   //Function for playing sad flower sound
@@ -102,12 +92,16 @@ export default class GameArea extends Component {
     this.setState({
       soundIsMuted: true
     });
+    this.backgroundMusic.setIsLoopingAsync(true);
+    this.backgroundMusic.setVolumeAsync(0.2);
+    this.backgroundMusic.pauseAsync();
   }
 
   playAllSound = () => {
     this.setState({
       soundIsMuted: false
     });
+    this.backgroundMusic.playAsync();
   }
 
   // Function for creating a matter engine, all the matter bodies and adding them to the world,
