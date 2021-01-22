@@ -51,10 +51,10 @@ export default class GameArea extends Component {
       );
       await this.happyFlowerLaugh.loadAsync(
         require('./assets/sounds/happyFlowerLaugh.wav')
-        );
+      );
       await this.beeSound.loadAsync(
         require('./assets/sounds/beeBuzzToSound.wav')
-        );
+      );
       await this.backgroundMusic.setIsLoopingAsync(true);
       await this.backgroundMusic.setVolumeAsync(0.2);
       await this.backgroundMusic.playAsync();
@@ -167,7 +167,7 @@ export default class GameArea extends Component {
             this.soundBeeOnScreen();
           }
           // If bee is off screen or dead
-          if (beePositionY < 0 || beePositionY > Math.floor(max_height) || this.entities[key].beeIsDead) {
+          if (beePositionY < 0 || beePositionY > Math.floor(max_height) || this.entities[key].beeIsDead || this.state.soundIsMuted) {
             this.stopBeeSound();
           }
         }
