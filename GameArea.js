@@ -51,32 +51,47 @@ export default class GameArea extends Component {
       );
       await this.happyFlowerLaugh.loadAsync(
         require('./assets/sounds/happyFlowerLaugh.wav')
-      );
-      await this.beeSound.loadAsync(
-        require('./assets/sounds/beeBuzzToSound.wav')
-      )
-      await this.backgroundMusic.setIsLoopingAsync(true);
-      await this.backgroundMusic.setVolumeAsync(0.2);
-      await this.backgroundMusic.playAsync();
+        );
+        await this.beeSound.loadAsync(
+          require('./assets/sounds/beeBuzzToSound.wav')
+          )
+     /*  if (!this.state.soundIsMuted) {
+        this.backgroundMusic.setIsLoopingAsync(true);
+        this.backgroundMusic.setVolumeAsync(0.2);
+        this.backgroundMusic.playAsync();
+      } */
     } catch (error) {}
   }
 
+  playBackgroundMusic = () => {
+    if (!this.state.soundIsMuted) {
+        this.backgroundMusic.setIsLoopingAsync(true);
+        this.backgroundMusic.setVolumeAsync(0.2);
+        this.backgroundMusic.playAsync();
+      }
+  }
 
   //Function for playing sad flower sound
   soundOnScoreDown = () => {
-    this.sadFlowerCloudSound.setVolumeAsync(0.5);
-    this.sadFlowerCloudSound.replayAsync();
+    if (!this.state.soundIsMuted) {
+      this.sadFlowerCloudSound.setVolumeAsync(0.5);
+      this.sadFlowerCloudSound.replayAsync();
+    }
   }
 
   //Function for playing happy flower sound
   soundOnScoreUp = () => {
-    this.happyFlowerLaugh.setVolumeAsync(0.5);
-    this.happyFlowerLaugh.replayAsync();
+    if (!this.state.soundIsMuted) {
+      this.happyFlowerLaugh.setVolumeAsync(0.5);
+      this.happyFlowerLaugh.replayAsync();
+    }
   }
 
   soundBeeOnScreen = () => {
-    this.beeSound.setIsLoopingAsync(true);
-    this.beeSound.replayAsync();
+    if (!this.state.soundIsMuted) {
+      this.beeSound.setIsLoopingAsync(true);
+      this.beeSound.replayAsync();
+    }
   }
 
   stopBeeSound = () => {
@@ -87,7 +102,12 @@ export default class GameArea extends Component {
     this.setState({
       soundIsMuted: true
     });
-    console.log(this.state.soundIsMuted)
+  }
+
+  playAllSound = () => {
+    this.setState({
+      soundIsMuted: false
+    });
   }
 
   // Function for creating a matter engine, all the matter bodies and adding them to the world,
@@ -243,9 +263,12 @@ export default class GameArea extends Component {
           onEvent={this.onEvent}
           running={this.state.running}
         />
-        <View style={styles.soundButton}>
+        {!this.state.soundIsMuted && <View style={styles.soundButton}>
           <Button title='press' onPress={this.muteAllSound}/>
-        </View>
+        </View>}
+        {this.state.soundIsMuted && <View style={styles.soundButton}>
+          <Button title='press' color='red' onPress={this.playAllSound}/>
+        </View>}
         <Text style={styles.scoreMeter}>{this.state.time}m</Text>
         {this.state.showGameOverScreen && !this.state.running && <Pressable onPress={this.resetGame} style={styles.fullScreenButton}>
           <GameOverScreen score={this.state.time}/>
