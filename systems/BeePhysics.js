@@ -9,15 +9,16 @@ const max_width = Dimensions.get('screen').width;
 let beeStartingPointX = [0, max_width];
 let beeStartingPointY = [-max_height / 2, max_height * 1.5];
 
-// Randomizing starting point for bee
-let beeStartingPointXToUse = beeStartingPointX[Math.floor(Math.random() * beeStartingPointX.length)];
-let beeStartingPointYToUse = beeStartingPointY[Math.floor(Math.random() * beeStartingPointY.length)];
 
 let bees = 0;
 
 // Function for creating a bee matter body at random position, adding it to the world and to the entites, and adding collision filter
 const spawnBees = (world, entities) => {
-
+  
+  // Randomizing starting point for bee
+  let beeStartingPointXToUse = beeStartingPointX[Math.floor(Math.random() * beeStartingPointX.length)];
+  let beeStartingPointYToUse = beeStartingPointY[Math.floor(Math.random() * beeStartingPointY.length)];
+  
   let bee = Matter.Bodies.rectangle(beeStartingPointXToUse, beeStartingPointYToUse, 60, 60, {isSensor: true});
 
   Matter.World.add(world, [bee]);
@@ -191,6 +192,9 @@ const BeePhysics = (entities, {touches}) => {
           }
           // If bee goes off screen
           if (beePositionX < 0 || beePositionX > max_width) {
+            console.log("X: ", beeStartingPointXToUse)
+            console.log("y: ", beeStartingPointyToUse)
+            console.log("off")
             bee.beeHitFlower = false;
             Matter.Body.setPosition(bee.body, {
               x: beeStartingPointXToUse, 
