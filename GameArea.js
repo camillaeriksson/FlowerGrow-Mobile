@@ -317,8 +317,8 @@ const styles = StyleSheet.create({
   },
   soundButton: {
     position: 'absolute',
-    top: 300,
-    left: 60,
+    top: 40,
+    left: 20,
   }
 });
 
