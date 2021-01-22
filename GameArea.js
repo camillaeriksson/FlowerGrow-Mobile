@@ -78,8 +78,6 @@ export default class GameArea extends Component {
     this.setState({
       soundIsMuted: true
     });
-    this.backgroundMusic.setIsLoopingAsync(true);
-    this.backgroundMusic.setVolumeAsync(0.2);
     this.backgroundMusic.pauseAsync();
   }
 
