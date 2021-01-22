@@ -39,6 +39,7 @@ export default class GameArea extends Component {
   // Initialize the sound effects to the game
   async componentDidMount() {
     this.beeSound = new Audio.Sound();
+    this.secondaryBeeSound = new Audio.Sound();
     this.backgroundMusic = new Audio.Sound();
     this.sadFlowerCloudSound = new Audio.Sound();
     this.happyFlowerLaugh = new Audio.Sound();
@@ -52,6 +53,12 @@ export default class GameArea extends Component {
       await this.happyFlowerLaugh.loadAsync(
         require('./assets/sounds/happyFlowerLaugh.wav')
       );
+      await this.beeSound.loadAsync(
+        require('./assets/sounds/beeBuzzToSound.wav')
+      )
+      await this.secondaryBeeSound.loadAsync(
+        require('./assets/sounds/beeBuzzToSound.wav')
+      )
       await this.backgroundMusic.setIsLoopingAsync(true);
       await this.backgroundMusic.setVolumeAsync(0.2);
       await this.backgroundMusic.playAsync();
@@ -86,6 +93,24 @@ export default class GameArea extends Component {
       soundIsMuted: false
     });
     this.backgroundMusic.playAsync();
+  }
+  
+  soundFirstBeeOnScreen = () => {
+    this.beeSound.setIsLoopingAsync(true);
+    this.beeSound.replayAsync();
+  }
+
+  stopFirstBeeSound = () => {
+    this.beeSound.pauseAsync();
+  }
+
+  soundSecondBeeOnScreen = () => {
+    this.secondaryBeeSound.setIsLoopingAsync(true);
+    this.secondaryBeeSound.replayAsync();
+  }
+
+  stopSecondBeeSound = () => {
+    this.secondaryBeeSound.pauseAsync();
   }
 
   // Function for creating a matter engine, all the matter bodies and adding them to the world,
@@ -136,6 +161,38 @@ export default class GameArea extends Component {
 
     // Function for every time the engine updates
     Matter.Events.on(engine, 'beforeUpdate', (event) => {
+      Object.keys(this.entities).forEach(key => {
+        let maxHeight = Math.floor(max_height);
+        // Arrays for possible bee positions, since it moves by random 5 steps at a time
+        // and might not be at exactly 0 or max_height when entering screen
+        let possibleBeeYPositionsOverScreen = [0, 1, 2, 3, 4];
+        let possibleBeeYPositionsUnderScreen = [maxHeight, maxHeight-1, maxHeight-2, maxHeight-3, maxHeight-4];
+        // Checking for first bee
+        if (key === 'bee1') {
+          let firstBeePositionY = Math.floor(this.entities[key].body.position.y);
+          // If first bee enters screen
+          if (possibleBeeYPositionsOverScreen.indexOf(firstBeePositionY) > -1 || possibleBeeYPositionsUnderScreen.indexOf(firstBeePositionY) > -1) {
+            this.soundFirstBeeOnScreen();
+          }
+          // If first bee is off screen or dead
+          if (firstBeePositionY < 0 || firstBeePositionY > Math.floor(max_height) || this.entities[key].beeIsDead) {
+            this.stopFirstBeeSound();
+          }
+        }
+        // Checking for second bee
+        if (key === 'bee2') {
+          let secondBeePositionY = Math.floor(this.entities[key].body.position.y);
+          // If second bee enters screen
+          if (possibleBeeYPositionsOverScreen.indexOf(secondBeePositionY) > -1 || possibleBeeYPositionsUnderScreen.indexOf(secondBeePositionY) > -1) {
+            this.soundSecondBeeOnScreen();
+          }
+          // If second bee is off screen or dead
+          if (secondBeePositionY < 0 || secondBeePositionY > Math.floor(max_height) || this.entities[key].beeIsDead) {
+            this.stopSecondBeeSound();
+          }
+        }     
+      });
+
       // Set the run time (which is also the score) to the state
       let total_seconds = parseInt(Math.floor(engine.timing.timestamp / 1000));
       this.setState({
@@ -183,6 +240,8 @@ export default class GameArea extends Component {
     } 
     // Stop game loop and show game over screen if 'game over' is dispatched
     if (e.type === 'game_over') {
+      this.stopFirstBeeSound();
+      this.stopSecondBeeSound();
       this.setState({
         running: false,
         showGameOverScreen: true,
