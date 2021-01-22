@@ -4,7 +4,7 @@ import Systems from './systems'
 import { GameEngine } from 'react-native-game-engine';
 import Matter from 'matter-js';
 
-import { View, StyleSheet, Text, Pressable } from 'react-native';
+import { View, StyleSheet, Text, Pressable, Image, TouchableOpacity} from 'react-native';
 import { Dimensions } from 'react-native';
 
 import Grass from './components/Grass';
@@ -28,7 +28,8 @@ export default class GameArea extends Component {
       waterLevel: 160,
       running: false,
       showStartScreen: true,
-      showGameOverScreen: false
+      showGameOverScreen: false,
+      soundIsMuted: false
     };
 
     this.GameEngine = null;
@@ -53,33 +54,54 @@ export default class GameArea extends Component {
       );
       await this.beeSound.loadAsync(
         require('./assets/sounds/beeBuzzToSound.wav')
-      )
+      );
       await this.backgroundMusic.setIsLoopingAsync(true);
       await this.backgroundMusic.setVolumeAsync(0.2);
       await this.backgroundMusic.playAsync();
     } catch (error) {}
   }
 
-
   //Function for playing sad flower sound
   soundOnScoreDown = () => {
-    this.sadFlowerCloudSound.setVolumeAsync(0.5);
-    this.sadFlowerCloudSound.replayAsync();
+    if (!this.state.soundIsMuted) {
+      this.sadFlowerCloudSound.setVolumeAsync(0.5);
+      this.sadFlowerCloudSound.replayAsync();
+    }
   }
 
   //Function for playing happy flower sound
   soundOnScoreUp = () => {
-    this.happyFlowerLaugh.setVolumeAsync(0.5);
-    this.happyFlowerLaugh.replayAsync();
+    if (!this.state.soundIsMuted) {
+      this.happyFlowerLaugh.setVolumeAsync(0.5);
+      this.happyFlowerLaugh.replayAsync();
+    }
   }
 
   soundBeeOnScreen = () => {
-    this.beeSound.setIsLoopingAsync(true);
-    this.beeSound.replayAsync();
+    if (!this.state.soundIsMuted) {
+      this.beeSound.setIsLoopingAsync(true);
+      this.beeSound.replayAsync();
+    }
   }
 
   stopBeeSound = () => {
     this.beeSound.pauseAsync();
+  }
+
+  muteAllSound = () => {
+    this.setState({
+      soundIsMuted: true
+    });
+    this.backgroundMusic.setIsLoopingAsync(true);
+    this.backgroundMusic.setVolumeAsync(0.2);
+    this.backgroundMusic.pauseAsync();
+  }
+
+  playAllSound = () => {
+    this.setState({
+      soundIsMuted: false
+    });
+    this.backgroundMusic.playAsync();
   }
 
   // Function for creating a matter engine, all the matter bodies and adding them to the world,
@@ -144,8 +166,8 @@ export default class GameArea extends Component {
           if (possibleBeeYPositionsOverScreen.indexOf(beePositionY) > -1 || possibleBeeYPositionsUnderScreen.indexOf(beePositionY) > -1) {
             this.soundBeeOnScreen();
           }
-          // If bee is off screen or dead
-          if (beePositionY < 0 || beePositionY > Math.floor(max_height) || this.entities[key].beeIsDead) {
+          // If bee is off screen or dead or if sound is muted while bee is on screen
+          if (beePositionY < 0 || beePositionY > Math.floor(max_height) || this.entities[key].beeIsDead || this.state.soundIsMuted) {
             this.stopBeeSound();
           }
         }
@@ -235,6 +257,12 @@ export default class GameArea extends Component {
           onEvent={this.onEvent}
           running={this.state.running}
         />
+        {!this.state.soundIsMuted && <TouchableOpacity style={styles.soundButton} onPress={this.muteAllSound}>
+          <Image source={require('./assets/volume.png')}/>
+        </TouchableOpacity>}
+        {this.state.soundIsMuted && <TouchableOpacity style={styles.soundButton} onPress={this.playAllSound}>
+          <Image source={require('./assets/mute.png')}/>
+        </TouchableOpacity>}
         <Text style={styles.scoreMeter}>{this.state.time}m</Text>
         {this.state.showGameOverScreen && !this.state.running && <Pressable onPress={this.resetGame} style={styles.fullScreenButton}>
           <GameOverScreen score={this.state.time}/>
@@ -286,6 +314,11 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     flex: 1
+  },
+  soundButton: {
+    position: 'absolute',
+    top: 40,
+    left: 20,
   }
 });
 
