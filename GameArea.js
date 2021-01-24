@@ -7,8 +7,6 @@ import Matter from 'matter-js';
 import { View, StyleSheet, Text, Pressable } from 'react-native';
 import { Dimensions } from 'react-native';
 
-import { resetBees } from './systems/BeePhysics';
-
 import Grass from './components/Grass';
 import Pot from './components/Pot';
 import Flower from './components/Flower';
@@ -17,10 +15,12 @@ import WaterMeter from './components/WaterMeter';
 import StartScreen from './components/StartScreen';
 import GameOverScreen from './components/GameOverScreen';
 import Stem from './components/Stem';
+import { resetBees } from './systems/BeePhysics';
 import { Audio } from 'expo-av';
 
 const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
+
 export default class GameArea extends Component {
   constructor(props) {
     super(props);
@@ -159,39 +159,6 @@ export default class GameArea extends Component {
 
     // Function for every time the engine updates
     Matter.Events.on(engine, 'beforeUpdate', (event) => {
-      Object.keys(this.entities).forEach(key => {
-        let maxHeight = Math.floor(max_height);
-        // Arrays for possible bee positions, since it moves by random 5 steps at a time
-        // and might not be at exactly 0 or max_height when entering screen
-        let possibleBeeYPositionsOverScreen = [0, 1, 2, 3, 4];
-        let possibleBeeYPositionsUnderScreen = [maxHeight, maxHeight-1, maxHeight-2, maxHeight-3, maxHeight-4];
-        // Checking for first bee
-        if (key === 'bee1') {
-          let firstBeePositionY = Math.floor(this.entities[key].body.position.y);
-          // console.log(firstBeePositionY)
-          // If first bee enters screen
-          if (possibleBeeYPositionsOverScreen.indexOf(firstBeePositionY) > -1 || possibleBeeYPositionsUnderScreen.indexOf(firstBeePositionY) > -1) {
-            this.soundFirstBeeOnScreen();
-          }
-          // If first bee is off screen or dead
-          if (firstBeePositionY < 0 || firstBeePositionY > Math.floor(max_height) || this.entities[key].beeIsDead) {
-            this.stopFirstBeeSound();
-          }
-        }
-        // Checking for second bee
-        if (key === 'bee2') {
-          let secondBeePositionY = Math.floor(this.entities[key].body.position.y);
-          // If second bee enters screen
-          if (possibleBeeYPositionsOverScreen.indexOf(secondBeePositionY) > -1 || possibleBeeYPositionsUnderScreen.indexOf(secondBeePositionY) > -1) {
-            this.soundSecondBeeOnScreen();
-          }
-          // If second bee is off screen or dead
-          if (secondBeePositionY < 0 || secondBeePositionY > Math.floor(max_height) || this.entities[key].beeIsDead) {
-            this.stopSecondBeeSound();
-          }
-        }     
-      });
-
       // Set the run time (which is also the score) to the state
       let total_seconds = parseInt(Math.floor(engine.timing.timestamp / 1000));
       this.setState({
@@ -234,9 +201,27 @@ export default class GameArea extends Component {
       if (this.state.waterLevel < 160) {
         this.setState({
         waterLevel: this.state.waterLevel + 32
-      });
+        });
       }
-    } 
+    }
+    // Play bee sound if first bee enters screen
+    if (e.type === 'first_bee_enters_screen') {
+      console.log('first')
+      this.soundFirstBeeOnScreen();
+    }
+    // Stop bee sound if first bee leaves screen
+    if (e.type === 'first_bee_leaves_screen') {
+      this.stopFirstBeeSound();
+    }
+    // Play bee sound if second bee enters screen
+    if (e.type === 'second_bee_enters_screen') {
+      console.log('second')
+      this.soundSecondBeeOnScreen();
+    }
+    // Stop bee sound if second bee leaves screen
+    if (e.type === 'second_bee_leaves_screen') {
+      this.stopSecondBeeSound();
+    }
     // Stop game loop and show game over screen if 'game over' is dispatched
     if (e.type === 'game_over') {
       this.stopFirstBeeSound();
