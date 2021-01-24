@@ -2,12 +2,15 @@ import Matter from 'matter-js';
 import { Dimensions } from 'react-native';
 import Bee from '../components/Bee';
 
-const max_height = Dimensions.get('screen').height;
-const max_width = Dimensions.get('screen').width;
+const max_height = Math.floor(Dimensions.get('screen').height);
+const max_width = Math.floor(Dimensions.get('screen').width);
 
 // Arrays containing possible starting positions for bee
 let beeStartingPointX = [0, max_width];
-let beeStartingPointY = [-max_height, -max_height / 2, max_height, max_height * 1.5];
+let beeStartingPointY = [-max_height, -max_height / 2, max_height + 5, max_height * 1.5];
+
+// Testat:
+// 0, -max_height / 2
 
 let bees = 0;
 

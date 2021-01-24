@@ -206,7 +206,6 @@ export default class GameArea extends Component {
     }
     // Play bee sound if first bee enters screen
     if (e.type === 'first_bee_enters_screen') {
-      console.log('first')
       this.soundFirstBeeOnScreen();
     }
     // Stop bee sound if first bee leaves screen
@@ -215,7 +214,6 @@ export default class GameArea extends Component {
     }
     // Play bee sound if second bee enters screen
     if (e.type === 'second_bee_enters_screen') {
-      console.log('second')
       this.soundSecondBeeOnScreen();
     }
     // Stop bee sound if second bee leaves screen
