@@ -130,9 +130,9 @@ export default class GameArea extends Component {
     let flower = Matter.Bodies.rectangle(max_width / 2, max_height - 140, 70, 70, {isStatic: true});
     let grass = Matter.Bodies.rectangle(max_width / 2, max_height - 100, max_width, 200, {isSensor: true});
     let pot = Matter.Bodies.rectangle(max_width / 2, max_height - 140, 100, 80, {isSensor: true});
-    let waterMeterBackground = Matter.Bodies.rectangle(20, max_height - 300, 30, 160, { isStatic: true });
+    let waterMeterBackground = Matter.Bodies.rectangle(35, max_height - 120, 30, 160, { isStatic: true });
     let stem = Matter.Bodies.rectangle(max_width / 2, max_height + 500, 100, 800);
-    let waterMeter = Matter.Bodies.rectangle(20, max_height - 300, 30, 160, { isStatic: true });
+    let waterMeter = Matter.Bodies.rectangle(35, max_height - 120, 30, 160, { isStatic: true });
 
     Matter.World.add(world, [grass, flower, pot, waterMeterBackground, waterMeter, stem]);
 
@@ -197,7 +197,7 @@ export default class GameArea extends Component {
       pot: { body: pot, size: [100, 80], renderer: Pot},
       stem: { body: stem, size: [100, 800], renderer: Stem },
       waterMeterBackground: { body: waterMeterBackground, color: 'grey', size: [30, 160], renderer: WaterMeterBackground},
-      waterMeter: { body: waterMeter, color: '#1F63E0', size: [30, 160], waterLevel: 160, newWaterMeterY: max_height - 300, renderer: WaterMeter}
+      waterMeter: { body: waterMeter, color: '#1F63E0', size: [30, 160], waterLevel: 160, newWaterMeterY: max_height - 120, renderer: WaterMeter}
     }
   }
 
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     color: 'white',
     fontSize: 22,
-    top: max_height - 130,
+    top: max_height - 44,
     left: 15,
     textShadowColor: '#444444',
     textShadowOffset: { width: 2, height: 2},

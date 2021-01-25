@@ -4,14 +4,14 @@ const WaterMeterPhysics = (entities, onEvent) => {
     // Reduce the water level and move it downwards if the dispatched event is "score down"
     if (onEvent.events[0].type === 'score_down') {
       entities.waterMeter.waterLevel -= 32;
-      entities.waterMeter.newWaterMeterY +=32;
+      entities.waterMeter.newWaterMeterY += 16;
     } 
     // Increase the water level and move it upwards if the dispatched event is "score up"
     if (onEvent.events[0].type === 'score_up') {
       // Only if the water level is not full (160 px high)
       if (entities.waterMeter.waterLevel < 160) {
         entities.waterMeter.waterLevel += 32;
-        entities.waterMeter.newWaterMeterY -= 32;
+        entities.waterMeter.newWaterMeterY -= 16;
       }
     }
   }
