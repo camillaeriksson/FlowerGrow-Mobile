@@ -4,7 +4,7 @@ import Systems from './systems'
 import { GameEngine } from 'react-native-game-engine';
 import Matter from 'matter-js';
 
-import { View, StyleSheet, Text, Pressable } from 'react-native';
+import { View, StyleSheet, Text, Pressable, Image, TouchableOpacity } from 'react-native';
 import { Dimensions } from 'react-native';
 
 import Grass from './components/Grass';
@@ -30,7 +30,8 @@ export default class GameArea extends Component {
       waterLevel: 160,
       running: false,
       showStartScreen: true,
-      showGameOverScreen: false
+      showGameOverScreen: false,
+      soundIsMuted: false
     };
 
     this.gameEngine = null;
@@ -69,14 +70,18 @@ export default class GameArea extends Component {
 
   //Function for playing sad flower sound
   soundOnScoreDown = () => {
-    this.sadFlowerCloudSound.setVolumeAsync(0.5);
-    this.sadFlowerCloudSound.replayAsync();
+    if (!this.state.soundIsMuted) {
+      this.sadFlowerCloudSound.setVolumeAsync(0.5);
+      this.sadFlowerCloudSound.replayAsync();
+    }
   }
 
   //Function for playing happy flower sound
   soundOnScoreUp = () => {
-    this.happyFlowerLaugh.setVolumeAsync(0.5);
-    this.happyFlowerLaugh.replayAsync();
+    if (!this.state.soundIsMuted) {
+      this.happyFlowerLaugh.setVolumeAsync(0.5);
+      this.happyFlowerLaugh.replayAsync();
+    }
   }
 
   muteAllSound = () => {
@@ -94,8 +99,10 @@ export default class GameArea extends Component {
   }
   
   soundFirstBeeOnScreen = () => {
-    this.beeSound.setIsLoopingAsync(true);
-    this.beeSound.replayAsync();
+    if (!this.state.soundIsMuted) {
+      this.beeSound.setIsLoopingAsync(true);
+      this.beeSound.replayAsync();
+    }
   }
 
   stopFirstBeeSound = () => {
@@ -103,8 +110,10 @@ export default class GameArea extends Component {
   }
 
   soundSecondBeeOnScreen = () => {
-    this.secondaryBeeSound.setIsLoopingAsync(true);
-    this.secondaryBeeSound.replayAsync();
+    if (!this.state.soundIsMuted) {
+      this.secondaryBeeSound.setIsLoopingAsync(true);
+      this.secondaryBeeSound.replayAsync();
+    }
   }
 
   stopSecondBeeSound = () => {
@@ -159,6 +168,11 @@ export default class GameArea extends Component {
 
     // Function for every time the engine updates
     Matter.Events.on(engine, 'beforeUpdate', (event) => {
+      // Stop bee sound if mute button is pressed 
+      if (this.state.soundIsMuted) {
+        this.stopFirstBeeSound();
+        this.stopSecondBeeSound();
+      }
       // Set the run time (which is also the score) to the state
       let total_seconds = parseInt(Math.floor(engine.timing.timestamp / 1000));
       this.setState({
@@ -261,6 +275,12 @@ export default class GameArea extends Component {
           onEvent={this.onEvent}
           running={this.state.running}
         />
+        {!this.state.soundIsMuted && <TouchableOpacity style={styles.soundButton} onPress={this.muteAllSound}>
+          <Image source={require('./assets/volume.png')}/>
+        </TouchableOpacity>}
+        {this.state.soundIsMuted && <TouchableOpacity style={styles.soundButton} onPress={this.playAllSound}>
+          <Image source={require('./assets/mute.png')}/>
+        </TouchableOpacity>}
         <Text style={styles.scoreMeter}>{this.state.time}m</Text>
         {this.state.showGameOverScreen && !this.state.running && <Pressable onPress={this.resetGame} style={styles.fullScreenButton}>
           <GameOverScreen score={this.state.time}/>
@@ -312,6 +332,11 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     flex: 1
+  },
+  soundButton: {
+    position: 'absolute',
+    top: 40,
+    left: 20
   }
 });
 

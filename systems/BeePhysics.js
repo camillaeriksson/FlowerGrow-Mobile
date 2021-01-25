@@ -9,9 +9,6 @@ const max_width = Math.floor(Dimensions.get('screen').width);
 let beeStartingPointX = [0, max_width];
 let beeStartingPointY = [-max_height, -max_height / 2, max_height + 5, max_height * 1.5];
 
-// Testat:
-// 0, -max_height / 2
-
 let bees = 0;
 
 export const resetBees = () => {
@@ -102,11 +99,6 @@ const BeePhysics = (entities, {touches, dispatch}) => {
       }
     }
     
-
-
-
-
-
     if (key.indexOf('bee') === 0) {
       let beePositionX = Math.floor(entities[key].body.position.x);
       let beePositionY = Math.floor(entities[key].body.position.y);
@@ -236,9 +228,6 @@ const BeePhysics = (entities, {touches, dispatch}) => {
           }
           // If bee goes off screen
           if (beePositionX < 0 || beePositionX > max_width) {
-            console.log("X: ", beeStartingPointXToUse)
-            console.log("y: ", beeStartingPointyToUse)
-            console.log("off")
             bee.beeHitFlower = false;
             Matter.Body.setPosition(bee.body, {
               x: beeStartingPointXToUse, 
