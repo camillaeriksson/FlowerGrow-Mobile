@@ -236,6 +236,9 @@ const BeePhysics = (entities, {touches, dispatch}) => {
           }
           // If bee goes off screen
           if (beePositionX < 0 || beePositionX > max_width) {
+            console.log("X: ", beeStartingPointXToUse)
+            console.log("y: ", beeStartingPointyToUse)
+            console.log("off")
             bee.beeHitFlower = false;
             Matter.Body.setPosition(bee.body, {
               x: beeStartingPointXToUse, 
