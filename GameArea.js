@@ -4,7 +4,7 @@ import Systems from './systems'
 import { GameEngine } from 'react-native-game-engine';
 import Matter from 'matter-js';
 
-import { View, StyleSheet, Text, Pressable, Image, TouchableOpacity} from 'react-native';
+import { View, StyleSheet, Text, Pressable, Image, TouchableOpacity } from 'react-native';
 import { Dimensions } from 'react-native';
 
 import Grass from './components/Grass';
@@ -15,10 +15,12 @@ import WaterMeter from './components/WaterMeter';
 import StartScreen from './components/StartScreen';
 import GameOverScreen from './components/GameOverScreen';
 import Stem from './components/Stem';
+import { resetBees } from './systems/BeePhysics';
 import { Audio } from 'expo-av';
 
 const max_height = Dimensions.get('screen').height;
 const max_width = Dimensions.get('screen').width;
+
 export default class GameArea extends Component {
   constructor(props) {
     super(props);
@@ -32,13 +34,14 @@ export default class GameArea extends Component {
       soundIsMuted: false
     };
 
-    this.GameEngine = null;
+    this.gameEngine = null;
     this.entities = this.setupWorld();
   }
   
   // Initialize the sound effects to the game
   async componentDidMount() {
     this.beeSound = new Audio.Sound();
+    this.secondaryBeeSound = new Audio.Sound();
     this.backgroundMusic = new Audio.Sound();
     this.sadFlowerCloudSound = new Audio.Sound();
     this.happyFlowerLaugh = new Audio.Sound();
@@ -52,11 +55,18 @@ export default class GameArea extends Component {
       await this.happyFlowerLaugh.loadAsync(
         require('./assets/sounds/happyFlowerLaugh.wav')
       );
+      await this.beeSound.loadAsync(
+        require('./assets/sounds/beeBuzzToSound.wav')
+      )
+      await this.secondaryBeeSound.loadAsync(
+        require('./assets/sounds/beeBuzzToSound.wav')
+      )
       await this.backgroundMusic.setIsLoopingAsync(true);
       await this.backgroundMusic.setVolumeAsync(0.2);
       await this.backgroundMusic.playAsync();
     } catch (error) {}
   }
+
 
   //Function for playing sad flower sound
   soundOnScoreDown = () => {
@@ -86,6 +96,28 @@ export default class GameArea extends Component {
       soundIsMuted: false
     });
     this.backgroundMusic.playAsync();
+  }
+  
+  soundFirstBeeOnScreen = () => {
+    if (!this.state.soundIsMuted) {
+      this.beeSound.setIsLoopingAsync(true);
+      this.beeSound.replayAsync();
+    }
+  }
+
+  stopFirstBeeSound = () => {
+    this.beeSound.pauseAsync();
+  }
+
+  soundSecondBeeOnScreen = () => {
+    if (!this.state.soundIsMuted) {
+      this.secondaryBeeSound.setIsLoopingAsync(true);
+      this.secondaryBeeSound.replayAsync();
+    }
+  }
+
+  stopSecondBeeSound = () => {
+    this.secondaryBeeSound.pauseAsync();
   }
 
   // Function for creating a matter engine, all the matter bodies and adding them to the world,
@@ -136,6 +168,11 @@ export default class GameArea extends Component {
 
     // Function for every time the engine updates
     Matter.Events.on(engine, 'beforeUpdate', (event) => {
+      // Stop bee sound if mute button is pressed 
+      if (this.state.soundIsMuted) {
+        this.stopFirstBeeSound();
+        this.stopSecondBeeSound();
+      }
       // Set the run time (which is also the score) to the state
       let total_seconds = parseInt(Math.floor(engine.timing.timestamp / 1000));
       this.setState({
@@ -178,11 +215,29 @@ export default class GameArea extends Component {
       if (this.state.waterLevel < 160) {
         this.setState({
         waterLevel: this.state.waterLevel + 32
-      });
+        });
       }
-    } 
+    }
+    // Play bee sound if first bee enters screen
+    if (e.type === 'first_bee_enters_screen') {
+      this.soundFirstBeeOnScreen();
+    }
+    // Stop bee sound if first bee leaves screen
+    if (e.type === 'first_bee_leaves_screen') {
+      this.stopFirstBeeSound();
+    }
+    // Play bee sound if second bee enters screen
+    if (e.type === 'second_bee_enters_screen') {
+      this.soundSecondBeeOnScreen();
+    }
+    // Stop bee sound if second bee leaves screen
+    if (e.type === 'second_bee_leaves_screen') {
+      this.stopSecondBeeSound();
+    }
     // Stop game loop and show game over screen if 'game over' is dispatched
     if (e.type === 'game_over') {
+      this.stopFirstBeeSound();
+      this.stopSecondBeeSound();
       this.setState({
         running: false,
         showGameOverScreen: true,
@@ -193,6 +248,7 @@ export default class GameArea extends Component {
 
   // Function for resetting the game loop
   resetGame = () => {
+    resetBees();
     this.gameEngine.swap(this.setupWorld());
     this.setState({
       waterLevel: 160,
@@ -280,7 +336,7 @@ const styles = StyleSheet.create({
   soundButton: {
     position: 'absolute',
     top: 40,
-    left: 20,
+    left: 20
   }
 });
 
