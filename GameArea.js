@@ -276,10 +276,10 @@ export default class GameArea extends Component {
           running={this.state.running}
         />
         {!this.state.soundIsMuted && <TouchableOpacity style={styles.soundButton} onPress={this.muteAllSound}>
-          <Image source={require('./assets/volume.png')}/>
+          <Image source={require('./assets/volume.png')} style={styles.soundIcon}/>
         </TouchableOpacity>}
         {this.state.soundIsMuted && <TouchableOpacity style={styles.soundButton} onPress={this.playAllSound}>
-          <Image source={require('./assets/mute.png')}/>
+          <Image source={require('./assets/mute.png')} style={styles.muteIcon}/>
         </TouchableOpacity>}
         <Text style={styles.scoreMeter}>{this.state.time}m</Text>
         {this.state.showGameOverScreen && !this.state.running && <Pressable onPress={this.resetGame} style={styles.fullScreenButton}>
@@ -337,6 +337,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 40,
     left: 20
+  },
+  soundIcon: {
+    height: 33,
+    width: 34
+  },
+  muteIcon: {
+    height: 33,
+    width: 33.3
   }
 });
 
