@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Systems from './systems'
+import Systems from './systems';
 
 import { GameEngine } from 'react-native-game-engine';
 import Matter from 'matter-js';
