@@ -84,6 +84,7 @@ export default class GameArea extends Component {
     }
   }
 
+  //Function for muting all sound
   muteAllSound = () => {
     this.setState({
       soundIsMuted: true
@@ -91,6 +92,7 @@ export default class GameArea extends Component {
     this.backgroundMusic.pauseAsync();
   }
 
+  //Function for playing all sound
   playAllSound = () => {
     this.setState({
       soundIsMuted: false
@@ -98,6 +100,7 @@ export default class GameArea extends Component {
     this.backgroundMusic.playAsync();
   }
   
+  // Function for playing bee sound when first bee enters the screen
   soundFirstBeeOnScreen = () => {
     if (!this.state.soundIsMuted) {
       this.beeSound.setIsLoopingAsync(true);
@@ -105,10 +108,12 @@ export default class GameArea extends Component {
     }
   }
 
+  //Function for stopping first bee sound
   stopFirstBeeSound = () => {
     this.beeSound.pauseAsync();
   }
 
+  // Function for playing bee sound when second bee enters the screen
   soundSecondBeeOnScreen = () => {
     if (!this.state.soundIsMuted) {
       this.secondaryBeeSound.setIsLoopingAsync(true);
@@ -116,6 +121,7 @@ export default class GameArea extends Component {
     }
   }
 
+  //Function for stopping second bee sound
   stopSecondBeeSound = () => {
     this.secondaryBeeSound.pauseAsync();
   }
