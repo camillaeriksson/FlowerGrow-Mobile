@@ -40,7 +40,7 @@ const FlowerPhysics = (entities, { touches }) => {
   }
   
   // Check the start of collisions and changing the flowers face
-  Matter.Events.on(engine, "collisionStart", (event) => {
+  Matter.Events.on(engine, 'collisionStart', (event) => {
     for (var i = 0; i < event.pairs.length; i++) {
       let pairs = event.pairs[i];
       if (pairs.bodyA.collisionFilter.group === 5 && pairs.bodyB.collisionFilter.group === -5) {
@@ -52,7 +52,7 @@ const FlowerPhysics = (entities, { touches }) => {
   })
 
   // Check the end of collisions and changing the flowers face depending on water level
-  Matter.Events.on(engine, "collisionEnd", (event) => {
+  Matter.Events.on(engine, 'collisionEnd', (event) => {
     if (waterLevel === 160) {
       entities.flower.flowerNumber = 100;
     }

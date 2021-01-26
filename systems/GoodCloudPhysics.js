@@ -1,4 +1,4 @@
-import Matter from 'matter-js'
+import Matter from 'matter-js';
 import { Dimensions } from 'react-native';
 import GoodCloud from '../components/GoodCloud';
 
@@ -17,7 +17,7 @@ const spawnGoodClouds = (world, entities) => {
 
   Matter.World.add(world, [goodCloud]);
 
-  entities["goodCloud"] = {
+  entities['goodCloud'] = {
     body: goodCloud,
     size: [117, 110],
     renderer: GoodCloud
@@ -42,7 +42,7 @@ const GoodCloudPhysics = (entities) => {
 
     // Going through the clouds and resetting their upper position if they go off screen
     Object.keys(entities).forEach(key => {
-      if (key.indexOf("goodCloud") === 0) {
+      if (key.indexOf('goodCloud') === 0) {
         if (entities[key].body.position.y > max_height + 200) {
           Matter.Body.setPosition(entities[key].body, {
             x: randomizeNumber(0, max_width - 60), 

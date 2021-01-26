@@ -19,7 +19,7 @@ export default class Stem extends Component {
           top: y,
           left: x,
         }}
-      resizeMode="stretch"
+      resizeMode='stretch'
       source={stemImage}
       />
     ) 

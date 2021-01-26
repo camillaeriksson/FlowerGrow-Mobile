@@ -22,7 +22,7 @@ export default class Flower extends Component {
           height: height,
           zIndex: 100
         }} 
-        resizeMode="stretch"
+        resizeMode='stretch'
         source={flowerImage}
         />
     )
