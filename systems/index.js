@@ -1,5 +1,5 @@
 // File that holds all the physics for all entities
-import Physics from './physics'
+import Physics from './physics';
 import BadCloudPhysics from './BadCloudPhysics';
 import FlowerPhysics from './FlowerPhysics';
 import GroundPhysics from './GroundPhysics';

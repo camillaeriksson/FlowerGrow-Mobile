@@ -22,7 +22,7 @@ export default class BadCloud extends Component {
         left: x,
         zIndex: 100
       }}
-      resizeMode="stretch"
+      resizeMode='stretch'
       source={cloudImage}
       />
     ) 

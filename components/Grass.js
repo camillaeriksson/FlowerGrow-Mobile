@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image } from 'react-native';
+import { Image } from 'react-native';
 import Images from '../assets/Images';
 
 export default class Grass extends Component {
@@ -14,14 +14,14 @@ export default class Grass extends Component {
     return (
       <Image
         style={{
-            position: "absolute",
+            position: 'absolute',
             left: x,
             top: y,
             width: width,
             height: height,
             zIndex: 100
         }}
-        resizeMode="stretch"
+        resizeMode='stretch'
         source={grassImage} />
     )
   }

@@ -11,6 +11,7 @@ let beeStartingPointY = [-max_height, -max_height / 2, max_height + 5, max_heigh
 
 let bees = 0;
 
+// Function for resetting bees
 export const resetBees = () => {
   bees = 0;
 }
@@ -62,7 +63,7 @@ const BeePhysics = (entities, {touches, dispatch}) => {
 
   // Spawn one more bee at around 40 sec
   if (total_time > 40000 && total_time < 40035) {
-    spawnBees(world, entities)
+    spawnBees(world, entities);
   }
 
   // Loop through all the bees and moving them depending on current position
@@ -79,11 +80,11 @@ const BeePhysics = (entities, {touches, dispatch}) => {
       let firstBeePositionY = Math.floor(entities[key].body.position.y);
       // If first bee enters screen
       if (possibleBeeYPositionsOverScreen.indexOf(firstBeePositionY) > -1 || possibleBeeYPositionsUnderScreen.indexOf(firstBeePositionY) > -1) {
-        dispatch({ type: 'first_bee_enters_screen' })
+        dispatch({ type: 'first_bee_enters_screen' });
       }
       // If first bee is off screen or dead
       if (firstBeePositionY < 0 || firstBeePositionY > Math.floor(max_height) || entities[key].beeIsDead) {
-        dispatch({ type: 'first_bee_leaves_screen' })
+        dispatch({ type: 'first_bee_leaves_screen' });
       }
     }
     // Checking for second bee
@@ -91,11 +92,11 @@ const BeePhysics = (entities, {touches, dispatch}) => {
       let secondBeePositionY = Math.floor(entities[key].body.position.y);
       // If second bee enters screen
       if (possibleBeeYPositionsOverScreen.indexOf(secondBeePositionY) > -1 || possibleBeeYPositionsUnderScreen.indexOf(secondBeePositionY) > -1) {
-        dispatch({ type: 'second_bee_enters_screen' })
+        dispatch({ type: 'second_bee_enters_screen' });
       }
       // If second bee is off screen or dead
       if (secondBeePositionY < 0 || secondBeePositionY > Math.floor(max_height) || entities[key].beeIsDead) {
-        dispatch({ type: 'second_bee_leaves_screen' })
+        dispatch({ type: 'second_bee_leaves_screen' });
       }
     }
     

@@ -1,4 +1,4 @@
-import Matter from 'matter-js'
+import Matter from 'matter-js';
 import { Dimensions } from 'react-native';
 import BadCloud from '../components/BadCloud';
 
@@ -19,9 +19,9 @@ const spawnBadClouds = (world, entities) => {
 
   Matter.World.add(world, [badCloud]);
 
-  let cloudNumber = randomizeNumber(1, 3)
+  let cloudNumber = randomizeNumber(1, 3);
 
-  entities["badCloud" + (badClouds + 1)] = {
+  entities['badCloud' + (badClouds + 1)] = {
     body: badCloud,
     size: [117, 60],
     cloudNumber: cloudNumber,
@@ -52,7 +52,7 @@ const BadCloudPhysics = (entities) => {
 
   // Going through the clouds and resetting their upper position if they go off screen
   Object.keys(entities).forEach(key => {
-    if (key.indexOf("badCloud") === 0) {
+    if (key.indexOf('badCloud') === 0) {
       if (entities[key].body.position.y > max_height + 200) {
         Matter.Body.setPosition(entities[key].body, {
           x: randomizeNumber(0, max_width), 
