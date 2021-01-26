@@ -5,8 +5,8 @@ export default class WaterMeter extends Component {
   render() {
   const width = this.props.size[0];
   const height = this.props.waterLevel; 
-  const x = this.props.body.position.x;
-  const y = this.props.newWaterMeterY;
+  const x = this.props.body.position.x - width / 2;
+  const y = this.props.newWaterMeterY - height / 2;
 
     return (
         <View style={{
