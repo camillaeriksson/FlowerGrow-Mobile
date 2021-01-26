@@ -1,4 +1,4 @@
-import Matter from 'matter-js'
+import Matter from 'matter-js';
 import { Dimensions } from 'react-native';
 import GoodCloud from '../components/GoodCloud';
 
